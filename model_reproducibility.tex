@@ -531,7 +531,7 @@ and its implications for computational methods.
 
 \section{Reproducibility and its Roles}
 
-\subsection{Reproducibility vs Replicability}
+\subsection{Replicability}
 
 We will use the term \textit{original record} for data which is output
 by a simulator
@@ -581,6 +581,8 @@ machines, hardware, operating systems, and even different simulation software.
 The results of simple integer arithmetic on a pocket calculator are, for example,
 quite replicable across different calculators.
 
+\subsection{Reproducibility}
+
 Reproducibility, as used in this paper, refers to the underlying science
 behind a result.
 Is it possible, for example, to derive the results of a computer simulation
@@ -608,7 +610,15 @@ deep in their internals.
 Reproducibility helps shed light on these details, and draws attention
 to scientific knowledge which may have initially been overlooked.
 
-Replicability is useful
+Replicability is a useful tool in studying reproducibility.
+If the output of a simulator cannot be replicated, it becomes
+difficult to make any objective statement about the accuracy of the
+underlying model.
+
+
+
+Yet, there has been an increasing tendency to deviate from determinism
+in modern software.
 
 \subsection{Determinism and Replicability}
 
