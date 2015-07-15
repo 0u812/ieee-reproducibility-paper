@@ -675,6 +675,33 @@ although memory layout and asynchronicity also exhibit such problems.
 
 Two systems that have been proposed to eliminate non-determinism in threading
 are C{\small ORE}D{\small ET} \hl{[REF]} and D{\small THREADS} \hl{[REF]}.
+C{\small ORE}D{\small ET} is a framework and library for compiling C/C++ programs
+using the LLVM compiler framework such that the generated machine code operates deterministically.
+D{\small THREADS} is a replacement for the standard UNIX Pthreads library.
+Both of these systems operate by preventing the sharing of information between
+threads during a parallel phase, and allowing sharing and synchronization
+in a deterministic way in a serial phase.
+This biphasic structure imposes an overhead on the operation of the threading
+system, but these approaches nevertheless show performance comparable to native
+threading in many benchmarked cases \hl{[REF]}, indicating that they show
+practical promise.
+
+Both C{\small ORE}D{\small ET} and D{\small THREADS} also
+feature deterministic memory allocation. In the case of D{\small THREADS},
+this is achieved through a specially implemented memory allocator,
+whereas in C{\small ORE}D{\small ET} it is achieved through compiling the
+memory allocator itself with the C{\small ORE}D{\small ET} framework.
+
+\subsection{Determinism in the Context of the Whole-Cell Model}
+
+The \textit{M. genitalium} whole-cell model \hl{[Karr2012]} consists of
+28 submodels, each of which represents a physiological process of the cell.
+A simulation involves running each submodel independently. At each time step,
+the submodels are synchronized and the shared variables are updated.
+The whole-cell model coordinates this synchronization and partitions resources such as ATP
+among the submodels.
+Using systems like C{\small ORE}D{\small ET} and D{\small THREADS}, it is possible
+to achieve deterministic behavior of a computer program which uses threads.
 
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
