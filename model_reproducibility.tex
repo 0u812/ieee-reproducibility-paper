@@ -544,10 +544,6 @@ is an original record.
 The external inputs to the software (in the form of data or user interaction)
 which may influence the results of the simulation are termed the \textit{original context}.
 
-\begin{definition}
-A record of a simulated experiment is a \textit{replica} of an original record if
-\end{definition}
-
 The original context does not contain all information required to successfully replicate
 an experiment. For example, architectural differences in hardware could result in numeric
 differences in output. However, extensive standardization in computer technology, such as recent versions
@@ -560,6 +556,22 @@ golden norm to which all implementations should strive to achieve, with slight
 numerical discrepancies being the expectation.
 Reproducibility of arithmetic operations is not germane to the topic of this report and
 we will therefore ignore it for the remainder.
+
+\begin{definition}
+For a given arithmetic system and a given precision (single or double floating point),
+a record of a simulated experiment is a \textit{replica} of an original record if
+the values of the record agree with the original down to some numerical precision.
+\end{definition}
+
+If precision is not specified, it is assumed to equal the maximum precision
+of the arithmetic representation, i.e. to compare equal under that system.
+
+\begin{definition}
+An experiment is said to be \textit{replicable} if, given the original context,
+the output of the simulator is a replica of the original.
+The \textit{range of replicability} is the set of environments (hardware and software)
+which can be used to generate a replica.
+\end{definition}
 
 \subsection{Determinism and Replicability}
 
