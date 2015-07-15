@@ -695,13 +695,29 @@ memory allocator itself with the C{\small ORE}D{\small ET} framework.
 \subsection{Determinism in the Context of the Whole-Cell Model}
 
 The \textit{M. genitalium} whole-cell model \hl{[Karr2012]} consists of
-28 submodels, each of which represents a physiological process of the cell.
+28 submodels.
+Each submodel represents a physiological process of the cell
+and each is based on a biological modeling technique with known predictive power
+(etc. ODEs, Boolean networks, flux balance analysis) \hl{[CovertReview]}.
 A simulation involves running each submodel independently. At each time step,
 the submodels are synchronized and the shared variables are updated.
 The whole-cell model coordinates this synchronization and partitions resources such as ATP
 among the submodels.
+This process is not unlike a multithreaded software system where each thread performs
+a specific task. The serial execution of a program can be designed to be deterministic.
+Likewise, the submodels of the whole-cell model are designed in such a way that
+they are individually replicable. The seed for the pseudorandom number generator
+used in the whole-cell model was recorded in order to allow replication of simulation results.
+
+The integration of these disparate modeling techniques poses distinct challenges.
+Much in the same way that multithreaded programming greatly complicates
+determinism in software, integration of submodels complicates the behavior
+of the whole-cell model.
 Using systems like C{\small ORE}D{\small ET} and D{\small THREADS}, it is possible
 to achieve deterministic behavior of a computer program which uses threads.
+It is instructive to consider whether the same approach can be applied to whole-cell
+modeling, and indeed the \textit{M. genitalium} whole-cell model already displays
+some hallmarks of deterministic frameworks, such as the biphasic structure if its timestep.
 
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
