@@ -563,15 +563,35 @@ a record of a simulated experiment is a \textit{replica} of an original record i
 the values of the record agree with the original down to some numerical precision.
 \end{definition}
 
+Precision is a property of the replica.
 If precision is not specified, it is assumed to equal the maximum precision
 of the arithmetic representation, i.e. to compare equal under that system.
 
 \begin{definition}
 An experiment is said to be \textit{replicable} if, given the original context,
-the output of the simulator is a replica of the original.
+the output of the simulator is a replica of the original record.
 The \textit{range of replicability} is the set of environments (hardware and software)
 which can be used to generate a replica.
 \end{definition}
+
+The range of replicability for a given original record may encompass different
+machines, hardware, operating systems, and even different simulation software.
+The results of simple integer arithmetic on a pocket calculator are, for example,
+quite replicable across different calculators.
+
+Reproducibility, as used in this paper, refers to the underlying science
+behind a result.
+Is it possible, for example, to derive the results of a computer simulation
+from first principles?
+Reproducibility underscores the true connection to nature, and defies a technical
+definition, as the results of two models may only be qualitatively similar, yet be
+capable of predicting the same phenomenon.
+The requirement of first principles is crucial, as two models may agree
+due to overfitting.
+Data-driven approaches, for example, do not fit in this category.
+There is a general preference in science for simpler models (out of a set of
+alternatives), with the hope
+that Occam's razor will weed out extraneous explanations.
 
 \subsection{Determinism and Replicability}
 
