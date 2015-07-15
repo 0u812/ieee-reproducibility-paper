@@ -644,6 +644,20 @@ algorithmic determinism.
 
 \subsection{Determinism and Replicability}
 
+Non-determinism in most software comes from two sources:
+
+\begin{itemize}
+\item Concurrency and synchronization
+\item Memory layout
+\end{itemize}
+
+Concurrency can be a result of threading, or it can arise from
+asynchronous input/output callbacks. In both cases, as well as with memory layout,
+the non-determinism
+can be seen as the result
+of program interaction with the operating system.
+
+
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
 
