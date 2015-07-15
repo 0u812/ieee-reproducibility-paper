@@ -610,15 +610,37 @@ deep in their internals.
 Reproducibility helps shed light on these details, and draws attention
 to scientific knowledge which may have initially been overlooked.
 
+\subsection{Replicability Requirements}
+
 Replicability is a useful tool in studying reproducibility.
 If the output of a simulator cannot be replicated, it becomes
 difficult to make any objective statement about the accuracy of the
 underlying model.
 
+A computer program is a predefined sequence of instructions.
+In simple applications, provided that a program starts in the same state and reads the same
+data each time it is run, the output should be constant.
+In practice, software mail fail to meet this expectation.
+This behavior can be caused by algorithmic design.
 
+Strictly speaking, most modern computers are designed to be deterministic
+when viewed from a holistic perspective.
+Even software such as the SPIN model checker \hl{[REF]}, which is designed to
+simulate non-determinism, runs on a deterministic host.
+However, an individual program itself represents a subset of the computer,
+and when viewed in isolation it may appear to exhibit non-deterministic behavior.
 
-Yet, there has been an increasing tendency to deviate from determinism
-in modern software.
+Whether or not such apparent non-determinism (hereafter, simply non-determinism)
+is problematic depends on the application.
+For example, exhaustive methods (such as database queries) do not rely on the order
+in which elements are enumerated.
+However, in greedy methods non-determinism can lead to different output, even
+when the input is the same.
+% Nevertheless, there has been an increasing tendency to deviate from determinism
+% in modern software.
+
+Therefore, in order to achieve replicability, it is necessary to ensure
+algorithmic determinism.
 
 \subsection{Determinism and Replicability}
 
