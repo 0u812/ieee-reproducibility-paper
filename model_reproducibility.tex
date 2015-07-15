@@ -665,6 +665,16 @@ is due to failing to account for all state information.
 This is an important theme (and challenge) in the context of whole-cell modeling,
 as we will discuss later. % quantum density matrix analogy
 
+While threading, asynchronous operations, and memory layout all contribute
+to non-determinism of software,
+concurrency due to threading has received considerable attention in the literature.
+This is perhaps due to an increasing push to exploit multi-core CPUs,
+and the fact that concurrency is seen as the culprit of ``Heisenbugs,'' \hl{[REF]}
+(errors which manifest themselves non-deterministically)
+although memory layout and asynchronicity also exhibit such problems.
+
+Two systems that have been proposed to eliminate non-determinism in threading
+are {\large C}ORE{\large D}ET \hl{[REF]} and {\large D}THREADS \hl{[REF]}.
 
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
