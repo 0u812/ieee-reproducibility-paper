@@ -750,6 +750,29 @@ the chromosome (i.e. bound at a locus such as a promoter), and actively transcri
 Transitions between these states are governed by various factors
 (transitioning from bound to active, for example, requires a sigma factor).
 
+SBML models the occupancy of discrete states, and while the RNA polymerase states
+are discrete and enumerable, the various states of transcript elongation
+represent an explosion of states. Each gene of length $n$ admits $n$ states
+at different stages of elongation.
+This sheer number of states, one for each \textit{M. genitalium's}
+580k base pairs \hl{[replace exact count?]}, overwhelms most SBML
+simulators.
+If one wanted to model additional physiological processes during transcription,
+such as the early binding of ribosomes before the transcript is released
+by the polymerase (a detail which is not currently incorporated into the
+\textit{M. genitalium} model), the number of states would grow even further.
+For this reason, discrete elongation states are not a scalable solution.
+There may be hope for rule-based modeling of such systems using the SBML
+multi package \hl{[REF]}, but the essential focus here is not the current limitations
+of standards, but rather on methods enabling robust reproduction of results,
+with the view that standards will follow practice.
+
+The Markov chain describing the transcription process can, for example,
+be readily simulated using Gillespie's algorithm \hl{[REF]/more specific}
+with rate laws representing relative state transition probabilities.
+The limitations of state space size notwithstanding, this approach renders
+the transcriptional process amenable to reproduction within SBML.
+
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
 
