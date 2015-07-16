@@ -719,6 +719,37 @@ It is instructive to consider whether the same approach can be applied to whole-
 modeling, and indeed the \textit{M. genitalium} whole-cell model already displays
 some hallmarks of deterministic frameworks, such as the biphasic structure if its timestep.
 
+\subsection{Standardization Efforts}
+
+Standardization of the \textit{M. genitalium} whole-cell model \hl{[Karr2012]}
+was the topic of a workshop in Rostock, Germany from March 9-13, 2015.
+The workshop was organized by subdividing the participants into teams,
+each of which focused on one of the 28 submodels of the whole-cell model
+\hl{[Waltemath(same issue)?]}.
+
+Recalling that (in this paper) reproducibility refers to the ability to
+reimplement a model and still recover the same predictions.
+Recreating exact numerical replicas is not a requirement for this definition
+of reproducibility.
+
+An additional goal of the workshop was to assess and improve the current
+condition of standards within the biological modeling community.
+This in fact became the dominant consideration in many of the teams,
+including the transcription team, which one of us (J.K. Medley)
+was a member of.
+
+SBML is the de facto standard for encoding biological models \hl{[Hucka][Sauro]},
+and encoding the processes represented in the \textit{M. genitalium}
+submodels represented a major area of focus.
+The main difficulty in arriving at a satisfactory SBML representation
+of the transcription submodel was due to the use of a Markov chain
+process for modeling transcriptional elongation.
+In the whole-cell model, an RNA polymerase may be in one of four states:
+free, non-specifically bound to the chromosome, specifically bound to
+the chromosome (i.e. bound at a locus such as a promoter), and actively transcribing.
+Transitions between these states are governed by various factors
+(transitioning from bound to active, for example, requires a sigma factor).
+
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
 
