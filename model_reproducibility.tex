@@ -117,7 +117,7 @@
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \ifCLASSINFOpdf
-  % \usepackage[pdftex]{graphicx}
+  \usepackage[pdftex]{graphicx}
   % declare the path(s) where your graphic files are
   % \graphicspath{{../pdf/}{../jpeg/}}
   % and their extensions so you won't have to specify these with
@@ -373,9 +373,15 @@
 % author names and affiliations
 % transmag papers use the long conference author name format.
 
-\author{\IEEEauthorblockN{J. Kyle Medley\IEEEauthorrefmark{1},
-and Herbert M. Sauro\IEEEauthorrefmark{1}}
-\IEEEauthorblockA{\IEEEauthorrefmark{1}Department of Bioengineering, University of Washington, Seattle WA 98195}
+\author{\IEEEauthorblockN{
+	J. Kyle Medley\IEEEauthorrefmark{1},
+	Jonathan R. Karr\IEEEauthorrefmark{2},
+	and Herbert M. Sauro\IEEEauthorrefmark{1}
+	}
+\IEEEauthorblockA{
+	\IEEEauthorrefmark{1}Department of Bioengineering, University of Washington, Seattle WA 98195
+	\IEEEauthorrefmark{2}Department of Genetics \& Genomic Siences, Icahn School of Medicine at Mount Sinai, New York NY 10029
+	}
 \thanks{Manuscript received December x, xxxx; revised September x, xxxx.
 Corresponding author: J. K. Medley (email: medleyj@uw.edu).}}
 
@@ -911,10 +917,7 @@ Appendix two text goes here.
 
 % use section* for acknowledgment
 \section*{Acknowledgment}
-
-
-The authors would like to thank...
-
+This work was supported by a XXX grant to H.M.S and a James S. McDonnell Foundational Postdoctoral Award in Studying Complex Systems to J.R.K.
 
 % Can use something like this to put references on a page
 % by themselves when using endfloat and the captionsoff option.
@@ -954,49 +957,19 @@ H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
 
 \end{thebibliography}
 
-% biography section
-% 
-% If you have an EPS/PDF photo (graphicx package needed) extra braces are
-% needed around the contents of the optional argument to biography to prevent
-% the LaTeX parser from getting confused when it sees the complicated
-% \includegraphics command within an optional argument. (You could create
-% your own custom macro containing the \includegraphics command to make things
-% simpler here.)
-%\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael Shell}
-% or if you just want to reserve a space for a photo:
-
-\begin{IEEEbiography}{Michael Shell}
+%%%%%%%%%%%%%%%%%%%%%
+%% biography section
+%%%%%%%%%%%%%%%%%%%%%
+\begin{IEEEbiography}{J. Kyle Medley}
 Biography text here.
 \end{IEEEbiography}
 
-% if you will not have a photo at all:
-\begin{IEEEbiographynophoto}{John Doe}
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{photos/karr.jpg}}]{Jonathan R. Karr}
+received his Ph.D. in Biophysics and M.S. in Medicine from Stanford University, USA in 2014 and his B.S.s in Physics and Brain \& Cognitive Sciences from the Massachusetts Institute of Technology, USA in 2006. Currently, Dr. Karr is a Fellow at the Icahn School of Medicine at Mount Sinai, USA. His research focuses on the development of comprehensive whole-cell computational models and their applications to bioengineering and medicine.
+\end{IEEEbiography}
+
+\begin{IEEEbiography}{Herbert M. Sauro}
 Biography text here.
-\end{IEEEbiographynophoto}
+\end{IEEEbiography}
 
-% insert where needed to balance the two columns on the last page with
-% biographies
-%\newpage
-
-\begin{IEEEbiographynophoto}{Jane Doe}
-Biography text here.
-\end{IEEEbiographynophoto}
-
-% You can push biographies down or up by placing
-% a \vfill before or after them. The appropriate
-% use of \vfill depends on what kind of text is
-% on the last page and whether or not the columns
-% are being equalized.
-
-%\vfill
-
-% Can be used to pull up biographies so that the bottom of the last one
-% is flush with the other column.
-%\enlargethispage{-5in}
-
-
-
-% that's all folks
 \end{document}
-
-
