@@ -333,7 +333,7 @@
 
 % *** PDF, URL AND HYPERLINK PACKAGES ***
 %
-%\usepackage{url}
+\usepackage{url}
 % url.sty was written by Donald Arseneau. It provides better support for
 % handling and breaking URLs. url.sty is already installed on most LaTeX
 % systems. The latest version and documentation can be obtained at:
@@ -388,8 +388,8 @@ Corresponding author: J. K. Medley (email: medleyj@uw.edu).}}
 
 
 % The paper headers
-\markboth{Journal of \LaTeX\ Class Files,~Vol.~13, No.~9, September~2014}%
-{Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for Journals}
+\markboth{IEEE Transactions on Biomedical Engineering,~Vol.~13, No.~9, September~2015}%
+{Medley \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for Journals}
 % The only time the second header will appear is for the odd numbered pages
 % after the title page when using the twoside option.
 % 
@@ -427,7 +427,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 % Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
-IEEEtran, journal, \LaTeX, magnetics, paper, template.
+systems biology, computational modeling, reproducibility
 \end{IEEEkeywords}}
 
 
@@ -481,7 +481,7 @@ IEEEtran, journal, \LaTeX, magnetics, paper, template.
 % 
 % Here we have the typical use of a "T" for an initial drop letter
 % and "HIS" in caps to complete the first word.
-\IEEEPARstart{E}{xperimental} reproducibility is a central component of rigorous
+\IEEEPARstart{R}{eproducibility} is a central component of rigorous
 research, and derives this status from a longstanding understanding \hl{[historical ref]}
 that the idea of being able to independently reproduce the results of
 previously reported results lends necessary scientific credibility to
@@ -510,7 +510,7 @@ plot of the output of a simulator.
 % add reproducibility def
 
 Great strides have been made in facilitating replicability within computational modeling
-of biological systems, such as SED-ML \hl{REF} and the COMBINE archive \hl{REF}.
+of biological systems, such as CellML \cite{cuellar2003overview}, SBML \cite{hucka2003}, SED-ML \cite{sedml2011}, the COMBINE archive \cite{COMBINE2012}, and SBGN \cite{LeNovereHMMSS09}.
 However, scientific understanding depends on the ability to lucidly understand the
 underlying laws which govern the behavior of a system.
 % introduce rhetoric about predictive power / mathematical abstraction?
@@ -526,7 +526,7 @@ is a property of the design of the system, and can form a topic of study in its 
 
 In this report, we will discuss the ideas of reproducibility and replicability and
 the role they play in the context of a whole-cell model of \textit{Mycoplasma genitalium}
-\hl{[Karr2012]},
+\cite{Karr2012},
 which represents the first integrated physics-based computational model of a complete organism.
 In \hl{Section xx}, we outline the requirements for replicability, show how they can
 be achieved in the implementation of simulation software, and discuss how this can benefit
@@ -700,11 +700,11 @@ memory allocator itself with the C{\small ORE}D{\small ET} framework.
 
 \subsection{Determinism in the Context of the Whole-Cell Model}
 
-The \textit{M. genitalium} whole-cell model \hl{[Karr2012]} consists of
+The \textit{M. genitalium} whole-cell model \cite{Karr2012} consists of
 28 submodels.
 Each submodel represents a physiological process of the cell
 and each is based on a biological modeling technique with known predictive power
-(etc. ODEs, Boolean networks, and flux balance analysis) \hl{[CovertReview]}.
+(etc. ODEs, Boolean networks, and flux balance analysis).
 A simulation involves running each submodel independently. At each time step,
 the submodels are synchronized and the shared variables are updated.
 The whole-cell model coordinates this synchronization and partitions resources such as ATP
@@ -727,7 +727,7 @@ some hallmarks of deterministic frameworks, such as the biphasic structure if it
 
 \subsection{Standardization Efforts}
 
-Standardization of the \textit{M. genitalium} whole-cell model \hl{[Karr2012]}
+Standardization of the \textit{M. genitalium} whole-cell model \cite{Karr2012}
 was the topic of a workshop in Rostock, Germany from March 9-13, 2015.
 The workshop was organized by subdividing the participants into teams,
 each of which focused on one of the 28 submodels of the whole-cell model
@@ -761,7 +761,7 @@ are discrete and enumerable, the various states of transcript elongation
 represent an explosion of states. Each gene of length $n$ admits $n$ states
 at different stages of elongation.
 This sheer number of states, one for each \textit{M. genitalium's}
-580k base pairs \hl{[replace exact count?]}, overwhelms most SBML
+580,076 base pairs, overwhelms most SBML
 simulators.
 If one wanted to model additional physiological processes during transcription,
 such as the early binding of ribosomes before the transcript is released
@@ -887,35 +887,10 @@ the transcriptional process amenable to reproduction within SBML.
 The conclusion goes here.
 
 
-
-
-
-% if have a single appendix:
-%\appendix[Proof of the Zonklar Equations]
-% or
-%\appendix  % for no appendix heading
-% do not use \section anymore after \appendix, only \section*
-% is possibly needed
-
-% use appendices with more than one appendix
-% then use \section to start each appendix
-% you must declare a \section before using any
-% \subsection or using \label (\appendices by itself
-% starts a section numbered zero.)
-%
-
-
 \appendices
 \section{Proof of the First Zonklar Equation}
 Appendix one text goes here.
 
-% you can choose not to have a title for an appendix
-% if you want by leaving the argument blank
-\section{}
-Appendix two text goes here.
-
-
-% use section* for acknowledgment
 \section*{Acknowledgment}
 This work was supported by a XXX grant to H.M.S and a James S. McDonnell Foundational Postdoctoral Award in Studying Complex Systems to J.R.K.
 
@@ -925,37 +900,8 @@ This work was supported by a XXX grant to H.M.S and a James S. McDonnell Foundat
   \newpage
 \fi
 
-
-
-% trigger a \newpage just before the given reference
-% number - used to balance the columns on the last page
-% adjust value as needed - may need to be readjusted if
-% the document is modified later
-%\IEEEtriggeratref{8}
-% The "triggered" command can be changed if desired:
-%\IEEEtriggercmd{\enlargethispage{-5in}}
-
-% references section
-
-% can use a bibliography generated by BibTeX as a .bbl file
-% BibTeX documentation can be easily obtained at:
-% http://www.ctan.org/tex-archive/biblio/bibtex/contrib/doc/
-% The IEEEtran BibTeX style support page is at:
-% http://www.michaelshell.org/tex/ieeetran/bibtex/
-%\bibliographystyle{IEEEtran}
-% argument is your BibTeX string definitions and bibliography database(s)
-%\bibliography{IEEEabrv,../bib/paper}
-%
-% <OR> manually copy in the resultant .bbl file
-% set second argument of \begin to the number of references
-% (used to reserve space for the reference number labels box)
-\begin{thebibliography}{1}
-
-\bibitem{IEEEhowto:kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
-  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
-
-\end{thebibliography}
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,model_reproducibility}
 
 %%%%%%%%%%%%%%%%%%%%%
 %% biography section
