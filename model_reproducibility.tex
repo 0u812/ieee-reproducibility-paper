@@ -563,7 +563,7 @@ and its implications for computational methods.
 \section{Reproducibility in Computational Modeling}
 
 In order for a model to be reproducible, it must satisfy certain criteria.
-First, the processes used in the model must be well-understood and effectively communicated.
+First, the processes used in the model must be well-understood and documented.
 The details of the process must be available.
 For example, the \textit{M. genitalium} model makes use of a Markov chain process in
 transcriptional elongation. The Markov chain represents states of an RNA polymerase:
@@ -580,6 +580,11 @@ This is possible because the numerical solution of a differential equation
 converges on the true solution.
 The convergence of numerical methods as been well-studied for ordinary differential
 equations \cite{brenan1996numerical}, but convergence of hybrid methods is less well understood.
+
+Third, any data which is used in the model (for example, initial/boundary conditions, parameters, and training data)
+must be documented.
+In the \textit{M. genitalium} model, much of this data came from the literature.
+Over 900 papers and 1,900 experimentally observed parameters were used to construct the model \cite{Karr2012}.
 
 
 \section{Technical definitions}
@@ -968,8 +973,11 @@ This work was supported by a XXX grant to H.M.S and a James S. McDonnell Foundat
 %%%%%%%%%%%%%%%%%%%%%
 %% biography section
 %%%%%%%%%%%%%%%%%%%%%
-\begin{IEEEbiography}{J. Kyle Medley}
-Biography text here.
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{photos/medley.jpg}}]{J. Kyle Medley}
+is currently pursuing a Ph.D. in Bioengineering from the University of Washington, USA.
+His research interests include modeling of kinetic biophysical processes such as
+metabolic networks and gene regulatory circuits.
+He currently develops libRoadRunner, a software package used to simulate SBML models.
 \end{IEEEbiography}
 
 \begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{photos/karr.jpg}}]{Jonathan R. Karr}
