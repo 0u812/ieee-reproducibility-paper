@@ -487,21 +487,20 @@ that the idea of being able to independently reproduce the results of
 previously reported results lends scientific credibility to
 a testable hypothesis.
 
-When tests are performed directly on physical systems, the outcome can be subject to a
-number of contextual factors. In biological systems, experimental measurements are highly
-sensitive to context. It has been suggested that such sensitivity may be due to selective
-pressure causing organisms to develop traits and behaviors that enable robustness under
-a variety of environmental conditions \cite{ArkinContext12}.
+% When tests are performed directly on physical systems, the outcome can be subject to a
+% number of contextual factors. In biological systems, experimental measurements are highly
+% sensitive to context. It has been suggested that such sensitivity may be due to selective
+% pressure causing organisms to develop traits and behaviors that enable robustness under
+% a variety of environmental conditions \cite{ArkinContext12}.
 % cite Begley Nature drug discovery 2012?
 
-In computational modeling of biological systems, a simulation is carried out according
-to an initial state and a set of rules which govern the evolution of a model.
-Provided that the same initial state is used, the simulation results should be identical.
-Computational models would seem avoid reproducibility
-problems stemming from the complex interaction of context with observed behavior.
-However, this impression stems from a conflation of the concepts of \textit{reproducibility}
-and \textit{replicability} \hl{[Drummond 2009]}.
-
+% In computational modeling of biological systems, a simulation is carried out according
+% to an initial state and a set of rules which govern the evolution of a model.
+% Provided that the same initial state is used, the simulation results should be identical.
+% Computational models would seem avoid reproducibility
+% problems stemming from the complex interaction of context with observed behavior.
+In computational modeling, \textit{reproducibility}
+and \textit{replicability} \cite{drummond2009replicability} are often conflated.
 \textit{Replicability} refers to the ability, given the source code and
 necessary data files, to recapitulate the results of a previously reported simulation.
 Replicability applies to the instance of regenerating a previously published time-course
@@ -519,15 +518,28 @@ a shared scientific basis of knowledge, then the basis is vindicated.
 
 % Bacon: heat
 
-Great strides have been made in facilitating replicability in computational modeling
-of biological systems, such as CellML \cite{cuellar2003overview}, SBML \cite{hucka2003}, SED-ML \cite{sedml2011}, the COMBINE archive \cite{COMBINE2012}, and SBGN \cite{LeNovereHMMSS09}.
-However, scientific understanding depends on the ability to lucidly understand the
-underlying laws which govern the behavior of a system.
-% introduce rhetoric about predictive power / mathematical abstraction?
-While replicability is a useful feature, it does not promote understanding stemming
-from the underlying theory of the model.
-On the contrary, it can cause ingraining of idiosyncratic behavior peculiar to a specific
-implementation.
+% Great strides have been made in facilitating replicability in computational modeling
+% of biological systems, such as
+Many standards and tools have emerged in systems biology to enable the exchange of models and data.
+These include
+CellML \cite{cuellar2003overview}, SBML \cite{hucka2003}, SED-ML \cite{sedml2011}, the COMBINE archive \cite{COMBINE2012}, and SBGN \cite{LeNovereHMMSS09},
+many of which aim to promote exchange between researchers in order to better foster reproducibility.
+
+However, reproducibility remains a difficult problem.
+For example, SBML Level 3 consists of extensions which enable additional
+functionality, such as hierarchical model composition, flux balance constraints, and arrays.
+While the features offered by these packages are critically important to certain
+types of models, not all simulators support them.
+As SBML gains highly specialized capabilities, it also becomes fractionated, as
+not all research groups have a need for such special-purpose features.
+
+% However, scientific understanding depends on the ability to lucidly understand the
+% underlying laws which govern the behavior of a system.
+% % introduce rhetoric about predictive power / mathematical abstraction?
+% While replicability is a useful feature, it does not promote understanding stemming
+% from the underlying theory of the model.
+% On the contrary, it can cause ingraining of idiosyncratic behavior peculiar to a specific
+% implementation.
 
 % Replicability is a stepping stone to reproducibility. At the very least, it provides a
 % baseline reference to which future implementations can be compared. Indeed, in computer
