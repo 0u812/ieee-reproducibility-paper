@@ -500,7 +500,7 @@ a testable hypothesis.
 % Computational models would seem avoid reproducibility
 % problems stemming from the complex interaction of context with observed behavior.
 In computational modeling, \textit{reproducibility}
-and \textit{replicability} \cite{drummond2009replicability} are often conflated.
+and \textit{replicability} are often conflated \cite{drummond2009replicability}.
 \textit{Replicability} refers to the ability, given the source code and
 necessary data files, to recapitulate the results of a previously reported simulation.
 Replicability applies to the instance of regenerating a previously published time-course
@@ -527,7 +527,10 @@ many of which aim to promote exchange between researchers in order to better fos
 
 However, reproducibility remains a difficult problem.
 For example, SBML Level 3 consists of extensions which enable additional
-functionality, such as hierarchical model composition, flux balance constraints, and arrays.
+functionality, such as
+hierarchical model composition \footnote{http://co.mbine.org/standards/sbml/level-3/version-1/comp/version-1/release-2},
+flux balance constraints \footnote{http://sbml.org/Documents/Specifications/SBML_Level_3/Packages/fbc}, and
+arrays \footnote{http://sbml.org/Documents/Specifications/SBML_Level_3/Packages/arrays}.
 While the features offered by these packages are critically important for certain
 types of models, not all simulators support them.
 As SBML gains highly specialized capabilities, it also becomes fractionated, as
@@ -577,7 +580,7 @@ an experiment. For example, architectural differences in hardware could result i
 differences in output. However, extensive standardization in computer technology, such as recent versions
 of the IEEE 754 standard for floating point arithmetic, helps to mitigate numerical discrepancies
 due to different machines. While IEEE 754 does not guarantee that an operation will produce
-a result which is exactly identical across implementations \hl{[Goldberg]}, compliance with the standard often
+a result which is exactly identical across implementations \cite{goldberg1991every}, compliance with the standard often
 preserves results to a scientifically relevant degree of accuracy.
 Moreover, we will not relax the requirements of replicability, but instead view it as a
 golden norm to which all implementations should strive to achieve, with slight
