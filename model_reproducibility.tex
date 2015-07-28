@@ -508,6 +508,15 @@ Replicability applies to the instance of regenerating a previously published tim
 plot of the output of a simulator.
 % add reproducibility def
 
+\textit{Reproducibility}, on the other hand, refers to whether a hypothesis can be
+independently tested and confirmed.
+Reproducibility is a stronger requirement than replicability, and distinguishing reproducibility
+from replicability is important in computational modeling.
+A computational model which is replicable does not necessarily merit scientific credibility,
+as this simply means that the software produces the same result consistently.
+If, however, a team of researchers attempt to model a biological process using
+a shared scientific basis of knowledge, then the basis is vindicated.
+
 Great strides have been made in facilitating replicability in computational modeling
 of biological systems, such as CellML \cite{cuellar2003overview}, SBML \cite{hucka2003}, SED-ML \cite{sedml2011}, the COMBINE archive \cite{COMBINE2012}, and SBGN \cite{LeNovereHMMSS09}.
 However, scientific understanding depends on the ability to lucidly understand the
@@ -518,12 +527,12 @@ from the underlying theory of the model.
 On the contrary, it can cause ingraining of idiosyncratic behavior peculiar to a specific
 implementation.
 
-Replicability is a stepping stone to reproducibility. At the very least, it provides a
-baseline reference to which future implementations can be compared. Indeed, in computer
-science fields, replicability of independent, repeated runs of software
-is a property of the design of the system, and can form a topic of study in its own right.
+% Replicability is a stepping stone to reproducibility. At the very least, it provides a
+% baseline reference to which future implementations can be compared. Indeed, in computer
+% science fields, replicability of independent, repeated runs of software
+% is a property of the design of the system, and can form a topic of study in its own right.
 
-In this report, we will discuss the ideas of reproducibility and replicability and
+In this report, we discuss the ideas of reproducibility and replicability and
 the role they play in the context of a whole-cell model of \textit{Mycoplasma genitalium}
 \cite{Karr2012},
 which represents the first integrated physics-based computational model of a complete organism.
@@ -531,7 +540,7 @@ In \hl{Section xx}, we outline the requirements for replicability, show how they
 be achieved in the implementation of simulation software, and discuss how this can benefit
 reproducibility. We then show how these principles apply to the \textit{Mycoplasma} whole-cell
 model and the specific difficulties arising in their implementation.
-Finally, we will discuss the meaning of reproducibility in a biological modeling context
+Finally, we discuss the meaning of reproducibility in a biological modeling context
 and its implications for computational methods.
 
 \section{Reproducibility and its Roles}
