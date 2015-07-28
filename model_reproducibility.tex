@@ -560,7 +560,29 @@ model and the specific difficulties arising in their implementation.
 Finally, we discuss the meaning of reproducibility in a biological modeling context
 and its implications for computational methods.
 
-\section{Reproducibility and its Roles}
+\section{Reproducibility in Computational Modeling}
+
+In order for a model to be reproducible, it must satisfy certain criteria.
+First, the processes used in the model must be well-understood and effectively communicated.
+The details of the process must be available.
+For example, the \textit{M. genitalium} model makes use of a Markov chain process in
+transcriptional elongation. The Markov chain represents states of an RNA polymerase:
+free, non-specifically bound to the chromosome, specifically bound to
+the chromosome (i.e. bound at a locus such as a promoter), and actively transcribing.
+The transition matrix for these states is a necessary detail for reproducibility.
+
+Second, the numerical algorithms used by the simulator must be sound.
+For example, kinetic models define a set of differential equations.
+Assuming boundary conditions are imposed to select a unique solution,
+it is possible to reproduce an exact result (subject to numerical precision limitations)
+across different simulators.
+This is possible because the numerical solution of a differential equation
+converges on the true solution.
+The convergence of numerical methods as been well-studied for ordinary differential
+equations \cite{brenan1996numerical}, but convergence of hybrid methods is less well understood.
+
+
+\section{Technical definitions}
 
 \subsection{Replicability}
 
