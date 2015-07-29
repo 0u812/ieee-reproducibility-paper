@@ -581,11 +581,31 @@ converges on the true solution.
 The convergence of numerical methods as been well-studied for ordinary differential
 equations \cite{brenan1996numerical}, but convergence of hybrid methods is less well understood.
 
-Third, any data which is used in the model (for example, initial/boundary conditions, parameters, and training data)
+Lastly, any data which is used in the model (for example, initial/boundary conditions, parameters, and training data)
 must be documented.
 In the \textit{M. genitalium} model, much of this data came from the literature.
 Over 900 papers and 1,900 experimentally observed parameters were used to construct the model \cite{Karr2012}.
+The sources for various types of experimental data must be preserved,
+as well as the rationale behind using them in a particular setting
+(e.g. the choice of parameter values).
 
+\subsection{Current Approaches}
+
+There has been a large effort to address reproducibility in computational biology.
+The state of reproducibility has improved considerably due to standards such as SED-ML \cite{waltemath2011reproducible}.
+However, despite these advances, reproducibility in computational biology remains a challenge \cite{garijo2013quantifying}.
+
+Part of this difficulty can be attributed to gaps in standards.
+SED-ML, for example, has good coverage of simulation parameters, but
+does not address the limitations of the underlying simulator.
+Other concerns, such as data transparency, have traditionally not held prominent roles in the modeling community.
+The emergence of complex hybrid models is a driving force behind curating single-cell experimental data and making it widely available.
+
+Transparency is essential to achieving reproducibility for complex models.
+Making source code publicly available is an important step in this direction \cite{easterbrook2014open}.
+However, a systematic framework for transparency is necessary to the continued success of whole-cell modeling.
+The ideal goal should be to create a machine-readable database containing information describing the experimental source for all data used in a model.
+Semantic web technologies such as Resource Description Framework (RDF) can be useful in this capacity, and have been used to successfully express genetic components \cite{galdzicki2014synthetic} using linked data.
 
 \section{Technical definitions}
 
@@ -779,28 +799,28 @@ some hallmarks of deterministic frameworks, such as the biphasic structure if it
 
 \subsection{Standardization Efforts}
 
-Standardization of the \textit{M. genitalium} whole-cell model \cite{Karr2012}
-was the topic of a workshop in Rostock, Germany from March 9-13, 2015.
-The workshop was organized by subdividing the participants into teams,
-each of which focused on one of the 28 submodels of the whole-cell model
-\hl{[Waltemath(same issue)?]}.
-
-Recalling that (in this paper) reproducibility refers to the ability to
-reimplement a model and still recover the same predictions.
-Recreating exact numerical replicas is not a requirement for this definition
-of reproducibility.
-
-An additional goal of the workshop was to assess and improve the current
-condition of standards within the biological modeling community.
-This in fact became the dominant consideration in many of the teams,
-including the transcription team, which one of us (J.K. Medley)
-was a member of.
+% Standardization of the \textit{M. genitalium} whole-cell model \cite{Karr2012}
+% was the topic of a workshop in Rostock, Germany from March 9-13, 2015.
+% The workshop was organized by subdividing the participants into teams,
+% each of which focused on one of the 28 submodels of the whole-cell model
+% \hl{[Waltemath(same issue)?]}.
+%
+% Recalling that (in this paper) reproducibility refers to the ability to
+% reimplement a model and still recover the same predictions.
+% Recreating exact numerical replicas is not a requirement for this definition
+% of reproducibility.
+%
+% An additional goal of the workshop was to assess and improve the current
+% condition of standards within the biological modeling community.
+% This in fact became the dominant consideration in many of the teams,
+% including the transcription team, which one of us (J.K. Medley)
+% was a member of.
 
 SBML is the de facto standard for encoding biological models \hl{[Hucka][Sauro]},
 and encoding the processes represented in the \textit{M. genitalium}
 submodels represented a major area of focus.
 The main difficulty in arriving at a satisfactory SBML representation
-of the transcription submodel was due to the use of a Markov chain
+of the transcription submodel is due to the use of a Markov chain
 process for modeling transcriptional elongation.
 In the whole-cell model, an RNA polymerase may be in one of four states:
 free, non-specifically bound to the chromosome, specifically bound to
@@ -815,10 +835,10 @@ at different stages of elongation.
 This sheer number of states, one for each \textit{M. genitalium's}
 580,076 base pairs, overwhelms most SBML
 simulators.
-If one wanted to model additional physiological processes during transcription,
+Furthermore, an even greater number of states would be required to model additional physiological processes during transcription,
 such as the early binding of ribosomes before the transcript is released
 by the polymerase (a detail which is not currently incorporated into the
-\textit{M. genitalium} model), the number of states would grow even further.
+\textit{M. genitalium} model).
 For this reason, discrete elongation states are not a scalable solution.
 There may be hope for rule-based modeling of such systems using the SBML
 multi package \hl{[REF]}, but the essential focus here is not the current limitations
