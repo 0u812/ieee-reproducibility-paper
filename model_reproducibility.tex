@@ -563,9 +563,20 @@ model \cite{Karr2012} and the specific deficiencies for reproduction.
 Finally, we discuss the meaning of reproducibility in a biological modeling context
 and its implications for dynamical modeling.
 
+\begin{figure}[!t]
+\centering
+\includegraphics[width=2.5in]{reproducibility-diagram.pdf}
+% where an .eps filename suffix will be assumed under latex,
+% and a .pdf suffix will be assumed for pdflatex; or what has been declared
+% via \DeclareGraphicsExtensions.
+\caption{Simulation results for the network.}
+\label{fig_repro_diagram}
+\end{figure}
+
 \section{Reproducibility in Computational Modeling}
 
-In order for a model to be reproducible, it must satisfy certain criteria.
+In order for a model to be reproducible, it must satisfy certain criteria,
+which are summarized in Fig. \ref{fig_repro_diagram}.
 First, the processes used in the model must be well-understood and documented.
 The details of the process must be available.
 For example, the \textit{M. genitalium} model makes use of a Markov chain process in
@@ -875,15 +886,6 @@ the transcriptional process amenable to reproduction within SBML.
 % option should be used if it is desired that the figures are to be
 % displayed while in draft mode.
 %
-%\begin{figure}[!t]
-%\centering
-%\includegraphics[width=2.5in]{myfigure}
-% where an .eps filename suffix will be assumed under latex, 
-% and a .pdf suffix will be assumed for pdflatex; or what has been declared
-% via \DeclareGraphicsExtensions.
-%\caption{Simulation results for the network.}
-%\label{fig_sim}
-%\end{figure}
 
 % Note that IEEE typically puts floats only at the top, even when this
 % results in a large percentage of a column being occupied by floats.
