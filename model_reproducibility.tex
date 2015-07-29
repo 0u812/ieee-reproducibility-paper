@@ -340,7 +340,8 @@
 % http://www.ctan.org/tex-archive/macros/latex/contrib/url/
 % Basically, \url{my_url_here}.
 
-
+\usepackage{hyperref}
+\newcommand{\email}[1]{\href{mailto:#1}{#1}}
 
 
 % *** Do not adjust lengths that control margins, column widths, etc. ***
@@ -373,19 +374,20 @@
 % author names and affiliations
 % transmag papers use the long conference author name format.
 
-\author{\IEEEauthorblockN{
-	J. Kyle Medley\IEEEauthorrefmark{1},
-	Jonathan R. Karr\IEEEauthorrefmark{2},
-	and Herbert M. Sauro\IEEEauthorrefmark{1}
-	}
-\IEEEauthorblockA{
-	\IEEEauthorrefmark{1}Department of Bioengineering, University of Washington, Seattle WA 98195\\
-	\IEEEauthorrefmark{2}Department of Genetics \& Genomic Siences, Icahn School of Medicine at Mount Sinai, New York NY 10029
-	}
-\thanks{Manuscript received December x, xxxx; revised September x, xxxx.
-Corresponding author: J. K. Medley (email: medleyj@uw.edu).}}
-
-
+\author{
+    J. Kyle Medley$^*$,
+	Jonathan R. Karr, and
+	Herbert M. Sauro
+    
+    \thanks{
+        Manuscript received XXX XX, 2015; revised XXX XX, 201X; accepted XXX XX, 201X. Date of publication XXX XX, 201X; date of current version XXX XX, 201X.
+        JKM and HMS acknowledge support from NIH grant R01 GM081070. JRK acknowledges support from a James S McDonnell Foundation Postdoctoral Fellowship Award in Studying Complex Systems. The content is solely the responsibility of the authors and does not necessarily represent the views of the National Institutes of Health or the James S McDonnell Foundation.
+        \textit{Asterisk indicates corresponding author.}
+    }
+    \thanks{J. K. Medley and H. M. Sauro are with the Department of Bioengineering, University of Washington, Seattle, WA 98195, USA (e-mail: \email{medleyj@uw.edu}; \email{hsauro@u.washington.edu}).}
+    \thanks{J. R. Karr is with the Department of Genetics \& Genomic Sciences, Icahn School of Medicine at Mount Sinai, New York, NY 10029, USA (e-mail: \email{karr@mssm.edu}).}
+    \thanks{Digital Object Identifier 10.1109/TBME.XXXX.XXXXXXX}
+}
 
 % The paper headers
 \markboth{IEEE Transactions on Biomedical Engineering,~Vol.~13, No.~9, September~2015}%
