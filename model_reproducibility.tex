@@ -698,7 +698,7 @@ underlying model.
 A computer program is a predefined sequence of instructions.
 In simple applications, provided that a program starts in the same state and reads the same
 data each time it is run, the output should be constant.
-In practice, software mail fail to meet this expectation.
+In practice, software may fail to meet this expectation.
 This behavior can be caused by algorithmic design.
 
 Strictly speaking, most modern computers are designed to be deterministic
@@ -747,7 +747,7 @@ While threading, asynchronous operations, and memory layout all contribute
 to non-determinism of software,
 concurrency due to threading has received considerable attention in the literature.
 This is perhaps due to an increasing push to exploit multi-core CPUs,
-and the fact that concurrency is seen as the culprit of ``Heisenbugs,'' \hl{[REF]}
+and the fact that concurrency is seen as the culprit of ``Heisenbugs,''
 (errors which manifest themselves non-deterministically)
 although memory layout and asynchronicity also exhibit such problems.
 
@@ -846,7 +846,7 @@ of standards, but rather on methods enabling robust reproduction of results,
 with the view that standards will follow practice.
 
 The Markov chain describing the transcription process can, for example,
-be readily simulated using Gillespie's algorithm \hl{[REF]/more specific}
+be readily simulated using Gillespie's algorithm \cite{gillespie1977exact}
 with rate laws representing relative state transition probabilities.
 The limitations of state space size notwithstanding, this approach renders
 the transcriptional process amenable to reproduction within SBML.
@@ -973,10 +973,19 @@ at the time and space scale of the simulation.
 This can be answered by testing the model's predictions against other
 models and also against non-training data.
 
+Ultimately, transparency, numerical robustness, and documentation all influence the reproducibility
+of a model. Large, complex models such as the \textit{M. genitalium} whole-cell model
+help emphasize these needs.
+Other fields have also encountered these issues in different context and have
+responded by building standards and tools to satisfy these needs.
+Due to the complexity of biological systems, the field of computational biology
+may well need to push beyond the solutions devised in the past.
+In this report, we have highlighted several areas where reproducibility may be improved.
+Technological breakthroughs in these areas will enable more rapid progress in whole-cell modeling.
 
-\appendices
-\section{Proof of the First Zonklar Equation}
-Appendix one text goes here.
+% \appendices
+% \section{Proof of the First Zonklar Equation}
+% Appendix one text goes here.
 
 \section*{Acknowledgment}
 This work was supported by a XXX grant to H.M.S and a James S. McDonnell Foundational Postdoctoral Award in Studying Complex Systems to J.R.K.
