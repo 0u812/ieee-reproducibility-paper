@@ -703,7 +703,7 @@ This behavior can be caused by algorithmic design.
 
 Strictly speaking, most modern computers are designed to be deterministic
 when viewed from a holistic perspective.
-Even software such as the SPIN model checker \hl{[REF]}, which is designed to
+Even software such as the SPIN model checker \cite{holzmann2004spin}, which is designed to
 simulate non-determinism, runs on a deterministic host.
 However, an individual program itself represents a subset of the computer,
 and when viewed in isolation it may appear to exhibit non-deterministic behavior.
@@ -752,7 +752,7 @@ and the fact that concurrency is seen as the culprit of ``Heisenbugs,'' \hl{[REF
 although memory layout and asynchronicity also exhibit such problems.
 
 Two systems that have been proposed to eliminate non-determinism in threading
-are C{\small ORE}D{\small ET} \hl{[REF]} and D{\small THREADS} \hl{[REF]}.
+are C{\small ORE}D{\small ET} \cite{bergan2010coredet} and D{\small THREADS} \cite{liu2011dthreads}.
 C{\small ORE}D{\small ET} is a framework and library for compiling C/C++ programs
 using the LLVM compiler framework such that the generated machine code operates deterministically.
 D{\small THREADS} is a replacement for the standard UNIX Pthreads library.
@@ -761,7 +761,7 @@ threads during a parallel phase, and allowing sharing and synchronization
 in a deterministic way in a serial phase.
 This biphasic structure imposes an overhead on the operation of the threading
 system, but these approaches nevertheless show performance comparable to native
-threading in many benchmarked cases \hl{[REF]}, indicating that they show
+threading in many benchmarked cases \cite{liu2011dthreads}, indicating that they show
 practical promise.
 
 Both C{\small ORE}D{\small ET} and D{\small THREADS} also
@@ -841,7 +841,7 @@ by the polymerase (a detail which is not currently incorporated into the
 \textit{M. genitalium} model).
 For this reason, discrete elongation states are not a scalable solution.
 There may be hope for rule-based modeling of such systems using the SBML
-multi package \hl{[REF]}, but the essential focus here is not the current limitations
+multi package \footnote{http://sbml.org/Documents/Specifications/SBML\_Level\_3/Packages/multi}, but the essential focus here is not the current limitations
 of standards, but rather on methods enabling robust reproduction of results,
 with the view that standards will follow practice.
 
