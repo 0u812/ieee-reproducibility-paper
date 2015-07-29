@@ -482,8 +482,7 @@ systems biology, computational modeling, reproducibility
 % Here we have the typical use of a "T" for an initial drop letter
 % and "HIS" in caps to complete the first word.
 \IEEEPARstart{R}{eproducibility} is a central component of rigorous
-research, and derives this status from a longstanding understanding \hl{[historical ref]}
-that the idea of being able to independently reproduce the results of
+research, and derives this status from the idea that being able to independently reproduce the results of
 previously reported results lends scientific credibility to
 a testable hypothesis.
 
@@ -499,7 +498,7 @@ a testable hypothesis.
 % Provided that the same initial state is used, the simulation results should be identical.
 % Computational models would seem avoid reproducibility
 % problems stemming from the complex interaction of context with observed behavior.
-In computational modeling, \textit{reproducibility}
+In dynamical modeling, \textit{reproducibility}
 and \textit{replicability} are often conflated \cite{drummond2009replicability}.
 \textit{Replicability} refers to the ability, given the source code and
 necessary data files, to recapitulate the results of a previously reported simulation.
@@ -549,16 +548,16 @@ not all research groups have a need for such special-purpose features.
 % science fields, replicability of independent, repeated runs of software
 % is a property of the design of the system, and can form a topic of study in its own right.
 
-In this report, we discuss the ideas of reproducibility and replicability and
-the role they play in the context of a whole-cell model of \textit{Mycoplasma genitalium}
-\cite{Karr2012},
-which represents the first integrated physics-based computational model of a complete organism.
-In \hl{Section xx}, we outline the requirements for replicability, show how they can
+% In this report, we discuss the ideas of reproducibility and replicability and
+% the role they play in the context of a whole-cell model of \textit{Mycoplasma genitalium}
+% \cite{Karr2012},
+% which represents the first integrated physics-based computational model of a complete organism.
+In this report, we outline the requirements for replicability, show how they can
 be achieved in the implementation of simulation software, and discuss how this can benefit
 reproducibility. We then show how these principles apply to the \textit{Mycoplasma} whole-cell
-model and the specific difficulties arising in their implementation.
+model and the specific deficiencies for reproduction.
 Finally, we discuss the meaning of reproducibility in a biological modeling context
-and its implications for computational methods.
+and its implications for dynamical modeling.
 
 \section{Reproducibility in Computational Modeling}
 
@@ -578,7 +577,7 @@ it is possible to reproduce an exact result (subject to numerical precision limi
 across different simulators.
 This is possible because the numerical solution of a differential equation
 converges on the true solution.
-The convergence of numerical methods as been well-studied for ordinary differential
+The convergence of numerical methods has been well-studied for ordinary differential
 equations \cite{brenan1996numerical}, but convergence of hybrid methods is less well understood.
 
 Lastly, any data which is used in the model (for example, initial/boundary conditions, parameters, and training data)
@@ -627,8 +626,8 @@ an experiment. For example, architectural differences in hardware could result i
 differences in output. However, extensive standardization in computer technology, such as recent versions
 of the IEEE 754 standard for floating point arithmetic, helps to mitigate numerical discrepancies
 due to different machines. While IEEE 754 does not guarantee that an operation will produce
-a result which is exactly identical across implementations \cite{goldberg1991every}, compliance with the standard often
-preserves results to a scientifically relevant degree of accuracy.
+a result which is exactly identical across implementations \cite{goldberg1991every}, compliance with the standard
+guarantees results to significant accuracy.
 Moreover, we will not relax the requirements of replicability, but instead view it as a
 golden norm to which all implementations should strive to achieve, with slight
 numerical discrepancies being the expectation.
@@ -638,14 +637,14 @@ we will therefore ignore it for the remainder.
 % Goldberg: http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html
 
 \begin{definition}
-For a given arithmetic system and a given precision (single or double floating point),
+For a given arithmetic system,
 a record of a simulated experiment is a \textit{replica} of an original record if
 the values of the record agree with the original down to some numerical precision.
 \end{definition}
 
-Precision is a property of the replica.
-If precision is not specified, it is assumed to equal the maximum precision
-of the arithmetic representation, i.e. to compare equal under that system.
+% Precision is a property of the replica.
+% If precision is not specified, it is assumed to equal the maximum precision
+% of the arithmetic representation, i.e. to compare equal under that system.
 
 \begin{definition}
 An experiment is said to be \textit{replicable} if, given the original context,
@@ -671,9 +670,8 @@ capable of predicting the same phenomenon.
 The requirement of first principles is crucial, as two models may agree
 due to overfitting.
 Data-driven approaches, for example, do not fit in this category.
-There is a general preference in science for simpler models (out of a set of
-alternatives), with the hope
-that Occam's razor will weed out extraneous explanations.
+Our a general preference in science for simpler models (out of a set of
+alternatives).
 
 The scientific progress in creating a computational model is not the
 software itself, but rather what it teaches us about the system under study.
@@ -703,8 +701,8 @@ This behavior can be caused by algorithmic design.
 
 Strictly speaking, most modern computers are designed to be deterministic
 when viewed from a holistic perspective.
-Even software such as the SPIN model checker \cite{holzmann2004spin}, which is designed to
-simulate non-determinism, runs on a deterministic host.
+% Even software such as the SPIN model checker \cite{holzmann2004spin}, which is designed to
+% simulate non-determinism, runs on a deterministic host.
 However, an individual program itself represents a subset of the computer,
 and when viewed in isolation it may appear to exhibit non-deterministic behavior.
 
@@ -776,7 +774,7 @@ The \textit{M. genitalium} whole-cell model \cite{Karr2012} consists of
 28 submodels.
 Each submodel represents a physiological process of the cell
 and each is based on a biological modeling technique with known predictive power
-(etc. ODEs, Boolean networks, and flux balance analysis).
+(e.g. ODEs, Boolean networks, and flux balance analysis).
 A simulation involves running each submodel independently. At each time step,
 the submodels are synchronized and the shared variables are updated.
 The whole-cell model coordinates this synchronization and partitions resources such as ATP
@@ -796,6 +794,8 @@ to achieve deterministic behavior of a computer program which uses threads.
 It is instructive to consider whether the same approach can be applied to whole-cell
 modeling, and indeed the \textit{M. genitalium} whole-cell model already displays
 some hallmarks of deterministic frameworks, such as the biphasic structure if its timestep.
+This suggests that technologies such as C{\small ORE}D{\small ET} and D{\small THREADS}
+can offer insights into how to integrate a hybrid model in a replicable way.
 
 \subsection{Standardization Efforts}
 
@@ -816,7 +816,7 @@ some hallmarks of deterministic frameworks, such as the biphasic structure if it
 % including the transcription team, which one of us (J.K. Medley)
 % was a member of.
 
-SBML is the de facto standard for encoding biological models \hl{[Hucka][Sauro]},
+SBML is the de facto standard for encoding biological models \cite{hucka2003systems},
 and encoding the processes represented in the \textit{M. genitalium}
 submodels represented a major area of focus.
 The main difficulty in arriving at a satisfactory SBML representation
@@ -960,7 +960,7 @@ Biology involves the study of complex systems.
 In order to form useful models, it is necessary to use approximations.
 These approximations are representative of the underlying physical
 system at various degrees of granularity in terms of time and space.
-The accuracy of model derived from such approximations may be influenced
+The accuracy of models derived from such approximations may be influenced
 by lack of pertinent data, computational limitations, or lack of
 understanding of the modeled system.
 
