@@ -463,14 +463,25 @@ Systems biology, computational modeling, reproducibility
 % 
 % Here we have the typical use of a "T" for an initial drop letter
 % and "HIS" in caps to complete the first word.
-\IEEEPARstart{R}{eproducibility} is a central component of rigorous
-research, and derives this status from the idea that being able to independently reproduce the results of
-previously reported results lends scientific credibility to
-a testable hypothesis.
+\IEEEPARstart{R}{eproducibility} is one of the central tenets of the scientific method.
+\textit{Reproducibility} is the ability to confirm a result via a completely independent test, including different investigators, experimental methods, and experimental machinery. 
+This rigorous standard eliminates conclusions that were based on incorrect methods, machinery, or experiments and ensures that scientific results are only accepted as facts once multiple scientists and tests have thoroughly dismissed other potential explanations. 
+
+\textit{Replicability}, the ability to reproduce a result given the same experimental machinery and conditions, is a related concept. 
+Replicability is a more liberal standard than reproducibility because replicability does not require independent experimental methods or equipment.
+Consequently, replicability only has the power to eliminate conclusions that were based on erroneous experiments, and cannot eliminate conclusions based on faulty methods or machinery.
+
+Due to the complexity of modern scientific experiments and financial, time, and publishing pressures, investigators often do not have the time or resources to design orthogonal methods to reproduce results independently. Instead, investigators frequently replicate reported results using use the published method. This decreased emphasis on independently reproducing results has the potential to allow us to accept false results based on faulty methods.
+
+Computational biology has become more replicable over the past several years through the introduction of standards including CellML \cite{cuellar2003overview}, SBML \cite{hucka2003}, SED-ML \cite{sedml2011}, the COMBINE archive \cite{COMBINE2012}, and SBGN \cite{LeNovereHMMSS09} and model repositorities including BioModels and CellML Model Repository. These standards and repositories have enabled researchers to easily replicate in silico experiments using the same mathematical model, the same simulator, and the same parameter values. They have also enabled researchers to use models to conduct new experiments, to expand models, and to combine models into large, more comprehensive models.
+
+Unfortunately, due to continued time pressures, emphasis on innovation, and the growing complexity of computational methods, the increased emphasis on replicability has not translated into increased reproducibility. This is exemplified by the recent \textit{Mycoplasma genitalium} whole-cell model \cite{Karr2012}. The authors took great strides to ensure that their software can replicate results, given the same initial conditions and random number generator seed. Unfortunately, the novelty and complexity of the model make it difficult for other researchers to reproduce the model or its scientific conclusions. 
+
+Waltemath and Schreiber recently a week-long workshop including 60 modelers, modeling software developers, and standards developers to reproduce the model using SBML and open-source modeling software. The workshop made great progress toward reproducing the model in SBML, including draft SBML versions of most of the submodels. However, because the model requires many new SBML languages features that are still only supported by a few simulation software programs and because the model is large, the over one-person year of effort that was devoted to the workshop was only a small fraction of the total effort that is needed to reproduce the model.
 
 % When tests are performed directly on physical systems, the outcome can be subject to a
 % number of contextual factors. In biological systems, experimental measurements are highly
-% sensitive to context. It has been suggested that such sensitivity may be due to selective
+% sensitive to context. It has b een suggested that such sensitivity may be due to selective
 % pressure causing organisms to develop traits and behaviors that enable robustness under
 % a variety of environmental conditions \cite{ArkinContext12}.
 % cite Begley Nature drug discovery 2012?
@@ -480,42 +491,6 @@ a testable hypothesis.
 % Provided that the same initial state is used, the simulation results should be identical.
 % Computational models would seem avoid reproducibility
 % problems stemming from the complex interaction of context with observed behavior.
-In dynamical modeling, \textit{reproducibility}
-and \textit{replicability} are often conflated \cite{drummond2009replicability}.
-\textit{Replicability} refers to the ability, given the source code and
-necessary data files, to recapitulate the results of a previously reported simulation.
-Replicability applies to the instance of regenerating a previously published time-course
-plot of the output of a simulator.
-% add reproducibility def
-
-\textit{Reproducibility}, on the other hand, refers to whether a hypothesis can be
-independently tested and confirmed.
-Reproducibility is a stronger requirement than replicability, and distinguishing reproducibility
-from replicability is important in computational modeling.
-A computational model which is replicable does not necessarily merit scientific credibility,
-as this simply means that the software produces the same result consistently.
-If, however, a team of researchers attempt to model a biological process using
-a shared scientific basis of knowledge, then the basis is vindicated.
-
-% Bacon: heat
-
-% Great strides have been made in facilitating replicability in computational modeling
-% of biological systems, such as
-Many standards and tools have emerged in systems biology to enable the exchange of models and data.
-These include
-CellML \cite{cuellar2003overview}, SBML \cite{hucka2003}, SED-ML \cite{sedml2011}, the COMBINE archive \cite{COMBINE2012}, and SBGN \cite{LeNovereHMMSS09},
-many of which aim to promote exchange between researchers in order to better foster reproducibility.
-
-However, reproducibility remains a difficult problem.
-For example, SBML Level 3 consists of extensions which enable additional
-functionality, such as
-hierarchical model composition \footnote{http://co.mbine.org/standards/sbml/level-3/version-1/comp/version-1/release-2},
-flux balance constraints \footnote{ http://sbml.org/Documents/Specifications/SBML\_Level\_3/Packages/fbc}, and
-arrays \footnote{http://sbml.org/Documents/Specifications/SBML\_Level\_3/Packages/arrays}.
-While the features offered by these packages are critically important for certain
-types of models, not all simulators support them.
-As SBML gains highly specialized capabilities, it also becomes fractionated, as
-not all research groups have a need for such special-purpose features.
 
 % However, scientific understanding depends on the ability to lucidly understand the
 % underlying laws which govern the behavior of a system.
@@ -534,22 +509,22 @@ not all research groups have a need for such special-purpose features.
 % the role they play in the context of a whole-cell model of \textit{Mycoplasma genitalium}
 % \cite{Karr2012},
 % which represents the first integrated physics-based computational model of a complete organism.
-In this report, we outline the requirements for replicability, show how they can
+Here, we outline the requirements for replicability, show how they can
 be achieved in the implementation of simulation software, and discuss how this can benefit
 reproducibility. We then show how these principles apply to the \textit{Mycoplasma genitalium} whole-cell
 model \cite{Karr2012} and the specific deficiencies for reproduction.
 Finally, we discuss the meaning of reproducibility in a biological modeling context
 and its implications for dynamical modeling.
 
-\begin{figure}[!t]
+\begin{figure*}[!t]
 \centering
-\includegraphics[width=2.5in]{reproducibility-diagram.pdf}
+\includegraphics[width=\textwidth]{figure1/figure1}
 % where an .eps filename suffix will be assumed under latex,
 % and a .pdf suffix will be assumed for pdflatex; or what has been declared
 % via \DeclareGraphicsExtensions.
 \caption{Core requirements for reproducibility vs. replicability.}
 \label{fig_repro_diagram}
-\end{figure}
+\end{figure*}
 
 \section{Reproducibility in Computational Modeling}
 
