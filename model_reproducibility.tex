@@ -534,7 +534,7 @@ Reproducibility is a stronger requirement and requires a replicable result as a 
 
 In order for a model to meet our definition of reproducibility, it must satisfy certain criteria,
 which are summarized in Fig. \ref{fig_repro_diagram}.
-First, the theoretical formulation of the model must be well-understood.
+The theoretical formulation of the model must be well-understood.
 Many mathematical modeling techniques have been applied to biology \cite{gombert2000mathematical}.
 These techniques have been studied extensively and any new techniques will need to be subjected to
 the same degree of scrutiny in order to form a viable foundation for reproducible models.
@@ -544,7 +544,13 @@ free, non-specifically bound to the chromosome, specifically bound to
 the chromosome (i.e. bound at a locus such as a promoter), and actively transcribing.
 The transition matrix for these states is a necessary detail for reproducibility.
 
-Second, the numerical algorithms used by the simulator must converge on a solution.
+Transparency is essential to achieving reproducibility for complex models.
+Making source code publicly available is an important step in this direction \cite{easterbrook2014open}.
+However, a systematic framework for transparency is necessary to the continued success of whole-cell modeling.
+The ideal goal should be to create a machine-readable database containing information describing the experimental source for all data used in a model.
+Semantic web technologies such as Resource Description Framework (RDF) can be useful in this capacity, and have been used to successfully express genetic components \cite{galdzicki2014synthetic} using linked data.
+
+The numerical algorithms used by the simulator must converge on a solution.
 For example, kinetic models define a set of differential equations.
 Assuming boundary conditions are imposed to select a unique solution,
 the numerical result converges to an exact solution which can be reproduced across different simulators.
@@ -553,7 +559,7 @@ the numerical result converges to an exact solution which can be reproduced acro
 % The convergence of numerical methods has been well-studied for ordinary differential
 % equations \cite{brenan1996numerical}, but convergence of hybrid methods is less well understood.
 
-Lastly, any data which is used in the model (for example, initial/boundary conditions, parameters, and training data)
+Any data which is used in the model (for example, initial/boundary conditions, parameters, and training data)
 must be documented.
 In the \textit{M. genitalium} model, much of this data came from the literature.
 Over 900 papers and 1,900 experimentally observed parameters were used to construct the model \cite{Karr2012}.
@@ -567,13 +573,13 @@ Future advances may help to automate this process, this accelerating model devel
 
 There has been a large effort to address reproducibility in computational biology.
 The state of reproducibility has improved considerably due to standards such as SED-ML \cite{sedml2011}.
-However, despite these advances, reproducibility in dynamical modeling remains a challenge \cite{garijo2013quantifying}.
+However, despite these advances, reproducibility in computational biology remains a challenge \cite{garijo2013quantifying}.
 
 Part of this difficulty can be attributed to gaps in standards.
 SED-ML, for example, has good coverage of simulation parameters, but
 does not address the limitations of the underlying simulator.
-Other concerns, such as data transparency, have traditionally not held prominent roles in the modeling community.
-The emergence of complex hybrid models is a driving force behind curating single-cell experimental data and making it widely available.
+Other concerns, such as data transparency, play an important role that is becoming more apparent.
+With the emergence of complex hybrid models, more researchers the increased demand for curated, high quality single-cell measurements as a driving force behind improving the current state-of-the-art for pathway and genome databases.
 
 Another barrier to reproducibility concerns limited support for standards.
 One advantage of representing a model in a standard format such as SBML is the ability
@@ -592,15 +598,13 @@ there is a risk of being confined to a niche of the dynamical modeling community
 In this case, the advantage of utilizing SBML, as opposed to an \textit{ad hoc} representation
 of the model, is diminished.
 
-Transparency is essential to achieving reproducibility for complex models.
-Making source code publicly available is an important step in this direction \cite{easterbrook2014open}.
-However, a systematic framework for transparency is necessary to the continued success of whole-cell modeling.
-The ideal goal should be to create a machine-readable database containing information describing the experimental source for all data used in a model.
-Semantic web technologies such as Resource Description Framework (RDF) can be useful in this capacity, and have been used to successfully express genetic components \cite{galdzicki2014synthetic} using linked data.
+\section{Building Reproducible Models}
 
-\section{Technical definitions}
 
-\subsection{Replicability}
+
+% \section{Technical definitions}
+%
+% \subsection{Replicability}
 
 % We will use the term \textit{original record} for data which is output
 % by a simulator
@@ -650,33 +654,33 @@ Semantic web technologies such as Resource Description Framework (RDF) can be us
 % The results of simple integer arithmetic on a pocket calculator are, for example,
 % quite replicable across different calculators.
 
-\subsection{Reproducibility}
-
-Reproducibility, as used in this paper, refers to the underlying science
-behind a result.
-Is it possible, for example, to derive the results of a computer simulation
-from first principles?
-Reproducibility underscores the true connection to the system being studied, and defies a technical
-definition, as the results of two models may only be qualitatively similar, yet be
-capable of predicting the same phenomenon.
-The requirement of first principles is crucial, as two models may agree
-due to overfitting.
-Data-driven approaches, for example, do not fit in this category.
-Our a general preference in science for simpler models (out of a set of
-alternatives).
-
-The scientific progress in creating a computational model is not the
-software itself, but rather what it teaches us about the system under study.
-In attempting to reproduce an experiment, as opposed to replicating it,
-we construct a new implementation from first principles.
-Based on how the output of this implementation compares to the original,
-we can evaluate the usefulness of the principles behind the operation
-of the implementation.
-While this may sound trivial, large scientific software systems
-contain an immense level of detail and many assumptions are buried
-deep in their internals.
-Reproducibility helps shed light on these details, and draws attention
-to scientific knowledge which may have initially been overlooked.
+% \subsection{Reproducibility}
+%
+% Reproducibility, as used in this paper, refers to the underlying science
+% behind a result.
+% Is it possible, for example, to derive the results of a computer simulation
+% from first principles?
+% Reproducibility underscores the true connection to the system being studied, and defies a technical
+% definition, as the results of two models may only be qualitatively similar, yet be
+% capable of predicting the same phenomenon.
+% The requirement of first principles is crucial, as two models may agree
+% due to overfitting.
+% Data-driven approaches, for example, do not fit in this category.
+% Our a general preference in science for simpler models (out of a set of
+% alternatives).
+%
+% The scientific progress in creating a computational model is not the
+% software itself, but rather what it teaches us about the system under study.
+% In attempting to reproduce an experiment, as opposed to replicating it,
+% we construct a new implementation from first principles.
+% Based on how the output of this implementation compares to the original,
+% we can evaluate the usefulness of the principles behind the operation
+% of the implementation.
+% While this may sound trivial, large scientific software systems
+% contain an immense level of detail and many assumptions are buried
+% deep in their internals.
+% Reproducibility helps shed light on these details, and draws attention
+% to scientific knowledge which may have initially been overlooked.
 
 \subsection{Replicability Requirements}
 
@@ -708,7 +712,7 @@ when the input is the same.
 % in modern software.
 
 Therefore, in order to achieve replicability, it is necessary to ensure
-algorithmic determinism.
+algorithmic determinism given the initial state (seed values) for the random number generators used.
 
 \subsection{Determinism and Replicability}
 
@@ -760,13 +764,30 @@ this is achieved through a specially implemented memory allocator,
 whereas in C{\small ORE}D{\small ET} it is achieved through compiling the
 memory allocator itself with the C{\small ORE}D{\small ET} framework.
 
-\subsection{Determinism in the Context of the Whole-Cell Model}
+\subsection{Replicability and Reproducibility of the Whole-Cell Model}
 
 The \textit{M. genitalium} whole-cell model \cite{Karr2012} consists of
 28 submodels.
 Each submodel represents a physiological process of the cell
-and each is based on a biological modeling technique with known predictive power
+and each is based on a mathematical biological modeling technique
 (e.g. ODEs, Boolean networks, and flux balance analysis).
+
+The model cannot be encoded in current standards.
+One reason for this is that no standards for hybrid modeling currently exist.
+While the hierarchical model composition package in SBML Level 3 does allow
+for the encoding of multiple submodels, the extension relies on the ability
+to flatten the resulting composite model to a single larger model.
+Thus, it is not possible to represent modules which run independently
+and synchronize at regular timesteps, as is the case in the \textit{M. genitalium} whole-cell model.
+
+The \textit{M. genitalium} model makes use of features outside of SBML Level 3 core,
+such as rule-based and stoichiometric methods.
+While this is not a barrier to encoding the model in SBML \textit{per se}, the lack
+of a single simulator which supports all of the necessary extensions
+prevents such a model from being simulated.
+
+The integration of the submodels in \textit{M. genitalium} is not a process currently
+addressed by standards. In order to be replicable, it must be done deterministically.
 A simulation involves running each submodel independently. At each time step,
 the submodels are synchronized and the shared variables are updated.
 The whole-cell model coordinates this synchronization and partitions resources such as ATP
