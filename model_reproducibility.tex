@@ -477,7 +477,7 @@ Computational biology has become more replicable over the past several years thr
 
 Unfortunately, due to continued time pressures, emphasis on innovation, and the growing complexity of computational methods, the increased emphasis on replicability has not translated into increased reproducibility. This is exemplified by the recent \textit{Mycoplasma genitalium} whole-cell model \cite{Karr2012}. The authors took great strides to ensure that their software can replicate results, given the same initial conditions and random number generator seed. Unfortunately, the novelty and complexity of the model make it difficult for other researchers to reproduce the model or its scientific conclusions. 
 
-Waltemath and Schreiber recently a week-long workshop including 60 modelers, modeling software developers, and standards developers to reproduce the model using SBML and open-source modeling software. The workshop made great progress toward reproducing the model in SBML, including draft SBML versions of most of the submodels. However, because the model requires many new SBML languages features that are still only supported by a few simulation software programs and because the model is large, the over one-person year of effort that was devoted to the workshop was only a small fraction of the total effort that is needed to reproduce the model.
+Waltemath and Schreiber recently held a week-long workshop including 60 modelers, modeling software developers, and standards developers to reproduce the model using SBML and open-source modeling software. The workshop made great progress toward reproducing the model in SBML, including draft SBML versions of most of the submodels. However, because the model requires many new SBML languages features that are still only supported by a few simulation software programs and because the model is large, the over one-person year of effort that was devoted to the workshop was only a small fraction of the total effort that is needed to reproduce the model.
 
 % When tests are performed directly on physical systems, the outcome can be subject to a
 % number of contextual factors. In biological systems, experimental measurements are highly
@@ -511,10 +511,10 @@ Waltemath and Schreiber recently a week-long workshop including 60 modelers, mod
 % which represents the first integrated physics-based computational model of a complete organism.
 Here, we outline the requirements for replicability, show how they can
 be achieved in the implementation of simulation software, and discuss how this can benefit
-reproducibility. We then show how these principles apply to the \textit{Mycoplasma genitalium} whole-cell
+reproducibility. We also show how these principles apply to the \textit{Mycoplasma genitalium} whole-cell
 model \cite{Karr2012} and the specific deficiencies for reproduction.
-Finally, we discuss the meaning of reproducibility in a biological modeling context
-and its implications for dynamical modeling.
+Finally, we discuss how the biological modeling community can work toward standards
+and tools which enable better reproducibility of complex models.
 
 \begin{figure*}[!t]
 \centering
@@ -528,10 +528,16 @@ and its implications for dynamical modeling.
 
 \section{Reproducibility in Computational Modeling}
 
-In order for a model to be reproducible, it must satisfy certain criteria,
+Replicability is a precursor to reproducibility, and refers to the ability to
+re-run a simulation (possibly on a different machine) to obtain identical results \cite{easterbrook2014open}.
+Reproducibility is a stronger requirement and requires a replicable result as a basis for comparison.
+
+In order for a model to meet our definition of reproducibility, it must satisfy certain criteria,
 which are summarized in Fig. \ref{fig_repro_diagram}.
-First, the processes used in the model must be well-understood and documented.
-The details of the process must be available.
+First, the theoretical formulation of the model must be well-understood.
+Many mathematical modeling techniques have been applied to biology \cite{gombert2000mathematical}.
+These techniques have been studied extensively and any new techniques will need to be subjected to
+the same degree of scrutiny in order to form a viable foundation for reproducible models.
 For example, the \textit{M. genitalium} model makes use of a Markov chain process in
 transcriptional elongation. The Markov chain represents states of an RNA polymerase:
 free, non-specifically bound to the chromosome, specifically bound to
