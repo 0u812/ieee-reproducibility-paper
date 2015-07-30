@@ -544,15 +544,14 @@ free, non-specifically bound to the chromosome, specifically bound to
 the chromosome (i.e. bound at a locus such as a promoter), and actively transcribing.
 The transition matrix for these states is a necessary detail for reproducibility.
 
-Second, the numerical algorithms used by the simulator must be sound.
+Second, the numerical algorithms used by the simulator must converge on a solution.
 For example, kinetic models define a set of differential equations.
 Assuming boundary conditions are imposed to select a unique solution,
-it is possible to reproduce an exact result (subject to numerical precision limitations)
-across different simulators.
-This is possible because the numerical solution of a differential equation
-converges on the true solution.
-The convergence of numerical methods has been well-studied for ordinary differential
-equations \cite{brenan1996numerical}, but convergence of hybrid methods is less well understood.
+the numerical result converges to an exact solution which can be reproduced across different simulators.
+% This is possible because the numerical solution of a differential equation
+% converges on the true solution.
+% The convergence of numerical methods has been well-studied for ordinary differential
+% equations \cite{brenan1996numerical}, but convergence of hybrid methods is less well understood.
 
 Lastly, any data which is used in the model (for example, initial/boundary conditions, parameters, and training data)
 must be documented.
@@ -562,6 +561,7 @@ Many of the parameters of the model were based on measurements made in other spe
 The sources for various types of experimental data must be preserved,
 as well as the rationale behind using them in a particular setting
 (e.g. the choice of parameter values).
+Future advances may help to automate this process, this accelerating model development.
 
 \subsection{Current Approaches}
 
@@ -575,6 +575,23 @@ does not address the limitations of the underlying simulator.
 Other concerns, such as data transparency, have traditionally not held prominent roles in the modeling community.
 The emergence of complex hybrid models is a driving force behind curating single-cell experimental data and making it widely available.
 
+Another barrier to reproducibility concerns limited support for standards.
+One advantage of representing a model in a standard format such as SBML is the ability
+to utilize different simulators.
+SBML Level 3 consists of extensions which enable additional
+functionality, such as
+hierarchical model composition \footnote{http://co.mbine.org/standards/sbml/level-3/version-1/comp/version-1/release-2},
+flux balance constraints \footnote{ http://sbml.org/Documents/Specifications/SBML\_Level\_3/Packages/fbc}, and
+arrays \footnote{http://sbml.org/Documents/Specifications/SBML\_Level\_3/Packages/arrays}.
+While the features offered by these packages are critically important for certain
+types of models, not all simulators support them.
+As SBML gains highly specialized capabilities, it also becomes fractionated, as
+not all researchers have a need for such special-purpose features.
+If a model makes use of features outside the SBML Level 3 core specification,
+there is a risk of being confined to a niche of the dynamical modeling community.
+In this case, the advantage of utilizing SBML, as opposed to an \textit{ad hoc} representation
+of the model, is diminished.
+
 Transparency is essential to achieving reproducibility for complex models.
 Making source code publicly available is an important step in this direction \cite{easterbrook2014open}.
 However, a systematic framework for transparency is necessary to the continued success of whole-cell modeling.
@@ -585,53 +602,53 @@ Semantic web technologies such as Resource Description Framework (RDF) can be us
 
 \subsection{Replicability}
 
-We will use the term \textit{original record} for data which is output
-by a simulator
-(such as a record of the values of state variables of a model over a time-course simulation)
-for a specific experiment with specific initial data and parameters
-and which serves as the reference of comparison for future attempts
-to recapitulate the same experiment.
-For example, the data set used to generate a time-course plot in a publication
-is an original record.
-The external inputs to the software (in the form of data or user interaction)
-which may influence the results of the simulation are termed the \textit{original context}.
-
-The original context does not contain all information required to successfully replicate
-an experiment. For example, architectural differences in hardware could result in numeric
-differences in output. However, extensive standardization in computer technology, such as recent versions
-of the IEEE 754 standard for floating point arithmetic, helps to mitigate numerical discrepancies
-due to different machines. While IEEE 754 does not guarantee that an operation will produce
-a result which is exactly identical across implementations \cite{goldberg1991every}, compliance with the standard
-guarantees results to significant accuracy.
-Moreover, we will not relax the requirements of replicability, but instead view it as a
-golden norm to which all implementations should strive to achieve, with slight
-numerical discrepancies being the expectation.
-Reproducibility of arithmetic operations is not germane to the topic of this report and
-we will therefore ignore it for the remainder.
-
-% Goldberg: http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html
-
-\begin{definition}
-For a given arithmetic system,
-a record of a simulated experiment is a \textit{replica} of an original record if
-the values of the record agree with the original down to some numerical precision.
-\end{definition}
-
-% Precision is a property of the replica.
-% If precision is not specified, it is assumed to equal the maximum precision
-% of the arithmetic representation, i.e. to compare equal under that system.
-
-\begin{definition}
-An experiment is said to be \textit{replicable} if, given the original context,
-the output of the simulator is a replica of the original record.
-The \textit{range of replicability} is the set of environments (hardware and software)
-which can be used to generate a replica.
-\end{definition}
-
-The range of replicability for a given original record may encompass different
-machines, hardware, operating systems, and even different simulation software.
-The results of simple integer arithmetic on a pocket calculator are, for example,
-quite replicable across different calculators.
+% We will use the term \textit{original record} for data which is output
+% by a simulator
+% (such as a record of the values of state variables of a model over a time-course simulation)
+% for a specific experiment with specific initial data and parameters
+% and which serves as the reference of comparison for future attempts
+% to recapitulate the same experiment.
+% For example, the data set used to generate a time-course plot in a publication
+% is an original record.
+% The external inputs to the software (in the form of data or user interaction)
+% which may influence the results of the simulation are termed the \textit{original context}.
+%
+% The original context does not contain all information required to successfully replicate
+% an experiment. For example, architectural differences in hardware could result in numeric
+% differences in output. However, extensive standardization in computer technology, such as recent versions
+% of the IEEE 754 standard for floating point arithmetic, helps to mitigate numerical discrepancies
+% due to different machines. While IEEE 754 does not guarantee that an operation will produce
+% a result which is exactly identical across implementations \cite{goldberg1991every}, compliance with the standard
+% guarantees results to significant accuracy.
+% Moreover, we will not relax the requirements of replicability, but instead view it as a
+% golden norm to which all implementations should strive to achieve, with slight
+% numerical discrepancies being the expectation.
+% Reproducibility of arithmetic operations is not germane to the topic of this report and
+% we will therefore ignore it for the remainder.
+%
+% % Goldberg: http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html
+%
+% \begin{definition}
+% For a given arithmetic system,
+% a record of a simulated experiment is a \textit{replica} of an original record if
+% the values of the record agree with the original down to some numerical precision.
+% \end{definition}
+%
+% % Precision is a property of the replica.
+% % If precision is not specified, it is assumed to equal the maximum precision
+% % of the arithmetic representation, i.e. to compare equal under that system.
+%
+% \begin{definition}
+% An experiment is said to be \textit{replicable} if, given the original context,
+% the output of the simulator is a replica of the original record.
+% The \textit{range of replicability} is the set of environments (hardware and software)
+% which can be used to generate a replica.
+% \end{definition}
+%
+% The range of replicability for a given original record may encompass different
+% machines, hardware, operating systems, and even different simulation software.
+% The results of simple integer arithmetic on a pocket calculator are, for example,
+% quite replicable across different calculators.
 
 \subsection{Reproducibility}
 
