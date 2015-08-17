@@ -529,21 +529,42 @@ ability to generate results in a reliable, repeatable manner; Replicability enco
 
 \section{Reproducibility in Computational Modeling}
 
-Replicability is a precursor to reproducibility, and refers to the ability to
+Replicability of a computational model refers to the ability to
 re-run a simulation (possibly on a different machine) to obtain identical results \cite{easterbrook2014open}.
 Reproducibility is a stronger requirement and requires a replicable result as a basis for comparison.
 
-In order for a model to meet our definition of reproducibility, it must satisfy certain criteria,
-which are summarized in Fig. \ref{fig_repro_diagram}.
-The theoretical formulation of the model must be well-understood.
-Many mathematical modeling techniques have been applied to biology \cite{gombert2000mathematical}.
-These techniques have been studied extensively and any new techniques will need to be subjected to
-the same degree of scrutiny in order to form a viable foundation for reproducible models.
-For example, the \textit{M. genitalium} model makes use of a Markov chain process in
-transcriptional elongation. The Markov chain represents states of an RNA polymerase:
-free, non-specifically bound to the chromosome, specifically bound to
-the chromosome (i.e. bound at a locus such as a promoter), and actively transcribing.
-The transition matrix for these states is a necessary detail for reproducibility.
+In order for a model to meet our definition of replicability,
+it must be capable of regenerating any previous result (such as a published simulation outcome),
+even if the simulation is run on a different machine.
+As a necessity, this implies that the model make use of purely deterministic numerical solvers.
+We discuss later how this can be achieved.
+
+As shown in Fig. \ref{fig_repro_diagram}, the requirements for replicability are
+included in our definition of reproducibility.
+This superset structure is largely motivated by validation considerations.
+In a typical construction of a model, there will be a series of tests
+that cover reduced parts of the model, and provide a means to verify
+that the model reproduces the known functions of a system, according to experiment.
+These tests also serve as the foundation for independently reconstructing the model.
+If the test results cannot be replicated from run to run, the difficulty of reconstruction
+increases dramatically, as results can no longer be directly compared but must instead
+be compared to some third standard on the basis of recapitulating some behavioral metric.
+Any behavioral discrepancy between the original model and its reconstruction
+then has two possible causes: Algorithmic non-determinism or a deviation in dynamical
+behavior, and more research is required to rule out one or the other.
+This research imposes a burden on model reproduction, and can forestall or even bar
+model reconstruction efforts.
+
+% which are summarized in Fig. \ref{fig_repro_diagram}.
+% The theoretical formulation of the model must be well-understood.
+% Many mathematical modeling techniques have been applied to biology \cite{gombert2000mathematical}.
+% These techniques have been studied extensively and any new techniques will need to be subjected to
+% the same degree of scrutiny in order to form a viable foundation for reproducible models.
+% For example, the \textit{M. genitalium} model makes use of a Markov chain process in
+% transcriptional elongation. The Markov chain represents states of an RNA polymerase:
+% free, non-specifically bound to the chromosome, specifically bound to
+% the chromosome (i.e. bound at a locus such as a promoter), and actively transcribing.
+% The transition matrix for these states is a necessary detail for reproducibility.
 
 Transparency is essential to achieving reproducibility for complex models.
 Making source code publicly available is an important step in this direction \cite{easterbrook2014open}.
