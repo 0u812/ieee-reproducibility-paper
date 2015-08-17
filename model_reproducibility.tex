@@ -536,7 +536,8 @@ Reproducibility is a stronger requirement and requires a replicable result as a 
 In order for a model to meet our definition of replicability,
 it must be capable of regenerating any previous result (such as a published simulation outcome),
 even if the simulation is run on a different machine.
-As a necessity, this implies that the model make use of purely deterministic numerical solvers.
+As a necessity, this implies that the model make use of purely deterministic numerical solvers
+and any pseudorandom processes are seeded in a controlled way.
 We discuss later how this can be achieved.
 
 As shown in Fig. \ref{fig_repro_diagram}, the requirements for replicability are
