@@ -621,7 +621,7 @@ there is a risk of being confined to a niche of the dynamical modeling community
 In this case, the advantage of utilizing SBML, as opposed to an \textit{ad hoc} representation
 of the model, is diminished.
 
-\section{Building Reproducible Models}
+% \section{Building Reproducible Models}
 
 
 
@@ -809,6 +809,67 @@ While this is not a barrier to encoding the model in SBML \textit{per se}, the l
 of a single simulator which supports all of the necessary extensions
 prevents such a model from being simulated.
 
+The WholeCellKB-MG database \cite{karr2013wholecellkb} contains manually curated data upon which the
+\textit{M. genitalium} model is built. The database includes detailed
+information on genes, proteins, and reaction pathways identified in the literature.
+This is important for reproducibility purposes, as WholeCellKB-MG presents
+data in an easily accessible format and helps to document the assumptions
+inherent in the \textit{M. genitalium} model.
+However, details regarding the dynamical models used to simulate cellular
+processes are not included in the database, and in such cases recourse to
+source code-level documentation is necessary.
+The scope of the \textit{M. genitalium} whole-cell model places it in an
+unusual category, where not all mechanistic details of the model are explained in primary
+publications. Hence, it highlights the need for summarizing the
+dynamical processes in a model without requiring the user to be an expert on the model's
+source code.
+
+SBML was developed in part to address these concerns. As a declarative language
+for modeling, SBML distills out the processes of a model from the implementation.
+The complexity of simulation is then shifted to separate software.
+SBML itself has become highly complex, and includes many packages which
+have sparse or no support from simulators.
+In this sense, it ceases to be a universal language for model exchange.
+
+SBGN also aims to provide a summary of a model, though it is centered
+around human readability as opposed to software.
+SBGN is useful in the sense that it provides a standard visual representation
+of a process, but this representation is produced and used exclusively by humans,
+and human error plays a role just as with documentation embedded in source code comments.
+
+\subsection{Standardization Efforts}
+
+% Standardization of the \textit{M. genitalium} whole-cell model \cite{Karr2012}
+% was the topic of a workshop in Rostock, Germany from March 9-13, 2015.
+% The workshop was organized by subdividing the participants into teams,
+% each of which focused on one of the 28 submodels of the whole-cell model
+% \hl{[Waltemath(same issue)?]}.
+%
+% Recalling that (in this paper) reproducibility refers to the ability to
+% reimplement a model and still recover the same predictions.
+% Recreating exact numerical replicas is not a requirement for this definition
+% of reproducibility.
+%
+% An additional goal of the workshop was to assess and improve the current
+% condition of standards within the biological modeling community.
+% This in fact became the dominant consideration in many of the teams,
+% including the transcription team, which one of us (J.K. Medley)
+% was a member of.
+
+% SBML is the de facto standard for encoding biological models \cite{hucka2003systems},
+% and encoding the processes represented in the \textit{M. genitalium}
+% submodels represented a major area of focus.
+% The main difficulty in arriving at a satisfactory SBML representation
+% of the transcription submodel is due to the use of a Markov chain
+% process for modeling transcriptional elongation.
+% In the whole-cell model, an RNA polymerase may be in one of four states:
+% free, non-specifically bound to the chromosome, specifically bound to
+% the chromosome (i.e. bound at a locus such as a promoter), and actively transcribing.
+% Transitions between these states are governed by various factors
+% (transitioning from bound to active, for example, requires a sigma factor).
+
+The \textit{M. genitalium} whole-cell model poses several novel challenges for standards.
+The most significant is supporting a hybrid modeling approach.
 The integration of the submodels in \textit{M. genitalium} is not a process currently
 addressed by standards. In order to be replicable, it must be done deterministically.
 A simulation involves running each submodel independently. At each time step,
@@ -833,59 +894,40 @@ some hallmarks of deterministic frameworks, such as the biphasic structure if it
 This suggests that technologies such as C{\small ORE}D{\small ET} and D{\small THREADS}
 can offer insights into how to integrate a hybrid model in a replicable way.
 
-\subsection{Standardization Efforts}
+Besides hybrid modeling, the \textit{M. genitalium} model highlights the use of
+standards as self-documenting. In a system composed purely of reactions,
+SBML specifies the minimum amount of information required for reproduction - the rate laws and
+boundary conditions. The complexities of numerical integration are not handled by the SBML encoding.
+However, many recent SBML Level 3 packages have tended to focus on
+structural features of the model which organize elements or
+improve simulator performance.
+This represents a shift away from the element description of the bare mathematical
+entities of the model. This shift may be necessary in some cases to enable
+simulation of certain types of models, but it detracts from the ability
+of standards to be self-documenting, and detract from reproducibility.
 
-% Standardization of the \textit{M. genitalium} whole-cell model \cite{Karr2012}
-% was the topic of a workshop in Rostock, Germany from March 9-13, 2015.
-% The workshop was organized by subdividing the participants into teams,
-% each of which focused on one of the 28 submodels of the whole-cell model
-% \hl{[Waltemath(same issue)?]}.
-%
-% Recalling that (in this paper) reproducibility refers to the ability to
-% reimplement a model and still recover the same predictions.
-% Recreating exact numerical replicas is not a requirement for this definition
-% of reproducibility.
-%
-% An additional goal of the workshop was to assess and improve the current
-% condition of standards within the biological modeling community.
-% This in fact became the dominant consideration in many of the teams,
-% including the transcription team, which one of us (J.K. Medley)
-% was a member of.
+% SBML models the occupancy of discrete states, and while the RNA polymerase states
+% are discrete and enumerable, the various states of transcript elongation
+% represent an explosion of states. Each gene of length $n$ admits $n$ states
+% at different stages of elongation.
+% This sheer number of states, one for each \textit{M. genitalium's}
+% 580,076 base pairs, overwhelms most SBML
+% simulators.
+% Furthermore, an even greater number of states would be required to model additional physiological processes during transcription,
+% such as the early binding of ribosomes before the transcript is released
+% by the polymerase (a detail which is not currently incorporated into the
+% \textit{M. genitalium} model).
+% For this reason, discrete elongation states are not a scalable solution.
+% There may be hope for rule-based modeling of such systems using the SBML
+% multi package \footnote{http://sbml.org/Documents/Specifications/SBML\_Level\_3/Packages/multi}, but the essential focus here is not the current limitations
+% of standards, but rather on methods enabling robust reproduction of results,
+% with the view that standards will follow practice.
 
-SBML is the de facto standard for encoding biological models \cite{hucka2003systems},
-and encoding the processes represented in the \textit{M. genitalium}
-submodels represented a major area of focus.
-The main difficulty in arriving at a satisfactory SBML representation
-of the transcription submodel is due to the use of a Markov chain
-process for modeling transcriptional elongation.
-In the whole-cell model, an RNA polymerase may be in one of four states:
-free, non-specifically bound to the chromosome, specifically bound to
-the chromosome (i.e. bound at a locus such as a promoter), and actively transcribing.
-Transitions between these states are governed by various factors
-(transitioning from bound to active, for example, requires a sigma factor).
-
-SBML models the occupancy of discrete states, and while the RNA polymerase states
-are discrete and enumerable, the various states of transcript elongation
-represent an explosion of states. Each gene of length $n$ admits $n$ states
-at different stages of elongation.
-This sheer number of states, one for each \textit{M. genitalium's}
-580,076 base pairs, overwhelms most SBML
-simulators.
-Furthermore, an even greater number of states would be required to model additional physiological processes during transcription,
-such as the early binding of ribosomes before the transcript is released
-by the polymerase (a detail which is not currently incorporated into the
-\textit{M. genitalium} model).
-For this reason, discrete elongation states are not a scalable solution.
-There may be hope for rule-based modeling of such systems using the SBML
-multi package \footnote{http://sbml.org/Documents/Specifications/SBML\_Level\_3/Packages/multi}, but the essential focus here is not the current limitations
-of standards, but rather on methods enabling robust reproduction of results,
-with the view that standards will follow practice.
-
-The Markov chain describing the transcription process can, for example,
-be readily simulated using Gillespie's algorithm \cite{gillespie1977exact}
-with rate laws representing relative state transition probabilities.
-The limitations of state space size notwithstanding, this approach renders
-the transcriptional process amenable to reproduction within SBML.
+% The Markov chain describing the transcription process can, for example,
+% be readily simulated using Gillespie's algorithm \cite{gillespie1977exact}
+% with rate laws representing relative state transition probabilities.
+% The limitations of state space size notwithstanding, this approach renders
+% the transcriptional process amenable to reproduction within SBML.
 
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
@@ -1009,6 +1051,14 @@ Due to the complexity of biological systems, the field of computational biology
 may well need to push beyond the solutions devised in the past.
 In this report, we have highlighted several areas where reproducibility may be improved.
 Technological breakthroughs in these areas will enable more rapid progress in whole-cell modeling.
+
+Sharing of data and source code is important for ensuring model reproducibility.
+However, the ability of these resources to be self-documenting varies inversely
+with complexity.
+Having a special purpose standard is a key factor in building reproducible models.
+Special purpose standards can encapsulate the mathematical behavior of a model
+with a minimum of extraneous information, thereby allowing others to
+quickly and independently understand, use, validate, and refine a model.
 
 % \appendices
 % \section{Proof of the First Zonklar Equation}
