@@ -584,15 +584,19 @@ and we discuss later how to improve the link between data and the processes whic
 % % The convergence of numerical methods has been well-studied for ordinary differential
 % % equations \cite{brenan1996numerical}, but convergence of hybrid methods is less well understood.
 
-Any data which is used in the model (for example, initial/boundary conditions, parameters, and training data)
-must be documented.
-In the \textit{M. genitalium} model, much of this data came from the literature.
+Experimentally measured single-cell parameters are highly important for whole-cell models.
+In the \textit{M. genitalium} model, much of this data comes from the literature.
 Over 900 papers and 1,900 experimentally observed parameters were used to construct the model \cite{Karr2012}.
 Many of the parameters of the model were based on measurements made in other species \cite{macklin2014future}.
-The sources for various types of experimental data must be preserved,
+As new measurements are made, more accurate models can be built.
+However, this relies on continual improvement in experimental reliability.
+One way to achieve this is to deposit experimental results into repositories
+containing redundant single-cell data and associated meta-information including
+a detailed record of experimental conditions and procedures.
+In the model, the sources for various types of experimental data must be preserved,
 as well as the rationale behind using them in a particular setting
 (e.g. the choice of parameter values).
-Future advances may help to automate this process, this accelerating model development.
+Future advances may help to automate this process, thus accelerating model development.
 
 \subsection{Current Approaches}
 
