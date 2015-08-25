@@ -627,41 +627,65 @@ there is a risk of being confined to a niche of the dynamical modeling community
 In this case, the advantage of utilizing SBML, as opposed to an \textit{ad hoc} representation
 of the model, is diminished.
 
+One aspect of replicability and reproducibility that is often overlooked is the
+behavior of the underlying numeric algorithm.
+The timestep of the \textit{M. genitalium} model bears a relation to the timestep
+of classical solvers such as Runge-Kutta, but the convergence properties of the hybrid model
+are much more complex.
+% Given the novelty of whole-cell modeling it is not unexpected that such numerical
+% questions have been heretofore unanswered
+Whereas no detailed study has currently been performed on how the timestep affects
+the whole-cell model's long-term dynamical behavior, for reproducibility purposes it is
+an important factor. If a small perturbation has the ability to drastically
+affect the simulation results, it is more difficult to reproduce the model.
+If, however, the model exhibits robust convergence behavior, then it is
+possible for multiple reproductions of the model to arrive at the same results.
+Indeed, this is an important property of standards development, as exploited by
+the SBML test suite \footnote{http://sbml.org/Software/SBML\_Test\_Suite}.
 
+% \subsection{Replicability Requirements}
+%
+% % A computer program is a predefined sequence of instructions.
+% % In simple applications, provided that a program starts in the same state and reads the same
+% % data each time it is run, the output should be constant.
+% % In practice, software may fail to meet this expectation.
+% % This behavior can be caused by algorithmic design.
+%
+% % Strictly speaking, most modern computers are designed to be deterministic
+% % when viewed from a holistic perspective.
+% % % Even software such as the SPIN model checker \cite{holzmann2004spin}, which is designed to
+% % % simulate non-determinism, runs on a deterministic host.
+% % However, an individual program itself represents a subset of the computer,
+% % and when viewed in isolation it may appear to exhibit non-deterministic behavior.
+%
+% Whether or not such apparent non-determinism (hereafter, simply non-determinism)
+% is problematic depends on the application.
+% For example, exhaustive methods (such as database queries) do not rely on the order
+% in which elements are enumerated.
+% However, in greedy methods non-determinism can lead to different output, even
+% when the input is the same.
+% % Nevertheless, there has been an increasing tendency to deviate from determinism
+% % in modern software.
+%
+% Therefore, in order to achieve replicability, it is necessary to ensure
+% algorithmic determinism given the initial state (seed values) for the random number generators used.
 
-\subsection{Replicability Requirements}
+\subsection{Determinism and Replicability}
 
 Replicability is a useful tool in studying reproducibility.
 If the output of a simulator cannot be replicated, it becomes
 difficult to make any objective statement about the accuracy of the
 underlying model.
 
-A computer program is a predefined sequence of instructions.
-In simple applications, provided that a program starts in the same state and reads the same
-data each time it is run, the output should be constant.
-In practice, software may fail to meet this expectation.
-This behavior can be caused by algorithmic design.
-
-Strictly speaking, most modern computers are designed to be deterministic
-when viewed from a holistic perspective.
-% Even software such as the SPIN model checker \cite{holzmann2004spin}, which is designed to
-% simulate non-determinism, runs on a deterministic host.
-However, an individual program itself represents a subset of the computer,
-and when viewed in isolation it may appear to exhibit non-deterministic behavior.
-
-Whether or not such apparent non-determinism (hereafter, simply non-determinism)
-is problematic depends on the application.
-For example, exhaustive methods (such as database queries) do not rely on the order
-in which elements are enumerated.
-However, in greedy methods non-determinism can lead to different output, even
-when the input is the same.
-% Nevertheless, there has been an increasing tendency to deviate from determinism
-% in modern software.
-
-Therefore, in order to achieve replicability, it is necessary to ensure
-algorithmic determinism given the initial state (seed values) for the random number generators used.
-
-\subsection{Determinism and Replicability}
+Many modern programming practices make use of non-determinism, with
+multithreading and memory layout being two major culprits.
+This inherent non-determinism in the software makes replicability
+impossible.
+Systems biologists need to be aware of these issues insofar as they
+can lead to non-replicability of a model.
+Therefore, we discuss approaches from computer science which
+have been used to successfully eliminate non-determinism
+in software.
 
 Non-determinism in most software comes from two sources:
 
