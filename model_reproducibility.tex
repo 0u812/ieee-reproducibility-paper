@@ -601,7 +601,7 @@ Future advances may help to automate this process, thus accelerating model devel
 \subsection{Current Approaches}
 
 There has been a large effort to address reproducibility and replicability in computational biology.
-The state of replicability has improved considerably due to standards such as SED-ML \cite{sedml2011}.
+The state of replicability has improved considerably due to the SED-ML standard \cite{sedml2011}.
 However, despite these advances, reproducibility in computational biology remains a challenge \cite{garijo2013quantifying}.
 
 Part of this difficulty can be attributed to gaps in standards.
@@ -627,89 +627,7 @@ there is a risk of being confined to a niche of the dynamical modeling community
 In this case, the advantage of utilizing SBML, as opposed to an \textit{ad hoc} representation
 of the model, is diminished.
 
-% \section{Building Reproducible Models}
 
-
-
-% \section{Technical definitions}
-%
-% \subsection{Replicability}
-
-% We will use the term \textit{original record} for data which is output
-% by a simulator
-% (such as a record of the values of state variables of a model over a time-course simulation)
-% for a specific experiment with specific initial data and parameters
-% and which serves as the reference of comparison for future attempts
-% to recapitulate the same experiment.
-% For example, the data set used to generate a time-course plot in a publication
-% is an original record.
-% The external inputs to the software (in the form of data or user interaction)
-% which may influence the results of the simulation are termed the \textit{original context}.
-%
-% The original context does not contain all information required to successfully replicate
-% an experiment. For example, architectural differences in hardware could result in numeric
-% differences in output. However, extensive standardization in computer technology, such as recent versions
-% of the IEEE 754 standard for floating point arithmetic, helps to mitigate numerical discrepancies
-% due to different machines. While IEEE 754 does not guarantee that an operation will produce
-% a result which is exactly identical across implementations \cite{goldberg1991every}, compliance with the standard
-% guarantees results to significant accuracy.
-% Moreover, we will not relax the requirements of replicability, but instead view it as a
-% golden norm to which all implementations should strive to achieve, with slight
-% numerical discrepancies being the expectation.
-% Reproducibility of arithmetic operations is not germane to the topic of this report and
-% we will therefore ignore it for the remainder.
-%
-% % Goldberg: http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html
-%
-% \begin{definition}
-% For a given arithmetic system,
-% a record of a simulated experiment is a \textit{replica} of an original record if
-% the values of the record agree with the original down to some numerical precision.
-% \end{definition}
-%
-% % Precision is a property of the replica.
-% % If precision is not specified, it is assumed to equal the maximum precision
-% % of the arithmetic representation, i.e. to compare equal under that system.
-%
-% \begin{definition}
-% An experiment is said to be \textit{replicable} if, given the original context,
-% the output of the simulator is a replica of the original record.
-% The \textit{range of replicability} is the set of environments (hardware and software)
-% which can be used to generate a replica.
-% \end{definition}
-%
-% The range of replicability for a given original record may encompass different
-% machines, hardware, operating systems, and even different simulation software.
-% The results of simple integer arithmetic on a pocket calculator are, for example,
-% quite replicable across different calculators.
-
-% \subsection{Reproducibility}
-%
-% Reproducibility, as used in this paper, refers to the underlying science
-% behind a result.
-% Is it possible, for example, to derive the results of a computer simulation
-% from first principles?
-% Reproducibility underscores the true connection to the system being studied, and defies a technical
-% definition, as the results of two models may only be qualitatively similar, yet be
-% capable of predicting the same phenomenon.
-% The requirement of first principles is crucial, as two models may agree
-% due to overfitting.
-% Data-driven approaches, for example, do not fit in this category.
-% Our a general preference in science for simpler models (out of a set of
-% alternatives).
-%
-% The scientific progress in creating a computational model is not the
-% software itself, but rather what it teaches us about the system under study.
-% In attempting to reproduce an experiment, as opposed to replicating it,
-% we construct a new implementation from first principles.
-% Based on how the output of this implementation compares to the original,
-% we can evaluate the usefulness of the principles behind the operation
-% of the implementation.
-% While this may sound trivial, large scientific software systems
-% contain an immense level of detail and many assumptions are buried
-% deep in their internals.
-% Reproducibility helps shed light on these details, and draws attention
-% to scientific knowledge which may have initially been overlooked.
 
 \subsection{Replicability Requirements}
 
