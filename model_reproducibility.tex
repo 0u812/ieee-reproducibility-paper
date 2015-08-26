@@ -844,7 +844,7 @@ some hallmarks of deterministic frameworks, such as the biphasic structure if it
 This suggests that technologies such as C{\small ORE}D{\small ET} and D{\small THREADS}
 can offer insights into how to integrate a hybrid model in a replicable way.
 
-Besides hybrid modeling, the \textit{M. genitalium} model highlights the use of
+The \textit{M. genitalium} model also highlights the use of
 standards as self-documenting. In a system composed purely of reactions,
 SBML specifies the minimum amount of information required for reproduction - the rate laws and
 boundary conditions. The complexities of numerical integration are not handled by the SBML encoding.
@@ -1030,6 +1030,23 @@ More research is needed to determine how to effectively integrate disparate
 modeling techniques while satisfying both numerical robustness and producing
 biologically accurate results.
 
+It is clear that SBML Level 3 core is insufficient to represent the
+\textit{M. genitalium} whole-cell model in its entirety.
+Encoding the model in an SBML-compliant format will require
+certain Level 3 packages such as Flux Balance Constraints (FBC),
+Hierarchical Model Composition, and Multistate and Multicomponent Species,
+as these packages capture vital techniques used in the model.
+SBML Arrays, another Level 3 package, can help ease the transition
+from the current MATLAB \cite{MATLAB:2010} encoding.
+Supporting these packages in SBML-compliant software will be a key
+step toward encoding the \textit{M. genitalium} whole-cell model in a standard format.
+
+Realistically, it is not practical to expect an SBML-compliant simulator
+to implement all Level 3 packages. We therefore propose that
+each simulator should focus on achieving completely replicable results,
+and that a separate standard be developed for integrating the
+output of different simulators.
+We have discussed ways of achieving replicable results in software.
 
 % \appendices
 % \section{Proof of the First Zonklar Equation}
