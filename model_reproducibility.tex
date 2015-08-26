@@ -820,8 +820,10 @@ The \textit{M. genitalium} whole-cell model poses several novel challenges for s
 The most significant is supporting a hybrid modeling approach.
 The integration of the submodels (as in \textit{M. genitalium}) is not currently
 addressed by standards. In order to be replicable, it must be done deterministically.
-A simulation involves running each submodel independently. At each time step,
-the submodels are synchronized and the shared variables are updated.
+A simulation involves a series of time steps. During each time step, the
+submodels are run independently,
+and synchronized at the end of the time step, updating any variables
+which are shared between submodels.
 The whole-cell model coordinates this synchronization and partitions resources such as ATP
 among the submodels.
 This process is not unlike a multithreaded software system where each thread performs
@@ -830,7 +832,7 @@ Likewise, the submodels of the whole-cell model are designed in such a way that
 they are individually replicable. The seed for the pseudorandom number generator
 used in the whole-cell model was recorded in order to allow replication of simulation results.
 
-The integration of these disparate modeling techniques poses distinct challenges.
+The integration of these disparate modeling techniques poses distinct challenges for replicability.
 Much in the same way that multithreaded programming greatly complicates
 determinism in software, integration of submodels complicates the behavior
 of the whole-cell model.
@@ -1009,13 +1011,25 @@ of standards to be self-documenting, and detract from reproducibility.
 % quickly and independently understand, use, validate, and refine a model.
 
 The \textit{M. genitalium} whole-cell model has pushed the frontier of hybrid modeling
-and revealed new challenges for reproducibility.
+and revealed new challenges for reproducibility and replicability.
 These challenges include curating and maintaining repositories of single-cell data,
 documenting model assumptions explicitly, and running simulations in a replicable way.
 The sheer complexity of the \textit{M. genitalium} model necessitates the
 automation of tasks which are commonly done manually.
 Continued development of whole-cell models will require software which is capable
 of linking data to model parameter values.
+Such data needs to be systematically annotated in order to ensure that
+the usage of data in the model remains explicit.
+
+Standards are needed for hybrid modeling, and these standards require widespread
+support in order to be useful.
+Replicability between simulations of a hybrid model is a critically important
+factory which should be incorporated into standards and their respective
+implementations from the beginning.
+More research is needed to determine how to effectively integrate disparate
+modeling techniques while satisfying both numerical robustness and producing
+biologically accurate results.
+
 
 % \appendices
 % \section{Proof of the First Zonklar Equation}
