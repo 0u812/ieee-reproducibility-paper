@@ -479,36 +479,6 @@ Unfortunately, due to continued time pressures, emphasis on innovation, and the 
 
 Waltemath and Schreiber recently held a week-long workshop including 60 modelers, modeling software developers, and standards developers to reproduce the model using SBML and open-source modeling software. The workshop made great progress toward reproducing the model in SBML, including draft SBML versions of most of the submodels. However, because the model requires many new SBML languages features that are still only supported by a few simulation software programs and because the model is large, the over one-person year of effort that was devoted to the workshop was only a small fraction of the total effort that is needed to reproduce the model.
 
-% When tests are performed directly on physical systems, the outcome can be subject to a
-% number of contextual factors. In biological systems, experimental measurements are highly
-% sensitive to context. It has b een suggested that such sensitivity may be due to selective
-% pressure causing organisms to develop traits and behaviors that enable robustness under
-% a variety of environmental conditions \cite{ArkinContext12}.
-% cite Begley Nature drug discovery 2012?
-
-% In computational modeling of biological systems, a simulation is carried out according
-% to an initial state and a set of rules which govern the evolution of a model.
-% Provided that the same initial state is used, the simulation results should be identical.
-% Computational models would seem avoid reproducibility
-% problems stemming from the complex interaction of context with observed behavior.
-
-% However, scientific understanding depends on the ability to lucidly understand the
-% underlying laws which govern the behavior of a system.
-% % introduce rhetoric about predictive power / mathematical abstraction?
-% While replicability is a useful feature, it does not promote understanding stemming
-% from the underlying theory of the model.
-% On the contrary, it can cause ingraining of idiosyncratic behavior peculiar to a specific
-% implementation.
-
-% Replicability is a stepping stone to reproducibility. At the very least, it provides a
-% baseline reference to which future implementations can be compared. Indeed, in computer
-% science fields, replicability of independent, repeated runs of software
-% is a property of the design of the system, and can form a topic of study in its own right.
-
-% In this report, we discuss the ideas of reproducibility and replicability and
-% the role they play in the context of a whole-cell model of \textit{Mycoplasma genitalium}
-% \cite{Karr2012},
-% which represents the first integrated physics-based computational model of a complete organism.
 Here, we outline the requirements for replicability, show how they can
 be achieved in the implementation of simulation software, and discuss how this can benefit
 reproducibility. We also show how these principles apply to the \textit{Mycoplasma genitalium} whole-cell
@@ -549,23 +519,12 @@ that the model reproduces the known functions of a system, according to experime
 These tests also serve as the foundation for independently reconstructing the model.
 If the test results cannot be replicated from run to run, the difficulty of reconstruction
 increases dramatically, as results can no longer be directly compared but must instead
-be compared to some third standard. %on the basis of recapitulating a behavioral metric.
+be compared to some third standard.
 Any behavioral discrepancy between the original model and its reconstruction
 then has two possible causes: Algorithmic non-determinism or a deviation in dynamical
 behavior, and further investigation is required to rule out one or the other.
 This research imposes a burden on model reproduction, and can forestall or even prevent
 model reconstruction efforts.
-
-% which are summarized in Fig. \ref{fig_repro_diagram}.
-% The theoretical formulation of the model must be well-understood.
-% Many mathematical modeling techniques have been applied to biology \cite{gombert2000mathematical}.
-% These techniques have been studied extensively and any new techniques will need to be subjected to
-% the same degree of scrutiny in order to form a viable foundation for reproducible models.
-% For example, the \textit{M. genitalium} model makes use of a Markov chain process in
-% transcriptional elongation. The Markov chain represents states of an RNA polymerase:
-% free, non-specifically bound to the chromosome, specifically bound to
-% the chromosome (i.e. bound at a locus such as a promoter), and actively transcribing.
-% The transition matrix for these states is a necessary detail for reproducibility.
 
 Transparency is essential to achieving reproducibility for complex models.
 Making source code publicly available is an important step in this direction \cite{easterbrook2014open}.
@@ -573,16 +532,6 @@ However, a systematic framework for transparency is necessary to the continued s
 The ideal goal should be to create a machine-readable database containing information describing the experimental source for all data used in a model.
 The \textit{M. genitalium} model has an associated database, WholeCellKB-MG \cite{karr2013wholecellkb},
 and we discuss later how to improve the link between data and the processes which consume it in complex models.
-%Semantic web technologies such as Resource Description Framework (RDF) can be useful in this capacity, and have been used to successfully express genetic components \cite{galdzicki2014synthetic} using linked data.
-
-% The numerical algorithms used by the simulator must converge on a solution.
-% For example, kinetic models define a set of differential equations.
-% Assuming boundary conditions are imposed to select a unique solution,
-% the numerical result converges to an exact solution which can be reproduced across different simulators.
-% % This is possible because the numerical solution of a differential equation
-% % converges on the true solution.
-% % The convergence of numerical methods has been well-studied for ordinary differential
-% % equations \cite{brenan1996numerical}, but convergence of hybrid methods is less well understood.
 
 Experimentally measured single-cell parameters are highly important for whole-cell models.
 In the \textit{M. genitalium} model, much of this data comes from the literature.
@@ -642,33 +591,6 @@ If, however, the model exhibits robust convergence behavior, then it is
 possible for multiple reproductions of the model to arrive at the same results.
 Indeed, this is an important property of standards development, as exploited by
 the SBML test suite \footnote{http://sbml.org/Software/SBML\_Test\_Suite}.
-
-% \subsection{Replicability Requirements}
-%
-% % A computer program is a predefined sequence of instructions.
-% % In simple applications, provided that a program starts in the same state and reads the same
-% % data each time it is run, the output should be constant.
-% % In practice, software may fail to meet this expectation.
-% % This behavior can be caused by algorithmic design.
-%
-% % Strictly speaking, most modern computers are designed to be deterministic
-% % when viewed from a holistic perspective.
-% % % Even software such as the SPIN model checker \cite{holzmann2004spin}, which is designed to
-% % % simulate non-determinism, runs on a deterministic host.
-% % However, an individual program itself represents a subset of the computer,
-% % and when viewed in isolation it may appear to exhibit non-deterministic behavior.
-%
-% Whether or not such apparent non-determinism (hereafter, simply non-determinism)
-% is problematic depends on the application.
-% For example, exhaustive methods (such as database queries) do not rely on the order
-% in which elements are enumerated.
-% However, in greedy methods non-determinism can lead to different output, even
-% when the input is the same.
-% % Nevertheless, there has been an increasing tendency to deviate from determinism
-% % in modern software.
-%
-% Therefore, in order to achieve replicability, it is necessary to ensure
-% algorithmic determinism given the initial state (seed values) for the random number generators used.
 
 \subsection{Determinism and Replicability}
 
@@ -787,35 +709,6 @@ and human error plays a role just as with documentation embedded in source code 
 
 \subsection{Standardization Efforts}
 
-% Standardization of the \textit{M. genitalium} whole-cell model \cite{Karr2012}
-% was the topic of a workshop in Rostock, Germany from March 9-13, 2015.
-% The workshop was organized by subdividing the participants into teams,
-% each of which focused on one of the 28 submodels of the whole-cell model
-% \hl{[Waltemath(same issue)?]}.
-%
-% Recalling that (in this paper) reproducibility refers to the ability to
-% reimplement a model and still recover the same predictions.
-% Recreating exact numerical replicas is not a requirement for this definition
-% of reproducibility.
-%
-% An additional goal of the workshop was to assess and improve the current
-% condition of standards within the biological modeling community.
-% This in fact became the dominant consideration in many of the teams,
-% including the transcription team, which one of us (J.K. Medley)
-% was a member of.
-
-% SBML is the de facto standard for encoding biological models \cite{hucka2003systems},
-% and encoding the processes represented in the \textit{M. genitalium}
-% submodels represented a major area of focus.
-% The main difficulty in arriving at a satisfactory SBML representation
-% of the transcription submodel is due to the use of a Markov chain
-% process for modeling transcriptional elongation.
-% In the whole-cell model, an RNA polymerase may be in one of four states:
-% free, non-specifically bound to the chromosome, specifically bound to
-% the chromosome (i.e. bound at a locus such as a promoter), and actively transcribing.
-% Transitions between these states are governed by various factors
-% (transitioning from bound to active, for example, requires a sigma factor).
-
 The \textit{M. genitalium} whole-cell model poses several novel challenges for standards.
 The most significant is supporting a hybrid modeling approach.
 The integration of the submodels (as in \textit{M. genitalium}) is not currently
@@ -855,29 +748,6 @@ This represents a shift away from the element description of the bare mathematic
 entities of the model. This shift may be necessary in some cases to enable
 simulation of certain types of models, but it detracts from the ability
 of standards to be self-documenting, and detract from reproducibility.
-
-% SBML models the occupancy of discrete states, and while the RNA polymerase states
-% are discrete and enumerable, the various states of transcript elongation
-% represent an explosion of states. Each gene of length $n$ admits $n$ states
-% at different stages of elongation.
-% This sheer number of states, one for each \textit{M. genitalium's}
-% 580,076 base pairs, overwhelms most SBML
-% simulators.
-% Furthermore, an even greater number of states would be required to model additional physiological processes during transcription,
-% such as the early binding of ribosomes before the transcript is released
-% by the polymerase (a detail which is not currently incorporated into the
-% \textit{M. genitalium} model).
-% For this reason, discrete elongation states are not a scalable solution.
-% There may be hope for rule-based modeling of such systems using the SBML
-% multi package \footnote{http://sbml.org/Documents/Specifications/SBML\_Level\_3/Packages/multi}, but the essential focus here is not the current limitations
-% of standards, but rather on methods enabling robust reproduction of results,
-% with the view that standards will follow practice.
-
-% The Markov chain describing the transcription process can, for example,
-% be readily simulated using Gillespie's algorithm \cite{gillespie1977exact}
-% with rate laws representing relative state transition probabilities.
-% The limitations of state space size notwithstanding, this approach renders
-% the transcriptional process amenable to reproduction within SBML.
 
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
