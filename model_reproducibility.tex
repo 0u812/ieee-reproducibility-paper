@@ -1048,6 +1048,19 @@ and that a separate standard be developed for integrating the
 output of different simulators.
 We have discussed ways of achieving replicable results in software.
 
+In summary, the path to replicable whole-cell models is based on
+encoding of the submodels in standard formats. It is not necessary for a single simulator
+to support every type of submodel, but it is important that the simulator
+be implemented in a highly replicable way.
+A separate integration module can update shared variables in a deterministic way.
+
+In addition, for reproducibility, the model assumptions must be explicitly
+documented, and if this can be done in a structured database,
+it becomes easier for independent researchers to understand and validate the model.
+
+In both cases, a continued commitment to open standards and source code is vital
+to constructing and validating biologically accurate whole-cell models.
+
 % \appendices
 % \section{Proof of the First Zonklar Equation}
 % Appendix one text goes here.
