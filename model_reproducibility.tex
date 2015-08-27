@@ -609,18 +609,17 @@ Therefore, we discuss approaches from computer science which
 have been used to successfully eliminate non-determinism
 in software.
 
-Non-determinism in most software comes from two sources:
+Non-determinism in software usually comes from two main sources:
+Concurrency and/or asynchronous execution, and
+ memory layout.
 
-\begin{itemize}
-\item Concurrency and synchronization
-\item Memory layout
-\end{itemize}
-
-Concurrency can be a result of threading, or it can arise from
-asynchronous input/output callbacks. In both cases, as well as with memory layout,
+Threading or
+asynchronous input/output callbacks can lead to unpredictable
+order of execution of instructions.
+In these cases, as well as with memory layout,
 the non-determinism
 can be seen as the result
-of program interaction with the operating system.
+of program interaction with the operating system or the external environment.
 The essential motif in this case is an interaction of a subsystem
 with a larger system in which it is embedded.
 When the subsystem is studied in isolation, the influence of the larger
@@ -633,10 +632,8 @@ as we will discuss later. % quantum density matrix analogy
 While threading, asynchronous operations, and memory layout all contribute
 to non-determinism of software,
 concurrency due to threading has received considerable attention in the literature.
-This is perhaps due to an increasing push to exploit multi-core CPUs,
-and the fact that concurrency is seen as the culprit of ``Heisenbugs,''
-(errors which manifest themselves non-deterministically)
-although memory layout and asynchronicity also exhibit such problems.
+This is perhaps due to an increasing push to exploit multi-core CPUs
+and massively parallel architectures.
 
 Two systems that have been proposed to eliminate non-determinism in threading
 are C{\small ORE}D{\small ET} \cite{bergan2010coredet} and D{\small THREADS} \cite{liu2011dthreads}.
@@ -645,7 +642,7 @@ using the LLVM compiler framework such that the generated machine code operates 
 D{\small THREADS} is a replacement for the standard UNIX Pthreads library.
 Both of these systems operate by preventing the sharing of information between
 threads during a parallel phase, and allowing sharing and synchronization
-in a deterministic way in a serial phase.
+deterministically in a serial phase.
 This biphasic structure imposes an overhead on the operation of the threading
 system, but these approaches nevertheless show performance comparable to native
 threading in many benchmarked cases \cite{liu2011dthreads}, indicating that they show
