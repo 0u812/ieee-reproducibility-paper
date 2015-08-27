@@ -869,19 +869,19 @@ The sheer complexity of the \textit{M. genitalium} model necessitates the
 automation of tasks which are commonly done manually.
 Continued development of whole-cell models will require software which is capable
 of linking data to model parameter values.
-Such data needs to be systematically annotated in order to ensure that
+Such data should be systematically annotated in order to ensure that
 the usage of data in the model remains explicit.
 
 Standards are needed for hybrid modeling, and these standards require widespread
 support in order to be useful.
 Replicability between simulations of a hybrid model is a critically important
-factory which should be incorporated into standards and their respective
+factor which should be incorporated into standards and their respective
 implementations from the beginning.
 More research is needed to determine how to effectively integrate disparate
 modeling techniques while satisfying both numerical robustness and producing
 biologically accurate results.
 
-It is clear that SBML Level 3 core is insufficient to represent the
+It is clear that SBML Level 3 Core is insufficient to represent the
 \textit{M. genitalium} whole-cell model in its entirety.
 Encoding the model in an SBML-compliant format will require
 certain Level 3 packages such as Flux Balance Constraints (FBC),
@@ -903,10 +903,11 @@ In summary, the path to replicable whole-cell models is based on
 encoding of the submodels in standard formats. It is not necessary for a single simulator
 to support every type of submodel, but it is important that the simulator
 be implemented in a highly replicable way.
-A separate integration module can update shared variables in a deterministic way.
+A separate integration module can then update shared variables deterministically,
+thus achieving replicability.
 
 In addition, for reproducibility, the model assumptions must be explicitly
-documented, and if this can be done in a structured database,
+documented, and if this can be done using a structured database,
 it becomes easier for independent researchers to understand and validate the model.
 
 In both cases, a continued commitment to open standards and source code is vital
