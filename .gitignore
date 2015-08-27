@@ -4,3 +4,8 @@
 *.orig
 *.kate-swap
 *.kate-swp
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
