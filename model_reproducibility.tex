@@ -749,6 +749,20 @@ entities of the model. This shift may be necessary in some cases to enable
 simulation of certain types of models, but it detracts from the ability
 of standards to be self-documenting, and detract from reproducibility.
 
+Reproducing a model independently requires validating its assumptions,
+which is not a topic addressed by SBML.
+Given that many biochemical reactions are cataloged in databases such as
+KEGG \cite{kanehisa2000kegg}, MetaCyc \cite{caspi2008metacyc}, BRENDA \cite{schomburg2002brenda}, and
+ExplorEnz \cite{mcdonald2009explorenz}, there is clearly a potential for
+linking SBML elements to the biophysical entities (e.g. molecules and reactions) they represent.
+Relevant information, such as the biological underpinnings
+of each dynamical processes, as well as the specific numerical values used by parameters,
+could in principle be collected by model repositories such as BioModels \cite{le2006biomodels}
+and linked to their respective sources.
+This would both improve model credibility and allow others to efficiently
+query, validate, and reconstruct a model from its assumptions,
+an activity which is currently laborious due to the necessity of manual verification.
+
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
 
