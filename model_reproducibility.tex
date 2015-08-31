@@ -495,24 +495,32 @@ and tools which enable better reproducibility of complex models.
 % where an .eps filename suffix will be assumed under latex,
 % and a .pdf suffix will be assumed for pdflatex; or what has been declared
 % via \DeclareGraphicsExtensions.
-\caption{Replicability and reproducibility clarified: Model reproducibility refers to derivation from scientific knowledge and the ability to generate results in a reliable, repeatable manner;
+\caption{Replicability and reproducibility explained: Model reproducibility refers to derivation from scientific knowledge and the ability to generate results in a reliable, repeatable manner;
 Replicability refers only to the ability to recapitulate earlier simulation results}
 \label{fig_repro_diagram}
 \end{figure*}
 
 \section{Replicability and Reproducibility}
 
+In order to analyze which factors influence model reproducibility,
+it is helpful to consider its subdomain of replicability.
 Replicability of a computational model refers to the ability to
 re-run a simulation and obtain identical results \cite{easterbrook2014open}.
-Reproducibility is a stronger requirement and requires a replicable result as a basis for comparison.
 
-For a simulation result such as a published figure to be replicable, it must be possible to regenerate the result, 
+Variability in model output interferes with reproduction of the model.
+If the model itself cannot converge on a solution, exact recapitulation of the model's behavior
+becomes futile. %, and reproduction takes on a foggy meaning.
+We do not address such cases in this paper, as the meaning of reproducibility in the face
+of intrinsically variable processes is not clear (and may have multiple definitions).
+Therefore, in order for a model to be reproducible, we require it to also be replicable,
+as show in Fig. \ref{fig_repro_diagram}.
+
+For a simulation result such as a published figure to meet our definition of replicability,
+it must be possible to regenerate the result,
 even if the simulation is run on a different machine.
-Consequently, simulations can only be replicated if that are implemented using deterministic numerical solvers and 
-seed-able machine-independent pseudorandom processes.
+Consequently, simulations can only be replicated if they are implemented using deterministic numerical solvers and
+machine-independent pseudorandom processes.
 
-As shown in Fig. \ref{fig_repro_diagram}, the requirements for replicability are
-included in our definition of reproducibility.
 In a typical construction of a model, there will be a series of tests
 that cover reduced parts of the model, and provide a means to verify
 that the model reproduces the known functions of a system, according to experiment.
