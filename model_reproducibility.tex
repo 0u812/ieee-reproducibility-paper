@@ -571,6 +571,13 @@ Despite these advances, results in computational biology still cannot easily be 
 Part of this difficulty can be attributed to gaps in standards.
 SED-ML, for example, has good coverage of simulation parameters, but
 does not address the determinism or lack thereof in the underlying simulator.
+Whereas some modeling techniques such as ordinary differential equations (ODEs)
+are typically highly replicable, other methods such as Gillespie's SSA and
+and Markov processes are not. These methods are inherently stochastic and care
+must be taken to ensure that they give identical results on different machines.
+Replicability of inherently stochastic processes is not currently addressed by standards,
+and each software tool must implement its own solution.
+
 Other concerns, such as data transparency, play an important role that is becoming more apparent.
 With the emergence of complex hybrid models, more researchers have noted the increased demand for curated, high quality measurements in order to improve the current state-of-the-art pathway and genome databases.
 
