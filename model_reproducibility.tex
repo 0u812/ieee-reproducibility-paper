@@ -521,10 +521,13 @@ even if the simulation is run on a different machine.
 Consequently, simulations can only be replicated if they are implemented using deterministic numerical solvers and
 machine-independent pseudorandom processes.
 
-In a typical construction of a model, there will be a series of tests
-that cover reduced parts of the model, and provide a means to verify
-that the model reproduces the experimentally verified functions of a system.
+In the typical construction of a model, there will be a series of tests
+that cover parts of the model and provide a means to verify
+that the model reproduces the experimentally verified functions of the biological system.
 These tests also serve as the foundation for independently reconstructing the model.
+That is, model reproduction begins with reproducing each test in turn, and checking
+the output of the new model against the original one.
+
 If the test results cannot be replicated from run to run, the difficulty of reconstruction
 increases dramatically, as results can no longer be directly compared but must instead
 be compared to some third standard.
