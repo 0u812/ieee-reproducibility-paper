@@ -650,6 +650,34 @@ feature deterministic memory allocation. In the case of D{\small THREADS},
 this is achieved through a specially implemented memory allocator,
 whereas in C{\small ORE}D{\small ET} it is achieved through compiling the
 memory allocator itself with the C{\small ORE}D{\small ET} framework.
+This is important for simulation algorithms because it eliminates non-determinism
+due to memory layout.
+
+Tools like C{\small ORE}D{\small ET} and D{\small THREADS} are useful in the context of
+dynamical modeling because they allow simulation algorithms to achieve replicability.
+However, the ultimate goal of modeling software should be to help reproducibility,
+and C{\small ORE}D{\small ET} and D{\small THREADS} offer peace-of-mind which comes
+with a certain amount of false sense of security.
+
+Namely, small changes in source code can drastically affect the output of programs
+compiled using these tools. The tools can help conceal intrinsic variability in the
+underlying model by hiding it behind a deterministic facade.
+Only when the author modifies the structure of the source code or model does this
+variability become apparent.
+
+This fact underscores the importance of studying the convergence properties of a model.
+The model may not converge at all, in which case the model may only be reproduced up to
+some metric for comparison. Some mathematical models for physical processes have this
+behavior, which does not limit their predictive power, but rather specifies the context
+where it applies.
+Nobel Laureate Richard Feynman famously criticized contemporary models of turbulence
+for lacking long-range predictive power.
+Like Feynman, we also wish to draw attention to the domain where a mathematical method
+is representative and predictive of physically testable outcomes.
+For this reason, we caution against utilizing determinism as a crutch to avoid
+addressing the larger issue of the robustness of the mathematical methods used in a model.
+In an ideal case, we would have methods which converge reliably to a biologically accurate
+solution, and which can be simulated deterministically.
 
 \subsection{Limitations of Current Standards for Whole-Cell Modeling}
 
