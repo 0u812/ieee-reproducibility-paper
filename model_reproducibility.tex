@@ -477,9 +477,9 @@ Consequently, replicability only has the power to eliminate conclusions that wer
 
 Due to the complexity of modern scientific experiments and financial, time, and publishing pressures, investigators often do not have the time or resources to design orthogonal methods to test results independently. Instead, investigators frequently replicate reported results using the published method. The underemphasis on independent testing has the potential to allow us to accept false results based on faulty methods.
 
-Computational biology has become more replicable over the past several years through the introduction of standards including CellML \cite{cuellar2003overview}, SBML \cite{hucka2003}, SED-ML \cite{sedml2011}, the COMBINE archive \cite{COMBINE2012}, and SBGN \cite{LeNovereHMMSS09} and model repositories including BioModels and CellML Model Repository. These standards and repositories have enabled researchers to easily replicate most in silico experiments using the same mathematical model, the same simulator, and the same parameter values. These standards and repositories have also enabled researchers to reuse models for new experiments, to expand models, and to combine models into larger, more comprehensive models.
+Computational biology has become more replicable over the past several years through the introduction of standards including CellML \cite{cuellar2003overview}, SBML \cite{hucka2003}, SED-ML \cite{sedml2011}, the COMBINE archive \cite{COMBINE2012}, and SBGN \cite{LeNovereHMMSS09} and model repositories including BioModels and CellML Model Repository. These standards and repositories have enabled researchers to easily replicate most \textit{in silico} experiments using the same mathematical model, the same simulator, and the same parameter values. These standards and repositories have also enabled researchers to reuse models for new experiments, to expand models, and to combine subunits into larger, more comprehensive models.
 
-Unfortunately, due to continued time pressures, the priority for innovation, and the growing complexity of computational methods, this increased emphasis on replicability has not translated into increased reproducibility. This is exemplified by the recent \textit{Mycoplasma genitalium} whole-cell model \cite{Karr2012}. The authors took great strides to ensure that their software replicate results given the same initial conditions and random number generator seed. However, the novelty and complexity of the model make it difficult for other researchers to reproduce the model or its scientific conclusions. 
+Unfortunately, due to continued time pressures, the priority for innovation, and the growing complexity of computational methods, this increased emphasis on replicability has not translated into increased reproducibility. This is exemplified by the recent \textit{Mycoplasma genitalium} whole-cell model \cite{Karr2012}. The authors took great strides to ensure that their software could replicate results given the same initial conditions and random number generator seed. However, the novelty and complexity of the model make it difficult for other researchers to reproduce the model or its scientific conclusions.
 
 Waltemath and Schreiber recently organized a week-long workshop to reproduce the \textit{M. genitalium} model simulations using SBML and open-source modeling software. The workshop included 60 modelers, modeling software developers, and standards developers. The workshop made great progress toward reproducing the model simulations in SBML, including draft SBML versions of most of the submodels. However, because the model requires many new SBML languages features that are still only supported by a few software programs and because the model is large, significant work remains to reproduce the model despite the more than one person-year of effort that has already been dedicated to reproducing the model simulations.
 
@@ -555,20 +555,20 @@ and annotation are essential for reproducible modeling.
 These problems have been discussed within disparate contexts, but
 have not been addressed in a unified way.
 Recently, a division of labor has emerged which places software developers and
-software users in two separate spheres within the scientific community \cite{mesirov2010computer}.
+software users in separate spheres within the scientific community \cite{mesirov2010computer}.
 Whereas technological solutions have been proposed to address replicability and reproducibility
 of dynamical models \cite{bergmann2014combine} \cite{waltemath2011minimum} \cite{novere2005minimum},
 a unified modeling platform supporting all of these features does not yet exist.
 We envision such a platform would enable researchers to construct models in a
-more open and standard way, and would supersede ad-hoc methods of modeling by
-offering the benefit of a robust, transparent pipeline.
+more open and standard way, and would cause use of these replicability and reproducibility
+tools to become a standard practice among modelers.
 
 Transparency is essential to achieving reproducibility for complex models \cite{boulton2012open}.
 Making source code publicly available and freely reusable is an important step in this direction \cite{easterbrook2014open}.
 However, a systematic framework for transparency is necessary to the continued success of whole-cell modeling.
 The ideal goal should be record the source of all data used in a model in a machine-readable database .
 The parameter values used in the \textit{M. genitalium} model are contained in an associated database, WholeCellKB-MG \cite{karr2013wholecellkb},
-and we discuss later how to improve the link between data and the processes which consume it in complex models.
+and we discuss later how to improve the link between data and the processes in models which consume it.
 
 Experimentally measured parameters are highly important for whole-cell models.
 In the \textit{M. genitalium} model, much of this data comes from the literature.
