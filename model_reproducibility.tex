@@ -659,7 +659,7 @@ the SBML test suite \footnote{http://sbml.org/Software/SBML\_Test\_Suite}.
 
 \subsection{Technical Considerations for Replicability and Reproducibility}
 
-Replicability is a useful tool in studying reproducibility.
+Replicability is a useful tool in achieving reproducibility.
 If the output of a simulator cannot be replicated, it becomes
 difficult to make any objective statement about its reproducibility.
 
@@ -747,10 +747,11 @@ ODEs, Boolean networks, and flux balance analysis.
 
 Although the \textit{M. genitalium} model is replicable, the model is not reproducible for several reasons. First,
 although the model could be encoded in SBML using the SBML hierarchical model composition package, there is no 
-general-purpose simulation software tool which can simulate multi-algorithm models. The SBML simulation tools which support
-model composition combine models by flattened them into a single larger model.
+general-purpose simulation software tool which can simulate multi-algorithm models. SBML
+model composition (i.e. the SBML `comp' extension) combines models by flattening them into a single larger model.
 
-Second, there is no simulator which can simulate the \textit{M. genitalium} model because the model requires several features 
+Second, current state-of-the-art SBML simulators are not sufficient to simulate the the \textit{M. genitalium} model. This is due to the fact that
+the model requires several features
 that are not supported by SBML Level 3 core, including rule-based and constraint-based modeling.
 The use of these features does not prevent the model from being encoded in SBML. However, if the model were encoded in SBML,
 it would not be possible to simulate it because there is no simulator which supports all of the
