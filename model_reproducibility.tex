@@ -566,11 +566,16 @@ tools to become a standard practice among modelers.
 Transparency is essential to achieving reproducibility for complex models \cite{boulton2012open}.
 Making source code publicly available and freely reusable is an important step in this direction \cite{easterbrook2014open}.
 However, a systematic framework for transparency is necessary to the continued success of whole-cell modeling.
+The encoding of a model plays an important role in how easy it is to independently reproduce.
+Using a standard representation which is widely understood makes a model more amenable to
+independent scrutiny.
+On top of this, another issue concerns how to preserve and encode the data used in the
+model's construction.
 The ideal goal should be record the source of all data used in a model in a machine-readable database .
 The parameter values used in the \textit{M. genitalium} model are contained in an associated database, WholeCellKB-MG \cite{karr2013wholecellkb},
 and we discuss later how to improve the link between data and the processes in models which consume it.
 
-Experimentally measured parameters are highly important for whole-cell models.
+Whole-cell models make extensive use of experimentally measured single-cell parameters.
 In the \textit{M. genitalium} model, much of this data comes from the literature.
 Over 900 papers and 1,900 experimentally observed parameters were used to construct the model \cite{Karr2012}.
 Many of the parameters of the model were based on measurements made in other species \cite{macklin2014future}.
@@ -583,6 +588,10 @@ In the model, the sources for various types of experimental data must be preserv
 as well as the rationale behind using them in a particular setting
 (e.g. the choice of parameter values).
 Future advances may help to automate this process, thus accelerating model development.
+
+In summary, to be reproducible, a model must be replicable, and it must be encoded
+in a transparent, reusable format. The data used in its construction must be
+recorded in an easily accessible way.
 
 \subsection{Limitations of Current Standards for Reproducibile Modeling}
 
@@ -719,7 +728,7 @@ solution, and which can be simulated deterministically.
 \subsection{Limitations of Current Standards for Whole-Cell Modeling}
 
 The \textit{M. genitalium} whole-cell model \cite{Karr2012} consists of 28 submodels.
-The submodel are implemented using a variety of modeling techniques including 
+The submodel are implemented using a variety of modeling techniques including
 ODEs, Boolean networks, and flux balance analysis.
 
 Although the \textit{M. genitalium} model is replicable, the model is not reproducible for several reasons. First,
