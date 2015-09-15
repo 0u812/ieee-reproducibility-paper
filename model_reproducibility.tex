@@ -572,8 +572,21 @@ independent scrutiny.
 On top of this, another issue concerns how to preserve and encode the data used in the
 model's construction.
 The ideal goal should be record the source of all data used in a model in a machine-readable database .
-The parameter values used in the \textit{M. genitalium} model are contained in an associated database, WholeCellKB-MG \cite{karr2013wholecellkb},
-and we discuss later how to improve the link between data and the processes in models which consume it.
+The parameter values used in the \textit{M. genitalium} model are contained in an associated database, WholeCellKB-MG \cite{karr2013wholecellkb}.
+
+Reproducing a model independently requires validating its assumptions,
+which is not a topic addressed by current standards.
+Given that many biochemical reactions are cataloged in databases such as
+KEGG \cite{kanehisa2000kegg}, MetaCyc \cite{caspi2008metacyc}, BRENDA \cite{schomburg2002brenda}, and
+ExplorEnz \cite{mcdonald2009explorenz}, there is clearly a potential for
+linking SBML elements to the biophysical entities (e.g. molecules and reactions) they represent.
+Relevant information, such as the biological underpinnings
+of each dynamical processes, as well as the specific numerical values used by parameters,
+could in principle be collected by model repositories such as BioModels \cite{le2006biomodels}
+and linked to their respective sources.
+This would both improve model credibility and allow others to efficiently
+query, validate, and reconstruct a model from its assumptions,
+an activity which is currently laborious due to the necessity of manual verification.
 
 Whole-cell models make extensive use of experimentally measured single-cell parameters.
 In the \textit{M. genitalium} model, much of this data comes from the literature.
@@ -651,9 +664,10 @@ If the output of a simulator cannot be replicated, it becomes
 difficult to make any objective statement about its reproducibility.
 
 Computational biologists should be aware of two types of technical issues which 
-can cause non-replicable models: concurrency and memory layout. 
+can cause non-replicable behavior: Concurrency and memory layout.
 Therefore, we discuss approaches from computer science which
-have been successfully used to create deterministic software from non-deterministic components.
+have been successfully used to create deterministic software in the face of apparently
+non-deterministic processes.
 
 Threading or
 asynchronous input/output callbacks can lead to unpredictable
@@ -667,7 +681,7 @@ with a larger system in which it is embedded.
 When the subsystem is studied in isolation, the influence of the larger
 system becomes a perturbation which cannot be accounted for or controlled by
 the subsystem. The apparent ``non-determinism'' in these cases
-is due to failing to account for all state information.
+is due to failing to account for a comprehensive description of the system's state.
 This is an important theme (and challenge) in the context of whole-cell modeling,
 as we will discuss later. % quantum density matrix analogy
 
@@ -680,13 +694,13 @@ and massively parallel architectures.
 Two systems that have been proposed to eliminate non-determinism in threading
 are C{\small ORE}D{\small ET} \cite{bergan2010coredet} and D{\small THREADS} \cite{liu2011dthreads}.
 C{\small ORE}D{\small ET} is a framework and library for compiling C/C++ programs
-using the LLVM compiler framework such that the generated machine code operates deterministically.
+using the LLVM \cite{lattner2004llvm} compiler framework such that the generated machine code operates deterministically.
 D{\small THREADS} is a replacement for the standard UNIX Pthreads library.
 Both of these systems operate by preventing the sharing of information between
 threads during a parallel phase, and allowing sharing and synchronization
 deterministically in a serial phase.
 This biphasic structure imposes an overhead on the operation of the threading
-system, but these approaches nevertheless show performance comparable to native
+system, but both approaches nevertheless show performance comparable to native
 threading in many benchmarked cases \cite{liu2011dthreads}, indicating that they show
 practical promise.
 
@@ -738,7 +752,7 @@ model composition combine models by flattened them into a single larger model.
 
 Second, there is no simulator which can simulate the \textit{M. genitalium} model because the model requires several features 
 that are not supported by SBML Level 3 core, including rule-based and constraint-based modeling.
-The use of these features does not prevent the model from being encoded in SBML. However, if the model w    ere encoded in SBML,
+The use of these features does not prevent the model from being encoded in SBML. However, if the model were encoded in SBML,
 it would not be possible to simulate it because there is no simulator which supports all of the
 required SBML features.
 
@@ -807,31 +821,17 @@ some hallmarks of deterministic frameworks, such as the biphasic structure if it
 This suggests that technologies such as C{\small ORE}D{\small ET} and D{\small THREADS}
 can offer insights into how to integrate a hybrid model in a replicable way.
 
-The \textit{M. genitalium} model also highlights the use of
-standards as self-documenting. In a system composed purely of reactions,
-SBML specifies the minimum amount of information required for reproduction - the rate laws and
-boundary conditions. The complexities of numerical integration are not handled by the SBML encoding.
-However, many recent SBML Level 3 packages have tended to focus on
-structural features of the model which organize elements or
-improve simulator performance.
-This represents a shift away from the element description of the bare mathematical
-entities of the model. This shift may be necessary in some cases to enable
-simulation of certain types of models, but it detracts from the ability
-of standards to be self-documenting, and detract from reproducibility.
-
-Reproducing a model independently requires validating its assumptions,
-which is not a topic addressed by SBML.
-Given that many biochemical reactions are cataloged in databases such as
-KEGG \cite{kanehisa2000kegg}, MetaCyc \cite{caspi2008metacyc}, BRENDA \cite{schomburg2002brenda}, and
-ExplorEnz \cite{mcdonald2009explorenz}, there is clearly a potential for
-linking SBML elements to the biophysical entities (e.g. molecules and reactions) they represent.
-Relevant information, such as the biological underpinnings
-of each dynamical processes, as well as the specific numerical values used by parameters,
-could in principle be collected by model repositories such as BioModels \cite{le2006biomodels}
-and linked to their respective sources.
-This would both improve model credibility and allow others to efficiently
-query, validate, and reconstruct a model from its assumptions,
-an activity which is currently laborious due to the necessity of manual verification.
+% The \textit{M. genitalium} model also highlights the use of
+% standards as self-documenting. In a system composed purely of reactions,
+% SBML specifies the minimum amount of information required for reproduction - the rate laws and
+% boundary conditions. The complexities of numerical integration are not handled by the SBML encoding.
+% However, many recent SBML Level 3 packages have tended to focus on
+% implementation-driven features which represent elements in a way that
+% improves simulator performance.
+% This represents a shift away from the element description of the bare mathematical
+% entities of the model. This shift may be necessary in some cases to enable
+% simulation of certain types of models, but it detracts from the ability
+% of standards to be self-documenting.
 
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
@@ -940,7 +940,10 @@ Another key step toward replicable whole-cell modeling is expanded support for t
 Flux Balance Constraints, Hierarchical Model Composition, Multistate and Multicomponent 
 Species, and Array SBML packages. 
 
-We have discussed ways of achieving replicable results in software.
+We have discussed ways of achieving replicable results in software by showing how
+systems biology software tools can be engineered to reliably produce the same result
+between runs. We emphasized the need to have deterministic control over the algorithms
+used, and highlighted the benefits of this approach to systems biology.
 
 In addition, more research is needed to determine how to effectively integrate disparate
 modeling techniques while satisfying both numerical robustness and producing
@@ -956,13 +959,13 @@ In addition, for reproducibility, the model assumptions must be explicitly
 documented, and if this can be done using a structured database,
 it becomes easier for independent researchers to understand and validate the model.
 
-In both cases, a continued commitment to open standards and source code is vital
+In both cases, a continued commitment to open standards and sharing source code is vital
 to constructing and validating biologically accurate whole-cell models.
 
 \section{Acknowledgment}
 
 The authors would like to acknowledge Herbert M. Sauro for providing comments and discussion
-on the state of reproducibility and replicability in systems biology.
+on reproducibility and replicability in systems biology.
 
 % \appendices
 % \section{Proof of the First Zonklar Equation}
