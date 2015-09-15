@@ -728,18 +728,18 @@ solution, and which can be simulated deterministically.
 \subsection{Limitations of Current Standards for Whole-Cell Modeling}
 
 The \textit{M. genitalium} whole-cell model \cite{Karr2012} consists of 28 submodels.
-The submodel are implemented using a variety of modeling techniques including
+The submodels are implemented using a variety of modeling techniques including
 ODEs, Boolean networks, and flux balance analysis.
 
 Although the \textit{M. genitalium} model is replicable, the model is not reproducible for several reasons. First,
 although the model could be encoded in SBML using the SBML hierarchical model composition package, there is no 
 general-purpose simulation software tool which can simulate multi-algorithm models. The SBML simulation tools which support
-model composition combine models by flatted them into a single larger model.
+model composition combine models by flattened them into a single larger model.
 
 Second, there is no simulator which can simulate the \textit{M. genitalium} model because the model requires several features 
-that not supported by SBML Level 3 core, including rule-based and constraint-based modeling.
-The use of these features doesn't prevent the model from being encoded in SBML. However, if the model where encoded in SBML,
-it wouldn't be possible to simulate it because there is no simulator which supports all of the
+that are not supported by SBML Level 3 core, including rule-based and constraint-based modeling.
+The use of these features does not prevent the model from being encoded in SBML. However, if the model w    ere encoded in SBML,
+it would not be possible to simulate it because there is no simulator which supports all of the
 required SBML features.
 
 Third, the model is difficult to reproduce because details of how the \textit{M. genitalium} model was parameterized with
@@ -753,7 +753,7 @@ because they are intertwined with the simulator source code.
 
 When this problem appeared in quantitative modeling, the SBML community responded with MIRIAM:
 Minimum information requested in the annotation of biochemical models \cite{novere2005minimum}.
-MIRIAM specifies the annotation of models using persistent URIs to identify model
+MIRIAM specifies the annotation of models using persistent uniform resource identifiers (URIs) to identify model
 components with the biophysical entities which they represent.
 If whole-cell models are to be reproducible, both modelers and the developers of software tools
 must make use of annotation schemes like MIRIAM to integrate parameterization information into the model.
@@ -932,7 +932,7 @@ an activity which is currently laborious due to the necessity of manual verifica
 
 The \textit{M. genitalium} whole-cell model has pushed the frontier of dynamical modeling. 
 However, it has also created new challenges for replicating and reproducing models.
-These challenges reproducing hybrid model simulations, reproducing model assumptions, and
+These challenges include reproducing hybrid model simulations, reproducing model assumptions, and
 reproducing model parameters from experimental data. 
 
 One key step toward replicable whole-cell modeling is a new standard for hybrid modeling.
