@@ -803,11 +803,12 @@ The \textit{M. genitalium} whole-cell model poses several novel challenges for s
 The most significant is supporting a hybrid modeling approach.
 The integration of the submodels (as in \textit{M. genitalium}) is not currently
 addressed by standards. In order to be replicable, it must be done deterministically.
+
 A simulation involves a series of time steps. During each time step, the
 submodels are run independently,
 and synchronized at the end of the time step, updating any variables
 which are shared between submodels.
-The whole-cell model coordinates this synchronization and partitions resources such as ATP
+The whole-cell model coordinates this synchronization and partitions resources such as cellular energy stores
 among the submodels.
 This process is not unlike a multithreaded software system where each thread performs
 a specific task. The serial execution of a program can be designed to be deterministic.
