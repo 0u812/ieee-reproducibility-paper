@@ -477,18 +477,15 @@ Consequently, replicability only has the power to eliminate conclusions that wer
 
 Due to the complexity of modern scientific experiments and financial, time, and publishing pressures, investigators often do not have the time or resources to design orthogonal methods to test results independently. Instead, investigators frequently replicate reported results using the published method. The underemphasis on independent testing has the potential to allow us to accept false results based on faulty methods.
 
-Computational biology has become more replicable over the past several years through the introduction of standards including CellML \cite{cuellar2003overview}, SBML \cite{hucka2003}, SED-ML \cite{sedml2011}, the COMBINE archive \cite{COMBINE2012}, and SBGN \cite{LeNovereHMMSS09} and model repositories including BioModels and CellML Model Repository. These standards and repositories have enabled researchers to easily replicate most \textit{in silico} experiments using the same mathematical model, the same simulator, and the same parameter values. These standards and repositories have also enabled researchers to reuse models for new experiments, to expand models, and to combine submodels into larger, more comprehensive models.
+Computational biology has become more replicable over the past several years through the introduction of standards including CellML \cite{cuellar2003overview}, SBML \cite{hucka2003}, SED-ML \cite{sedml2011}, the COMBINE archive \cite{COMBINE2012}, and SBGN \cite{LeNovereHMMSS09} and model repositories including BioModels and CellML Model Repository. These standards and repositories have enabled researchers to easily replicate most \textit{in silico} experiments using the same mathematical model, the same simulator, and the same parameter values. These standards and repositories have also enabled researchers to reuse models for new experiments, to expand models, and to combine models into larger, more comprehensive models.
 
 Unfortunately, due to continued time pressures, the priority for innovation, and the growing complexity of computational methods, this increased emphasis on replicability has not translated into increased reproducibility. This is exemplified by the recent \textit{Mycoplasma genitalium} whole-cell model \cite{Karr2012}. The authors took great strides to ensure that their software could replicate results given the same initial conditions and random number generator seed. However, the novelty and complexity of the model make it difficult for other researchers to reproduce the model or its scientific conclusions.
 
-Waltemath and Schreiber recently organized a week-long workshop to reproduce the \textit{M. genitalium} model simulations using SBML and open-source modeling software. The workshop included 60 modelers, modeling software developers, and standards developers. The workshop made great progress toward reproducing the model simulations in SBML, including draft SBML versions of most of the submodels. However, because the model requires many new SBML languages features that are still only supported by a few software programs and because the model is large, significant work remains to reproduce the model despite the more than one person-year of effort that has already been dedicated to reproducing the model simulations.
+Waltemath and Schreiber recently organized a week-long workshop to reproduce the \textit{M. genitalium} model using SBML and open-source modeling software. The workshop included 60 modelers, modeling software developers, and standards developers. The workshop made great progress toward reproducing the model in SBML, including draft SBML versions of most of the submodels. However, because the model requires many new SBML packages that are still only supported by a few software programs and because the model is large, significant work remains to reproduce the model despite the more than one person-year of effort that has already been dedicated to this effort.
 
-Here, we outline the requirements for reproducibility, show how they can
-be achieved in simulation standards and software, and discuss how this would benefit
-the computational biology field. We also show how these principles apply to the \textit{Mycoplasma genitalium} whole-cell
-model.
-Finally, we discuss how the biological modeling community can work toward standards
-and tools which enable better reproducibility of complex models.
+Here, we outline the process for reproducing models, outline the gaps in our current standards and software for facilitating 
+reproducible modeling, and describe new standards and tools that are needed to enable researchers to conduct reproducible
+biological modeling. Throughout, our discussion is motivated by the need for improved standards and software tools for whole-cell modeling.
 
 \begin{figure*}[!t]
 \centering
@@ -502,481 +499,123 @@ Replicability refers only to the ability to recapitulate earlier simulation resu
 \end{figure*}
 
 \section{Replicability and Reproducibility}
+Reproducing a model requires three steps (Fig.~\ref{fig_repro_diagram}). First, the model's equations and parameter values must be duplicated from the original assumptions and experimental data. This requires machine-readable standards for concretely describing model components in terms of external database entries such as KEGG \cite{kanehisa2000kegg} compounds and MetaCyc \cite{caspi2008metacyc} reactions, machine-readable databases for representing the data sources that were used to parameterize a model, annotation standards for describing how those data sources were used to parameterize the model, and annotation standards for describing the assumptions that the model was based on \cite{boulton2012open}. Such standards would also allow researchers to efficiently search and discover models.
 
-Reproducibility is a complex subject, but we argue that a first
-step in achieving reproducibility is replicability.
-Replicability of a computational model refers to the ability to
-re-run a simulation and obtain identical results \cite{easterbrook2014open}.
+Second, the model's numerical integrator must be duplicated. This requires that simulation software programs be available open-source \cite{easterbrook2014open}.
 
-Variability in a model's output interferes with reproduction of the model.
-If the model itself cannot converge on a solution, exact recapitulation of the model's behavior
-becomes futile. %, and reproduction takes on a foggy meaning.
-We do not address such cases in this paper, as the meaning of reproducibility in the face
-of intrinsic variability becomes clouded.
-Therefore, in order for a model to be reproducible, we require it to also be replicable,
-as show in Fig. \ref{fig_repro_diagram}.
-
-For a simulation result (such as a published figure) to meet our definition of replicability,
-it must be possible to regenerate the result,
-even if the simulation is run on a different machine.
-Consequently, simulations can only be replicated if they are implemented using deterministic numerical solvers and
-machine-independent pseudorandom processes.
-
-A typical procedure for constructing a dynamical biological model
-involves building and testing subsystems independently.
-These tests, together with their coverage of known behavior of the system, provide a means to verify
-that the model reproduces the experimentally verified functions of the biological system.
-The tests can also serve as the foundation for independently reconstructing the model.
-That is, model reproduction begins with reproducing each test in turn, and checking
-the output of the new model against the original one.
-
-If the test results cannot be replicated from run to run, the difficulty of reconstruction
-increases dramatically, as results can no longer be directly compared but must instead
-be compared using some metric of similarity.
-The implication behind comparing stochastic models is that some summary of the data,
-such as the mean and standard deviation, is sufficient to capture the behavior of the
-model.
-This is a difficult question to answer in general.
-% Such a metric will by tacitly exclude features which are "random," and unimportant, and
-% preserve others which are important and representative of the model dynamics.
-Any behavioral discrepancy between the original model and its reconstruction
-has two possible causes: Algorithmic non-determinism or a deviation in dynamical
-behavior.
-% Sorting out how to compare two intrinsically variable models is case-dependent,
-% as the features of interest are determined by the scientific questions the model is
-% designed to address.
-This imposes a burden on model reproduction, and can forestall or even prevent
-model reconstruction efforts.
-A software system engineered for model reproducibility should therefore possess
-replicability as a first step.
-
-Replicability, together with transparency, parameterization, documentation,
-and annotation are essential for reproducible modeling.
-These problems have been discussed within disparate contexts, but
-have not been addressed in a unified way.
-Recently, a division of labor has emerged which places software developers and
-software users in separate spheres within the scientific community \cite{mesirov2010computer}.
-Whereas technological solutions have been proposed to address replicability and reproducibility
-of dynamical models \cite{bergmann2014combine} \cite{waltemath2011minimum} \cite{novere2005minimum},
-a unified modeling platform supporting all of these features does not yet exist.
-We envision such a platform would enable researchers to construct models in a
-more open and standard way, and would promote these replicability and reproducibility
-tools as a standard practice among modelers.
-
-Transparency is essential to achieving reproducibility for complex models \cite{boulton2012open}.
-Making source code publicly available and freely reusable is an important step in this direction \cite{easterbrook2014open}.
-However, a systematic framework for transparency is necessary to the continued success of whole-cell modeling.
-The encoding of a model plays an important role in how easy it is to independently reproduce.
-Using a standard representation which is widely understood makes a model more amenable to
-independent scrutiny.
-On top of this, another issue concerns how to preserve and encode the data used in the
-model's construction.
-The ideal goal should be record the source of all data used in a model in a machine-readable database.
-The parameter values used in the \textit{M. genitalium} model are contained in an associated database, WholeCellKB-MG \cite{karr2013wholecellkb}.
-We view WholeCellKB-MG as an important step in the right direction, but, we also suggest
-ways in which whole-cell databases could be better implemented.
-In particular, we think that a user-centric design for such databases is a must,
-and that future research should focus on user interaction with these resources.
-
-Reproducing a model independently requires validating its assumptions,
-which is not a topic addressed by current standards.
-Given that many biochemical reactions are cataloged in databases such as
-KEGG \cite{kanehisa2000kegg}, MetaCyc \cite{caspi2008metacyc}, BRENDA \cite{schomburg2002brenda}, and
-ExplorEnz \cite{mcdonald2009explorenz}, there is clearly a potential for
-linking SBML elements to the biophysical entities (e.g. molecules and reactions) they represent.
-Relevant information, such as the biological underpinnings
-of each dynamical processes, as well as the specific numerical values used by parameters,
-could in principle be collected by model repositories such as BioModels \cite{le2006biomodels}
-and linked to their respective sources.
-This would both improve model credibility and allow others to efficiently
-query, validate, and reconstruct a model from its assumptions,
-an activity which is currently laborious due to the necessity of manual verification.
-
-Whole-cell models make extensive use of experimentally measured single-cell parameters.
-In the \textit{M. genitalium} model, much of this data comes from the literature.
-Over 900 papers and 1,900 experimentally observed parameters were used to construct the model \cite{Karr2012}.
-Many of the parameters of the model were based on measurements made in other species \cite{macklin2014future}.
-As new measurements are made, more accurate models can be built.
-However, this relies on continual improvement in experimental reliability.
-One way to achieve this is to deposit experimental results into repositories
-containing redundant data and associated meta-information including
-a detailed record of experimental conditions and procedures.
-In the model, the sources for various types of experimental data must be preserved,
-as well as the rationale behind using them in a particular setting
-(e.g. the choice of parameter values).
-Future advances may help to automate this process, thus accelerating model development.
-
-In summary, to be reproducible, a model must be replicable, and it must be encoded
-in a transparent, reusable format. The data used in its construction must be
-recorded in an easily accessible way, and all of this information must be
-presented in a way that allows efficient searching, displaying, and accessing.
+Third, the second numerical integrator must be used to numerically duplicate the model's numerical results \cite{easterbrook2014open}. In the case of stochastic models, this means that the first moments of the model's predictions must be duplicated. In turn, to duplicate numerical results simulators should have complete deterministic control over their execution, including using deterministic algorithms and deterministic pseudorandom number generators. Chaotic models, which are highly sensitive to small numerical differences, and stochastic simulators, which cannot duplicate numerical results, are considerably more difficult to reproduce.
 
 \subsection{Limitations of Current Standards for Reproducibile Modeling}
 
 The CellML \cite{cuellar2003overview}, SBML \cite{hucka2003}, and SED-ML \cite{sedml2011} standards have greatly improved the replicability of dynamical modeling.
-Despite these advances, results in computational biology still cannot easily be reproduced \cite{garijo2013quantifying}.
+Despite these advances, many computational biology results still cannot easily be reproduced \cite{garijo2013quantifying}.
 
-Part of this difficulty can be attributed to gaps in standards.
-SED-ML, for example, has good coverage of simulation parameters, but
-does not address the determinism or lack thereof in the underlying simulator.
-Whereas some modeling techniques such as ordinary differential equations (ODEs)
-are typically highly replicable, other methods such as Gillespie's SSA and
-and Markov processes are not. These methods are inherently stochastic and care
-must be taken to ensure that they give identical results on different machines.
-Replicability of inherently stochastic processes is not currently addressed by standards,
-and each software tool must implement its own solution.
+Part of this difficulty can be attributed to the gaps in the existing standards.
+SBML helps researchers replicate model variables and equations and SED-ML helps researchers replicate simulation parameter values. 
+However, neither standard helps researchers replicate simulators. 
+In particular, neither standard ensures that simulators that use pseudorandom number generators can deterministically replicate stochastic simulation results, 
+or that multiple simulators can replicate chaotic models.
 
-Other concerns, such as data transparency, play an important role that is becoming more apparent.
-With the emergence of complex hybrid models, more researchers have noted the increased demand for curated, high quality measurements in order to improve the current state-of-the-art pathway and genome databases.
-
-Another barrier to reproducibility concerns limited support for standards.
+A second barrier to reproducibility is the limited support for the existing standards.
 One advantage of representing a model in a standard format such as SBML is the ability
-to utilize different simulators.
-SBML Level 3 consists of extensions which enable additional
-functionality, such as
-hierarchical model composition\footnote{http://co.mbine.org/standards/sbml/level-3/version-1/comp/version-1/release-2},
-flux balance constraints\footnote{ http://sbml.org/Documents/Specifications/SBML\_Level\_3/Packages/fbc}, and
-arrays\footnote{http://sbml.org/Documents/Specifications/SBML\_Level\_3/Packages/arrays}.
-While the features offered by these packages are critically important for certain
-types of models, not all simulators support them.
-As SBML gains highly specialized capabilities, it also becomes fractionated, as
-not all researchers have a need for such special-purpose features.
-If a model makes use of features outside the SBML Level 3 core specification,
-there is a risk of being confined to a niche of the dynamical modeling community.
-In this case, the advantage of utilizing SBML, as opposed to an \textit{ad hoc} representation
-of the model, is diminished.
+to utilize multiple simulators to independently replicate simulation results. To support various specialized
+modeling formalisms, SBML Level 3 includes several extensions including the
+Hierarchical Model Composition\footnote{http://co.mbine.org/standards/sbml/level-3/version-1/comp/version-1/release-2},
+Flux Balance Constraints\footnote{http://sbml.org/Documents/Specifications/SBML\_Level\_3/Packages/fbc}, and
+Arrays\footnote{http://sbml.org/Documents/Specifications/SBML\_Level\_3/Packages/arrays} packages.
+However, these packages have also fractioned SBML because each of these packages is only supported by a few simulators. 
+In fact, no single simulator supports all of these packages.
+This diminishes SBML's capability to facilitate replication.
 
-One aspect of replicability and reproducibility that is often overlooked is the
-behavior of the underlying numeric algorithm.
-The timestep of the \textit{M. genitalium} model bears a relation to the timestep
-of classical solvers such as Runge-Kutta, but the convergence properties of the hybrid model
-are much more complex.
-% Given the novelty of whole-cell modeling it is not unexpected that such numerical
-% questions have been heretofore unanswered
-Whereas no detailed study has currently been performed on how the timestep affects
-the whole-cell model's long-term dynamical behavior, for reproducibility purposes it is
-an important factor. If a small perturbation has the ability to drastically
-affect the simulation results, it is more difficult to reproduce the model.
-If, however, the model exhibits robust convergence behavior, then it is
-possible for multiple reproductions of the model to arrive at the same results.
-Indeed, this is an important property of standards development, as exploited by
-the SBML test suite \footnote{http://sbml.org/Software/SBML\_Test\_Suite}.
+A third barrier to reproducibility is the lack of transparency into the experimental data and assumptions which models are based on. 
+This is becoming more important as researchers increasingly take advantage of high-throughput genomics data and pathway databases to build larger models.
 
 \subsection{Technical Considerations for Replicability and Reproducibility}
 
-Replicability is a useful tool in achieving reproducibility.
-If the output of a simulator cannot be replicated, it becomes
-difficult to make any objective statement about its reproducibility.
+Replicating a model is a useful step toward reproducing a model.
+If a model's numerical simulations cannot be replicated, it will be
+difficult to reproduce the model. Here, we discuss two technical issues which can 
+cause non-replicable simulations -- concurrency and memory layout -- 
+and approaches from computer science which have been successfully used to create 
+deterministic software despite these issues.
 
-Computational biologists should be aware of two types of technical issues which 
-can cause non-replicable behavior: Concurrency and memory layout.
-Therefore, we discuss approaches from computer science which
-have been successfully used to create deterministic software in the face of apparently
-non-deterministic processes.
-
-Threading or
-asynchronous input/output callbacks can lead to unpredictable
-order of execution of instructions.
-In these cases, as well as with memory layout,
-the non-determinism
-can be seen as the result
-of program interaction with the operating system or the external environment.
-The essential motif in this case is an interaction of a subsystem
-with a larger system in which it is embedded.
-When the subsystem is studied in isolation, the influence of the larger
-system becomes a perturbation which cannot be accounted for or controlled by
-the subsystem. The apparent ``non-determinism'' in these cases
-is due to failing to account for a comprehensive description of the system's state.
-This is an important theme (and challenge) in the context of whole-cell modeling,
-as we will discuss later. % quantum density matrix analogy
-
-While threading, asynchronous operations, and memory layout all contribute
-to non-determinism of software,
-concurrency due to threading has received considerable attention in the literature.
-This is perhaps due to an increasing push to exploit multi-core CPUs
-and massively parallel architectures.
-
-Two systems that have been proposed to eliminate non-determinism in threading
+Threading and asynchronous input/output callbacks execute instructions in an apparently
+non-deterministic order that is determined by a program's interaction with 
+its operating environment. The increasing push to exploit multi-core CPUs has
+led computer scientists to develop strategies for deterministically running software 
+on top of apparently non-deterministic multithreaded systems. Two systems that have been developed to eliminate non-determinism in threading
 are C{\small ORE}D{\small ET} \cite{bergan2010coredet} and D{\small THREADS} \cite{liu2011dthreads}.
 C{\small ORE}D{\small ET} is a framework and library for compiling C/C++ programs
-using the LLVM \cite{lattner2004llvm} compiler framework such that the generated machine code operates deterministically.
+such that the generated machine code operates deterministically.
 D{\small THREADS} is a replacement for the standard UNIX Pthreads library.
-Both of these systems operate by preventing the sharing of information between
-threads during a parallel phase, and allowing sharing and synchronization
-deterministically in a serial phase.
+Both of these systems operate by preventing information sharing between
+threads during a parallel phase, and deterministically allowing sharing
+during a serial phase.
 This biphasic structure imposes an overhead on the operation of the threading
-system, but both approaches nevertheless show performance comparable to native
-threading in many benchmarked cases \cite{liu2011dthreads}, indicating that they show
-practical promise.
+system, but this overhead is low in many benchmarked cases \cite{liu2011dthreads}. 
 
-Both C{\small ORE}D{\small ET} and D{\small THREADS} also
-feature deterministic memory allocation. In the case of D{\small THREADS},
-this is achieved through a specially implemented memory allocator,
-whereas in C{\small ORE}D{\small ET} it is achieved through compiling the
+These libraries also eliminate non-determinism
+due to memory layout. D{\small THREADS} achieves this through a specially implemented memory allocator,
+whereas C{\small ORE}D{\small ET} achieves this by compiling the
 memory allocator itself with the C{\small ORE}D{\small ET} framework.
-This is important for simulation algorithms because it eliminates non-determinism
-due to memory layout.
 
-Tools like C{\small ORE}D{\small ET} and D{\small THREADS} are useful in the context of
-dynamical modeling because they allow simulation algorithms to achieve replicability.
-However, the ultimate goal of modeling software should be to help reproducibility,
-and C{\small ORE}D{\small ET} and D{\small THREADS} offer peace of mind which comes
-with a certain amount of false sense of security.
-
-Namely, small changes in source code can drastically affect the output of programs
-compiled using these tools. The tools can help conceal intrinsic variability in the
-underlying model by hiding it behind a deterministic facade.
-Only when the author modifies the structure of the source code or model does this
-variability become apparent.
-
-This fact underscores the importance of studying the convergence properties of a model.
-The model may not converge at all, in which case the model may only be reproduced up to
-some metric for comparison. Some mathematical models for physical processes have this
-behavior, which does not limit their predictive power, but rather specifies the context
-where it applies.
-Nobel Laureate Richard Feynman famously criticized contemporary models of turbulence
-for lacking long-range predictive power.
-
-Like Feynman, we also wish to draw attention to the domain where a mathematical method
-is representative and predictive of physically testable outcomes.
-For this reason, we caution against utilizing determinism as a crutch to avoid
-addressing the larger issue of the robustness of the mathematical methods used in a model.
-In an ideal case, we would have methods which converge reliably to a biologically accurate
-solution, and which can be simulated deterministically.
+Dynamical modelers should use tools like C{\small ORE}D{\small ET} and D{\small THREADS} 
+to achieve replicable simulation algorithms, even on top of non-deterministic platforms.
 
 \subsection{Limitations of Current Standards for Whole-Cell Modeling}
 
 The \textit{M. genitalium} whole-cell model \cite{Karr2012} consists of 28 submodels.
-The submodels are implemented using a variety of modeling techniques including
-ODEs, Boolean networks, and flux balance analysis.
+The submodels are implemented using a variety of modeling formalisms including
+ordinary differential equations, Boolean networks, and flux balance analysis.
 
-Although the \textit{M. genitalium} model is replicable, the model is not reproducible for several reasons. First,
-although the model could be encoded in SBML using the SBML hierarchical model composition package, there is no 
-general-purpose simulation software tool which can simulate multi-algorithm models. SBML
-model composition (i.e. the SBML `comp' extension) combines models by flattening them into a single larger model.
+Although the \textit{M. genitalium} model is replicable, the model is not easily reproducible for several reasons. First,
+although the model could be encoded in SBML using the Flux Balance Constraints, Hierarchical Model Composition, Multistate and Multicomponent 
+Species, and Array SBML packages, there is no SBML-compatible simulator which supports all of these packages or 
+which can simulate multi-algorithm models. The existing SBML simulators only support 
+model composition by flattening submodels into a single larger model. 
 
-Second, current state-of-the-art SBML simulators are not sufficient to simulate the the \textit{M. genitalium} model. This is due to the fact that
-the model requires several features
-that are not supported by SBML Level 3 core, including rule-based and constraint-based modeling.
-The use of these features does not prevent the model from being encoded in SBML. However, if the model were encoded in SBML,
-it would not be possible to simulate it because there is no simulator which supports all of the
-required SBML features.
+Second, the model is difficult to reproduce because the details of how experimental data was used to parameterize the \textit{M. genitalium}
+are not transparent. The \textit{M. genitalium} model was parameterized using data from over 900 
+sources. The WholeCellKB-MG database carefully describes these data sources \cite{karr2013wholecellkb}. Although this database is publicly accessible, 
+the details of how this database was used to parameterize the model are unclear
+because they are intertwined with the simulation code. 
+Improved software tools must be developed to help whole-cell modelers use the minimum information 
+requested in the annotation of biochemical models (MIRIAM) \cite{novere2005minimum}
+standard to annotate model components with persistent uniform resource identifiers. 
 
-Third, the model is difficult to reproduce because details of how the \textit{M. genitalium} model was parameterized with
-experimental data are not transparent. The \textit{M. genitalium} model was parameterized using data from over 900 
-publications that was curated and organized in the WholeCellKB-MG database \cite{karr2013wholecellkb}. The database 
-includes detailed information about each gene, protein, and reaction. Although the database is publicly accessible and
-easy to search and browse, the details of how the data was used to parameterize the model are not fully transparent
-because they are intertwined with the simulator source code.
-% \karrcomment{Going forward, modelers should use transparent
-% representation formats such as SBML to describe how experimental data is used parameterize models.}{elaborate}
+Third, the model is difficult to reproduce because its assumptions are not clearly outlined. Rather, its assumptions are
+implicit in the simulation source code. This makes it difficult
+to distill the model's mathematical structure. A new standard is needed to allow modelers to annotate model assumptions, including why
+specific mathematical formalisms were used and why those formalisms were appropriate. This standard should reference an ontology that 
+includes common modeling assumptions.
 
-The problem of transparency and documentation quality has been present in quantitative modeling for some time. The SBML community's response to this problem was MIRIAM:
-Minimum information requested in the annotation of biochemical models \cite{novere2005minimum}.
-MIRIAM specifies the annotation of models using persistent uniform resource identifiers (URIs) to identify model
-components with the biophysical entities which they represent.
-If whole-cell models are to be reproducible, both modelers and the developers of software tools
-must make use of annotation schemes like MIRIAM to integrate parameterization information into the model.
-
-% Fourth, the model is difficult to reproduce because it assumptions are non-transparent because they are also intertwined
-% with the simulator source code. \karrcomment{A new standard must be developed to allow modelers to annotate model assumptions.}{elaborate}
-
-Fourth, the model assumptions are intertwined with the model source code, making it difficult
-to distill the mathematical structure from the implementation.
-A number of considerations are involved in constructing a model, and the desired level of detail
-often guides the final choice of mathematical approximation.
-This is a difficult area, but should be addressed, as the diversity of alternatives for approximating
-a given biophysical process can be quite extensive, and each method has its own set of
-technical literature \cite{gunawardena2014models}.
-
-We therefore propose that a new standard be developed to allow modelers to annotate the assumptions
-of a model.
-These assumptions include the specific mathematical approximations used (flux balance, Boolean networks, etc.),
-the rationale for why these approximations are appropriate, and the biophysical processes they represent.
-These annotations should be encoded using persistent URIs as with earlier standards.
-Minting such URIs requires a consensus regarding their use and the support of the developers of
-systems biology software.
-
-\subsection{Toward Reproducing Multi-Algorithm Models}
-
-The \textit{M. genitalium} whole-cell model poses several novel challenges for standards.
-The most significant is supporting a hybrid modeling approach.
-The integration of the submodels (as in \textit{M. genitalium}) is not currently
-addressed by standards. In order to be replicable, it must be done deterministically.
-
-A simulation involves a series of time steps. During each time step, the
-submodels are run independently,
-and synchronized at the end of the time step, updating any variables
-which are shared between submodels.
-The whole-cell model coordinates this synchronization and partitions resources such as cellular energy stores
-among the submodels.
-This process is not unlike a multithreaded software system where each thread performs
-a specific task. The serial execution of a program can be designed to be deterministic.
-Likewise, the submodels of the whole-cell model are designed in such a way that
-they are individually replicable. The seed for the pseudorandom number generator
-used in the whole-cell model was recorded in order to allow replication of simulation results.
-
-The integration of these disparate modeling techniques poses distinct challenges for replicability.
-Much in the same way that multithreaded programming greatly complicates
-determinism in software, integration of submodels complicates the behavior
-of the whole-cell model.
-Using systems like C{\small ORE}D{\small ET} and D{\small THREADS}, it is possible
-to achieve deterministic behavior of a computer program which uses threads.
-It is instructive to consider whether the same approach can be applied to whole-cell
-modeling, and indeed the \textit{M. genitalium} whole-cell model already displays
-some hallmarks of deterministic frameworks, such as the biphasic structure if its timestep.
-This suggests that technologies such as C{\small ORE}D{\small ET} and D{\small THREADS}
-can offer insights into how to integrate a hybrid model in a replicable way.
-
-% The \textit{M. genitalium} model also highlights the use of
-% standards as self-documenting. In a system composed purely of reactions,
-% SBML specifies the minimum amount of information required for reproduction - the rate laws and
-% boundary conditions. The complexities of numerical integration are not handled by the SBML encoding.
-% However, many recent SBML Level 3 packages have tended to focus on
-% implementation-driven features which represent elements in a way that
-% improves simulator performance.
-% This represents a shift away from the element description of the bare mathematical
-% entities of the model. This shift may be necessary in some cases to enable
-% simulation of certain types of models, but it detracts from the ability
-% of standards to be self-documenting.
-
-% needed in second column of first page if using \IEEEpubid
-%\IEEEpubidadjcol
-
-% \subsubsection{Subsubsection Heading Here}
-% Subsubsection text here.
-
-
-% An example of a floating figure using the graphicx package.
-% Note that \label must occur AFTER (or within) \caption.
-% For figures, \caption should occur after the \includegraphics.
-% Note that IEEEtran v1.7 and later has special internal code that
-% is designed to preserve the operation of \label within \caption
-% even when the captionsoff option is in effect. However, because
-% of issues like this, it may be the safest practice to put all your
-% \label just after \caption rather than within \caption{}.
-%
-% Reminder: the "draftcls" or "draftclsnofoot", not "draft", class
-% option should be used if it is desired that the figures are to be
-% displayed while in draft mode.
-%
-
-% Note that IEEE typically puts floats only at the top, even when this
-% results in a large percentage of a column being occupied by floats.
-
-
-% An example of a double column floating figure using two subfigures.
-% (The subfig.sty package must be loaded for this to work.)
-% The subfigure \label commands are set within each subfloat command,
-% and the \label for the overall figure must come after \caption.
-% \hfil is used as a separator to get equal spacing.
-% Watch out that the combined width of all the subfigures on a 
-% line do not exceed the text width or a line break will occur.
-%
-%\begin{figure*}[!t]
-%\centering
-%\subfloat[Case I]{\includegraphics[width=2.5in]{box}%
-%\label{fig_first_case}}
-%\hfil
-%\subfloat[Case II]{\includegraphics[width=2.5in]{box}%
-%\label{fig_second_case}}
-%\caption{Simulation results for the network.}
-%\label{fig_sim}
-%\end{figure*}
-%
-% Note that often IEEE papers with subfigures do not employ subfigure
-% captions (using the optional argument to \subfloat[]), but instead will
-% reference/describe all of them (a), (b), etc., within the main caption.
-% Be aware that for subfig.sty to generate the (a), (b), etc., subfigure
-% labels, the optional argument to \subfloat must be present. If a
-% subcaption is not desired, just leave its contents blank,
-% e.g., \subfloat[].
-
-
-% An example of a floating table. Note that, for IEEE style tables, the
-% \caption command should come BEFORE the table and, given that table
-% captions serve much like titles, are usually capitalized except for words
-% such as a, an, and, as, at, but, by, for, in, nor, of, on, or, the, to
-% and up, which are usually not capitalized unless they are the first or
-% last word of the caption. Table text will default to \footnotesize as
-% IEEE normally uses this smaller font for tables.
-% The \label must come after \caption as always.
-%
-%\begin{table}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-%\caption{An Example of a Table}
-%\label{table_example}
-%\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-%\begin{tabular}{|c||c|}
-%\hline
-%One & Two\\
-%\hline
-%Three & Four\\
-%\hline
-%\end{tabular}
-%\end{table}
-
-
-% Note that the IEEE does not put floats in the very first column
-% - or typically anywhere on the first page for that matter. Also,
-% in-text middle ("here") positioning is typically not used, but it
-% is allowed and encouraged for Computer Society conferences (but
-% not Computer Society journals). Most IEEE journals/conferences use
-% top floats exclusively. 
-% Note that, LaTeX2e, unlike IEEE journals/conferences, places
-% footnotes above bottom floats. This can be corrected via the
-% \fnbelowfloat command of the stfloats package.
-
-
-
+Fourth, the model is difficult to reproduce because there is not yet a consensus multi-algorithm simulation meta-algorithm 
+or consensus multi-algorithm simulation software system. An accurate, scalable multi-algorithm simulation meta-algorithm
+and a high performance simulation program must be developed and accepted by the modeling community. This 
+simulator must have deterministic control over its execution so that it can replicate 
+simulations. In particular, it must have deterministic control over its use of pseudorandom number generators. 
+In addition, multithreaded simulators should use libraries like C{\small ORE}D{\small ET} and D{\small THREADS} to 
+to ensure deterministic behavior on multi-core systems.
 
 \section{Conclusion}
 
-The \textit{M. genitalium} whole-cell model has pushed the frontier of dynamical modeling. 
-However, it has also created new challenges for replicating and reproducing models.
-These challenges include reproducing hybrid model simulations, reproducing model assumptions, and
-reproducing model parameters from experimental data. 
+Expanded standards and new tools are needed to facilitate replicable and reproducible systems biology modeling, including whole-cell modeling.
+These standards and tools must enable researchers to reproduce model assumptions, reproduce model parameters
+directly from experimental data, and reproduce hybrid model simulations. 
 
-One key step toward replicable whole-cell modeling is a new standard for hybrid modeling.
-Another key step toward replicable whole-cell modeling is expanded support for the 
+One key step toward replicable modeling is expanded support for the 
 Flux Balance Constraints, Hierarchical Model Composition, Multistate and Multicomponent 
-Species, and Array SBML packages. 
-
-We have discussed ways of achieving replicable results in software by showing how
-systems biology software tools can be engineered to reliably produce the same result
-between runs. We emphasized the need to have deterministic control over the algorithms
-used, and highlighted the benefits of this approach to systems biology.
-
-In addition, more research is needed to determine how to effectively integrate disparate
-modeling techniques while satisfying both numerical robustness and producing
-biologically accurate results. Furthermore, the sheer complexity of whole-cell modeling necessitates 
-the automation of routine tasks such as data curation which are commonly performed manually.
-
-In summary, the path to replicable whole-cell models is based on
-encoding of the submodels in standard formats. It is not necessary for a single simulator
-to support every type of submodel, but it is important that the simulator
-be implemented in a highly replicable way.
-
-In addition, for reproducibility, the model assumptions must be explicitly
-documented, and if this can be done using a structured database,
-it becomes easier for independent researchers to understand and validate the model.
-
-In both cases, a continued commitment to open standards and sharing source code is vital
-to constructing and validating biologically accurate whole-cell models.
+Species, and Array SBML packages. It is not necessary for every simulator
+to support every package, but each simulator should be capable of numerically replicating its own results.
+Consequently, each simulator must have deterministic control over its use of pseudorandom number generators.
+New standards and tools to document model assumptions and data sources are also needed to enable researchers to reproduce models.
+Such standards and tools will make it easier for independent researchers to understand, reproduce, and validate models. 
+Finally, continued commitment to open standards, software tools, and models is needed to help researchers replicate and reproduce biologically accurate models.
 
 \section{Acknowledgment}
 
-The authors would like to acknowledge Herbert M. Sauro for providing comments and discussion
+The authors thank Herbert M. Sauro for helpful discussions
 on reproducibility and replicability in systems biology.
-
-% \appendices
-% \section{Proof of the First Zonklar Equation}
-% Appendix one text goes here.
 
 % Can use something like this to put references on a page
 % by themselves when using endfloat and the captionsoff option.
@@ -994,11 +633,11 @@ on reproducibility and replicability in systems biology.
 is currently pursuing a Ph.D. in Bioengineering from the University of Washington, USA.
 His research interests include modeling dynamical biophysical processes such as
 metabolism and gene expression regulation.
-He currently develops libRoadRunner, a software package used to simulate dynamical models encoded in SBML.
+He currently develops libRoadRunner, a software package for simulating dynamical models encoded in SBML.
 \end{IEEEbiography}
 
 \begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{photos/karr.jpg}}]{Jonathan R. Karr}
-received his Ph.D. in Biophysics and M.S. in Medicine from Stanford University, USA in 2014 and his B.S.s in Physics and Brain \& Cognitive Sciences from the Massachusetts Institute of Technology, USA in 2006. Currently, Dr. Karr is a Fellow at the Icahn School of Medicine at Mount Sinai, USA. His research focuses on the development of comprehensive whole-cell computational models and their applications to bioengineering and medicine.
+received his Ph.D. in Biophysics and M.S. in Medicine from Stanford University, USA in 2014 and his B.S.s in Physics and Brain \& Cognitive Sciences from the Massachusetts Institute of Technology, USA in 2006. Currently, Dr. Karr is a Fellow at the Icahn School of Medicine at Mount Sinai, USA. His research focuses on the development of comprehensive whole-cell computational models and their application to bioengineering and medicine.
 \end{IEEEbiography}
 
 \vfill
