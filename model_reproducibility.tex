@@ -472,7 +472,7 @@ Systems biology, computational modeling, reproducibility
 This rigorous standard eliminates conclusions that were based on incorrect methods, machinery, or experiments and ensures that scientific results are only accepted as facts once multiple scientists have thoroughly dismissed other potential explanations. 
 
 \textit{Replicability}, in contrast, is the ability to reproduce a result given the same experimental machinery and conditions. 
-Replicability is a more liberal standard than reproducibility because replicability does not require independent experimental methods or equipment.
+% Replicability is a more liberal standard than reproducibility because replicability does not require independent experimental methods or equipment.
 Consequently, replicability only has the power to eliminate conclusions that were based on erroneous experiments, and cannot eliminate conclusions based on faulty methods or machinery.
 
 Due to the complexity of modern scientific experiments and financial, time, and publishing pressures, investigators often do not have the time or resources to design orthogonal methods to test results independently. Instead, investigators frequently replicate reported results using the published method. The underemphasis on independent testing has the potential to allow us to accept false results based on faulty methods.
@@ -501,9 +501,9 @@ Replicability refers only to the ability to recapitulate earlier simulation resu
 \section{Replicability and Reproducibility}
 Reproducing a model requires three steps (Fig.~\ref{fig_repro_diagram}). First, the model's equations and parameter values must be duplicated from the original assumptions and experimental data. This requires machine-readable standards for concretely describing model components in terms of external database entries such as KEGG \cite{kanehisa2000kegg} compounds and MetaCyc \cite{caspi2008metacyc} reactions, machine-readable databases for representing the data sources that were used to parameterize a model, annotation standards for describing how those data sources were used to parameterize the model, and annotation standards for describing the assumptions that the model was based on \cite{boulton2012open}. Such standards would also allow researchers to efficiently search and discover models.
 
-Second, the model's numerical integrator must be duplicated. This requires that simulation software programs be available open-source \cite{easterbrook2014open}.
+Second, the model's numerical integrator must be duplicated. This requires that the simulation software source code be available and freely redistributable \cite{easterbrook2014open}.
 
-Third, the second numerical integrator must be used to numerically duplicate the model's numerical results \cite{easterbrook2014open}. In the case of stochastic models, this means that the first moments of the model's predictions must be duplicated. In turn, to duplicate numerical results simulators should have complete deterministic control over their execution, including using deterministic algorithms and deterministic pseudorandom number generators. Chaotic models, which are highly sensitive to small numerical differences, and stochastic simulators, which cannot duplicate numerical results, are considerably more difficult to reproduce.
+Third, the numerical integrator must be used to numerically duplicate the model's numerical results \cite{easterbrook2014open}. In the case of stochastic models, this means that the first moments of the model's predictions must be duplicated. In turn, to duplicate numerical results simulators should have complete deterministic control over their execution, including using deterministic algorithms and deterministic pseudorandom number generators. Chaotic models, which are highly sensitive to small numerical differences, and stochastic simulators, which cannot duplicate numerical results, are considerably more difficult to reproduce.
 
 \subsection{Limitations of Current Standards for Reproducibile Modeling}
 
@@ -527,7 +527,7 @@ However, these packages have also fractioned SBML because each of these packages
 In fact, no single simulator supports all of these packages.
 This diminishes SBML's capability to facilitate replication.
 
-A third barrier to reproducibility is the lack of transparency into the experimental data and assumptions which models are based on. 
+A third barrier to reproducibility is the lack of transparency with respect to the experimental data and assumptions which models are based on.
 This is becoming more important as researchers increasingly take advantage of high-throughput genomics data and pathway databases to build larger models.
 
 \subsection{Technical Considerations for Replicability and Reproducibility}
