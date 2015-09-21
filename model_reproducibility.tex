@@ -543,10 +543,10 @@ Threading and asynchronous input/output callbacks execute instructions in an app
 non-deterministic order that is determined by a program's interaction with 
 its operating environment. The increasing push to exploit multi-core CPUs has
 led computer scientists to develop strategies for deterministically running software 
-on top of apparently non-deterministic multithreaded systems. Two systems that have been developed to eliminate non-determinism in threading
+in a concurrent environment. Two systems that have been developed to eliminate non-determinism in threading
 are C{\small ORE}D{\small ET} \cite{bergan2010coredet} and D{\small THREADS} \cite{liu2011dthreads}.
 C{\small ORE}D{\small ET} is a framework and library for compiling C/C++ programs
-such that the generated machine code operates deterministically.
+such that the output executables behave deterministically, whereas
 D{\small THREADS} is a replacement for the standard UNIX Pthreads library.
 Both of these systems operate by preventing information sharing between
 threads during a parallel phase, and deterministically allowing sharing
@@ -559,8 +559,12 @@ due to memory layout. D{\small THREADS} achieves this through a specially implem
 whereas C{\small ORE}D{\small ET} achieves this by compiling the
 memory allocator itself with the C{\small ORE}D{\small ET} framework.
 
-Dynamical modelers should use tools like C{\small ORE}D{\small ET} and D{\small THREADS} 
-to achieve replicable simulation algorithms, even on top of non-deterministic platforms.
+Some shortcomings of these tools include the fact that a small perturbation in initial
+conditions can drastically affect program behavior.
+Nevertheless, we believe that
+dynamical modelers should use tools like C{\small ORE}D{\small ET} and D{\small THREADS}
+to achieve replicable simulation algorithms, and that the systems biology community should
+work toward producing software with robust determinism.
 
 \subsection{Limitations of Current Standards for Whole-Cell Modeling}
 
