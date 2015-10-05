@@ -506,7 +506,7 @@ Reproducing a model requires three steps (Fig.~\ref{fig_repro_diagram}). First, 
 
 Second, the model's numerical integrator must be duplicated. This requires that the simulation software source code be available and freely redistributable \cite{easterbrook2014open}.
 
-Third, the numerical integrator must be used to numerically duplicate the model's numerical results \cite{easterbrook2014open}. In the case of stochastic models, this means that the first moments of the model's predictions must be duplicated. In turn, to duplicate numerical results simulators should have complete deterministic control over their execution, including using deterministic algorithms and deterministic pseudorandom number generators. Chaotic models, which are highly sensitive to small numerical differences, and stochastic simulators, which cannot duplicate numerical results, are considerably more difficult to reproduce.
+Third, the numerical integrator must be used to duplicate the model's numerical results \cite{easterbrook2014open}. In the case of stochastic models, this means that the first moments of the model's predictions must be duplicated. In turn, to duplicate numerical results simulators should have complete deterministic control over their execution, including using deterministic algorithms and deterministic pseudorandom number generators. Chaotic models, which are highly sensitive to small numerical differences, and stochastic simulators, which cannot duplicate numerical results, are considerably more difficult to reproduce.
 
 \subsection{Limitations of Current Standards for Reproducibile Modeling}
 
