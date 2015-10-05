@@ -520,7 +520,7 @@ A second barrier to reproducibility is the limited support for the existing stan
 One advantage of representing a model in a standard format such as SBML is the ability
 to utilize multiple simulators to independently replicate simulation results. To support various specialized
 modeling formalisms, SBML Level 3 includes several extensions including the
-Hierarchical Model Composition\footnote{http://co.mbine.org/standards/sbml/level-3/version-1/comp/version-1/release-2},
+Hierarchical Model Composition \cite{smith2015sbml},
 Flux Balance Constraints\footnote{http://sbml.org/Documents/Specifications/SBML\_Level\_3/Packages/fbc}, and
 Arrays\footnote{http://sbml.org/Documents/Specifications/SBML\_Level\_3/Packages/arrays} packages.
 However, these packages have also fractioned SBML because each of these packages is only supported by a few simulators. 
@@ -573,7 +573,7 @@ The submodels are implemented using a variety of modeling formalisms including
 ordinary differential equations, Boolean networks, and flux balance analysis.
 
 Although the \textit{M. genitalium} model is replicable, the model is not easily reproducible for several reasons. First,
-although the model could be encoded in SBML using the Flux Balance Constraints, Hierarchical Model Composition, Multistate and Multicomponent 
+although the model could be encoded in SBML using the Flux Balance Constraints, Hierarchical Model Composition \cite{smith2015sbml}, Multistate and Multicomponent
 Species, and Array SBML packages, there is no SBML-compatible simulator which supports all of these packages or 
 which can simulate multi-algorithm models. The existing SBML simulators only support 
 model composition by flattening submodels into a single larger model. 
@@ -608,7 +608,7 @@ These standards and tools must enable researchers to reproduce model assumptions
 directly from experimental data, and reproduce hybrid model simulations. 
 
 One key step toward replicable modeling is expanded support for the 
-Flux Balance Constraints, Hierarchical Model Composition, Multistate and Multicomponent 
+Flux Balance Constraints, Hierarchical Model Composition \cite{smith2015sbml}, Multistate and Multicomponent
 Species, and Array SBML packages. It is not necessary for every simulator
 to support every package, but each simulator should be capable of numerically replicating its own results.
 Consequently, each simulator must have deterministic control over its use of pseudorandom number generators.
