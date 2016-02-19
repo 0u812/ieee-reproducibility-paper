@@ -624,9 +624,11 @@ The \textit{M. genitalium} was constructed from a limited set of data and its cr
 
 A hybrid model employs diverse numerical solvers in calculating a timecourse trajectory. In general, these solvers will not be united by a common theoretical ground so it will not be possible to collapse (or ``flatten'') models into a single set of differential equations or rules which govern its dynamical behavior.
 Instead, the dynamics will be derived from the internal behavior of the solvers and their interactions with each other. This allows modelers the freedom of choosing the optimum solver for a given role and availability of data.
-Furthermore, 
-% The utility of the model lies in providing optimal modeling of each of its subprocesses by choosing optimal modeling schemes on a case-by-case basis.
-% Therefore, attempting to simplify or reduce the model would eliminate one of its most critical advantages. The disparate modeling techniques used in the model require different numerical solvers.
+Furthermore, many models feature multiscale phenomena. In a whole-cell model, some reactions will proceed on a faster timescale than others. The difference can be orders of magnitude, and considerable gains in performance can be realized if the fast components of the system can be simulated separately from the slow components. Indeed, SBML has attributes for such ``fast'' reactions, but complex multiscale models may have an entire hierarchy of reaction timescales and a simple true/false attribute is insufficient in this case.
+
+Returning to the \textit{M. genitalium} model, we observe that it is divided into submodules on the basis of physiological processes (transcription, translation, metabolism, etc.). The numerical solvers for each of these submodules are all run at each timestep and the outputs are propagated to global shared variables. Assuming \textit{a priori} knowledge of the timescale of each component, we could instead subdivide the full model on the basis of timescale by putting components with similar scales in the same submodule. Furthermore, instead of running all numerical solvers at each timestep, we could employ a hierarchy of timesteps in which only the fastest submodules are run, followed by the next fastest, and so on.
+
+Naturally, this raises theoretical questions
 
 \section{Conclusion}
 
