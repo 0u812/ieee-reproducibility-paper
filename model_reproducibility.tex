@@ -618,6 +618,16 @@ simulations. In particular, it must have deterministic control over its use of p
 In addition, multithreaded simulators should use libraries like C{\small ORE}D{\small ET} and D{\small THREADS} to 
 ensure deterministic behavior on multi-core systems.
 
+\subsection{Towards Hybrid Simulators}
+
+The \textit{M. genitalium} was constructed from a limited set of data and its creators made carefully chosen compromises which reflect this fact. For example, metabolism is modeled using flux balance when a more detailed kinetic model could have been employed. Flux balance was chosen due to the fact that it does not require kinetic parameters in order to estimate the flux for a pathway, and it is difficult to obtain accurate values for these parameters in an organism such as \textit{M. genitalium}. We anticipate whole-cell models will continue to need to make such tradeoffs in the near future, so it follows that \texit{hybrid models} will become utilized more often in modeling studies.
+
+A hybrid model employs diverse numerical solvers in calculating a timecourse trajectory. In general, these solvers will not be united by a common theoretical ground so it will not be possible to collapse (or ``flatten'') models into a single set of differential equations or rules which govern its dynamical behavior.
+Instead, the dynamics will be derived from the internal behavior of the solvers and their interactions with each other. This allows modelers the freedom of choosing the optimum solver for a given role and availability of data.
+Furthermore, 
+% The utility of the model lies in providing optimal modeling of each of its subprocesses by choosing optimal modeling schemes on a case-by-case basis.
+% Therefore, attempting to simplify or reduce the model would eliminate one of its most critical advantages. The disparate modeling techniques used in the model require different numerical solvers.
+
 \section{Conclusion}
 
 Expanded standards and new tools are needed to facilitate replicable and reproducible systems biology modeling, including whole-cell modeling.
