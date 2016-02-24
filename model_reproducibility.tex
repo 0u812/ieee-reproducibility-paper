@@ -479,9 +479,13 @@ Systems biology, computational modeling, reproducibility
 \textit{Reproducibility} is the ability to confirm a result via a completely independent test, including different investigators, experimental methods, and experimental machinery. 
 This rigorous standard eliminates conclusions that were based on incorrect methods, machinery, or experiments and ensures that scientific results are only accepted as facts once multiple scientists have thoroughly dismissed other potential explanations. 
 
-\textit{Replicability}, in contrast, is the ability to reproduce a result given the same experimental machinery and conditions. 
-% Replicability is a more liberal standard than reproducibility because replicability does not require independent experimental methods or equipment.
+\textit{Repeatability}, in contrast, is the ability to reproduce a result given the same experimental machinery and conditions.
+% Repeatability is a more liberal standard than reproducibility because replicability does not require independent experimental methods or equipment.
 Consequently, replicability only has the power to eliminate conclusions that were based on erroneous experiments, and cannot eliminate conclusions based on faulty methods or machinery.
+
+To illustrate the difference between these two terms, consider a Gedanken experiment where Alice and Bob are both independently and separately trying to model pathway X which has been implicated in cancer. Suppose that the interactions that govern the pathway are well known and that binding affinities and Hill coefficients can be estimated from experimental data. Since Alice and Bob are both trying to model the same pathway with the same interactions, they should qualitatively arrive at the same results, assuming prior knowledge of the pathway is accurate. Upon comparing results, Alice and Bob find that their results show qualitative agreement. This is good, since independent researchers converging at the same result suggests that each employed valid reasoning and methods.
+
+numerical discrepancies, which, in this case, they attribute to their using different parameter fitting schemes. To determine if the only discrepancy is due to different parameterization, Alice asks Bob for his parameter values in order to test them in her own model.
 
 Due to the complexity of modern scientific experiments as well as financial, time, and publishing pressures, investigators often do not have the time or resources to design orthogonal methods to test results independently. Instead, investigators frequently replicate reported results using the published method. The underemphasis on independent testing has the potential to allow us to accept false results based on faulty methods.
 
@@ -502,12 +506,15 @@ biological modeling. Throughout, our discussion is motivated by the need for imp
 % where an .eps filename suffix will be assumed under latex,
 % and a .pdf suffix will be assumed for pdflatex; or what has been declared
 % via \DeclareGraphicsExtensions.
-\caption{Replicability and reproducibility explained: Model reproducibility refers to derivation from scientific knowledge and the ability to generate results in a reliable, repeatable manner;
-Replicability refers only to the ability to recapitulate earlier simulation results}
+\caption{Repeatability and reproducibility explained: Model reproducibility refers to derivation from scientific knowledge and the ability to generate results in a reliable, repeatable manner;
+Repeatability refers only to the ability to recapitulate earlier simulation results}
 \label{fig_repro_diagram}
 \end{figure*}
 
-\section{Replicability and Reproducibility}
+\section{Repeatability and Reproducibility}
+
+While there is a degree of overlap between repeatability and reproducibility as we have defined the terms in this paper, not all possible use-cases may be initial apparent so it is worthwhile to consider how these concepts play out.
+
 Reproducing a model requires three steps (Fig.~\ref{fig_repro_diagram}). First, the model's equations and parameter values must be duplicated from the original assumptions and experimental data. This requires machine-readable standards for concretely describing model components in terms of external database entries such as KEGG \cite{kanehisa2000kegg} compounds and MetaCyc \cite{caspi2008metacyc} reactions, machine-readable databases for representing the data sources that were used to parameterize a model, annotation standards for describing how those data sources were used to parameterize the model, and annotation standards for describing the assumptions that the model was based on \cite{boulton2012open}. Such standards would also allow researchers to efficiently search and discover models.
 
 Second, the model's numerical integrator must be duplicated. This requires that the simulation software source code be available and freely redistributable \cite{easterbrook2014open}.
@@ -547,7 +554,7 @@ This diminishes SBML's capability to facilitate replication.
 A third barrier to reproducibility is the lack of transparency with respect to the experimental data and assumptions which models are based on.
 This is becoming more important as researchers increasingly take advantage of high-throughput genomics data and pathway databases to build larger models.
 
-\subsection{Technical Considerations for Replicability and Reproducibility}
+\subsection{Technical Considerations for Repeatability and Reproducibility}
 
 Replicating a model is a useful step toward reproducing a model.
 If a model's numerical simulations cannot be replicated, it will be
@@ -620,7 +627,7 @@ ensure deterministic behavior on multi-core systems.
 
 \subsection{Towards Hybrid Simulators}
 
-The \textit{M. genitalium} was constructed from a limited set of data and its creators made carefully chosen compromises which reflect this fact. For example, metabolism is modeled using flux balance when a more detailed kinetic model could have been employed. Flux balance was chosen due to the fact that it does not require kinetic parameters in order to estimate the flux for a pathway, and it is difficult to obtain accurate values for these parameters in an organism such as \textit{M. genitalium}. We anticipate whole-cell models will continue to need to make such tradeoffs in the near future, so it follows that \texit{hybrid models} will become utilized more often in modeling studies.
+The \textit{M. genitalium} was constructed from a limited set of data and its creators made carefully chosen compromises which reflect this fact. For example, metabolism is modeled using flux balance when a more detailed kinetic model could have been employed. Flux balance was chosen due to the fact that it does not require kinetic parameters in order to estimate the flux for a pathway, and it is difficult to obtain accurate values for these parameters in an organism such as \textit{M. genitalium}. We anticipate whole-cell models will continue to need to make such tradeoffs in the near future, so it follows that \textit{hybrid models} will become utilized more often in modeling studies.
 
 A hybrid model employs diverse numerical solvers in calculating a timecourse trajectory. In general, these solvers will not be united by a common theoretical ground so it will not be possible to collapse (or ``flatten'') models into a single set of differential equations or rules which govern its dynamical behavior.
 Instead, the dynamics will be derived from the internal behavior of the solvers and their interactions with each other. This allows modelers the freedom of choosing the optimum solver for a given role and availability of data.
