@@ -631,6 +631,20 @@ simulations. In particular, it must have deterministic control over its use of p
 In addition, multithreaded simulators should use libraries like C{\small ORE}D{\small ET} and D{\small THREADS} to 
 ensure deterministic behavior on multi-core systems.
 
+\section{Constructing a Platform for Complex, Hybrid Modeling}
+
+The \textit{M. genitalium} re-encoding effort provides a useful test case for a platform designed to support large, complex, hybrid models, such as whole-cell models. Using the outcome of the workshop as an example, we can expect the following areas to be key features in the next generation of modeling software:
+
+\begin{itemize}
+\item A hybrid timecourse solver incorporating multiple, heterogeneous codebases
+\item Better standards for model integration, including how to parallelize the model for execution performance
+\item Transparent encoding of model data and initialization
+\end{itemize}
+
+The first requirement necessitates having a way for a diverse set of solvers to communicate. There are many ways to achieve this, including a shared memory buffer, a memory-mapped file, or message passing. Message passing offers the additional advantage that the different solvers can reside on different machines connected by a network. Furthermore, if the structure of the data contained in the message is defined and documented, it is possible to use the message passing scheme from many different programming languages and software environments.
+
+The behavior of hybrid systems is largely unknown. 
+
 \subsection{Towards Hybrid Simulators}
 
 The \textit{M. genitalium} was constructed from a limited set of data and its creators made carefully chosen compromises which reflect this fact. For example, metabolism is modeled using flux balance when a more detailed kinetic model could have been employed. Flux balance was chosen due to the fact that it does not require kinetic parameters in order to estimate the flux for a pathway, and it is difficult to obtain accurate values for these parameters in an organism such as \textit{M. genitalium}. We anticipate whole-cell models will continue to need to make such tradeoffs in the near future, so it follows that \textit{hybrid models} will become utilized more often in modeling studies.
