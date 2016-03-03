@@ -519,8 +519,6 @@ Repeatability refers only to the ability to recapitulate earlier simulation resu
 
 \section{Repeatability and Reproducibility}
 
-% While there is a degree of overlap between repeatability and reproducibility as we have defined the terms in this paper, not all possible use-cases may be initial apparent so it is worthwhile to consider how these concepts play out.
-
 Reproducing a model requires three steps (Fig.~\ref{fig_repro_diagram}). First, the model's equations and parameter values must be duplicated from the original assumptions and experimental data. This requires machine-readable standards for concretely describing model components in terms of external database entries such as KEGG \cite{kanehisa2000kegg} compounds and MetaCyc \cite{caspi2008metacyc} reactions, machine-readable databases for representing the data sources that were used to parameterize a model, annotation standards for describing how those data sources were used to parameterize the model, and annotation standards for describing the assumptions that the model was based on \cite{boulton2012open}. Such standards would also allow researchers to efficiently search and discover models.
 
 Second, the model's numerical integrator must be duplicated. This requires that the simulation software source code be available and freely redistributable \cite{easterbrook2014open}.
@@ -533,7 +531,11 @@ Second, being able to reproduce a trace of model timecourse behavior is absolute
 
 The idea of capturing the exact sequence of events leading to an error is not new. In the field of computer science, the SPIN model checker \cite{holzmann1997model} \cite{holzmann2004spin} has been used extensively to validate the operational logic of non-deterministic systems. SPIN detects invalid models by exhibiting a counterexample including the exact events leading to failure. We envisage a similar approach for biophysical modeling. Specifically, we envisage a simulator where not only can an exact simulation be replicated by supplying the same random seed, but also where a simulation may be restarted from a checkpoint containing a state snapshot at any point in the timecourse. Since serializing such checkpoints would be an expensive operation, the checkpoints would be user-specified. By combining these two features, we would be able to (1) replicate exactly a trace from a specific prior simulation, and (2) insert as many such checkpoints into the run as desired without affecting the outcome. We would then be able to capture rare events and apply permutations to test various hypotheses relating to the mechanism of the events, e.g. to test their robustness to knockouts and systematically screen for targets for intervention.
 
-% In turn, to duplicate numerical results simulators should have complete deterministic control over their execution, including using deterministic algorithms and deterministic pseudorandom number generators. Chaotic models, which are highly sensitive to small numerical differences, and stochastic simulators, which cannot duplicate numerical results, are considerably more difficult to reproduce.
+\subsection{Validation Tests as a Basis for Reproducibility}
+
+Bergmann \cite{bergmann2008comparing} presented a strategy for comparing the outputs of various SBML ODE simulators, enabling developers of simulation tools to identify weaknesses of a particular implementation. The SBML Test Suite provides normative simulation output for specific SBML features\footnote{http://sbml.org/Software/SBML\_Test\_Suite}. Both of these tests cover ODE models only, which, owing to their determinism, can be reproduced across solvers. Hence, the criteria for passing these tests is whether the results converge to an \textit{a priori} known trajectory. Stochastic models, on the other hand, intrinsically do not converge to an exact trajectory. The current standard for testing stochastic models is a statistical test based on comparing the per-variable mean and standard deviation to expected values as a function of time \cite{evans2008sbml}.
+
+In general, hybrid models contain both deterministic and stochastic components, so the statistical test could in principle be applicable. However, we argue that statistical tests are not sufficient to pronounce hybrid models (nor even complex stochastic ones) identical in practice. It has been shown that noise propagation in genetic networks can have a non-linear effect on the behavior of the network \cite{kim2013nonlinear}. A simple example is an $n$-stable switch (for example, a cell fate model) with noisy inputs. The system will ultimately end up in one of several stable states, dependent to a large extent on a random decision process. Consider a simple bi-stable switch. Over many trials, the sampled values of the variables of this system will exhibit bi-modality, with a mean in between the two modes and a very large variance large enough to include the two modes. Rather than test whether a given trajectory fits within this large variance, a more useful test would be to confirm whether the trajectory follows one of the bi-modal patterns. However, complex models can contain many non-trivial features such as the aforementioned branching behavior and it is difficult to construct a generalized statistical test that encompasses all of them.
 
 \subsection{Limitations of Current Standards for Reproducibile Modeling}
 
@@ -552,7 +554,7 @@ to utilize multiple simulators to independently replicate simulation results. To
 modeling formalisms, SBML Level 3 includes several extensions including
 Hierarchical Model Composition \cite{smith2015sbml},
 Flux Balance Constraints\footnote{http://sbml.org/Documents/Specifications/SBML\_Level\_3/Packages/fbc}, and
-Arrays\footnote{http://sbml.org/Documents/Specifications/SBML\_Level\_3/Packages/arrays} packages.
+Arrays \cite{watanabe2016efficient} packages.
 However, these packages have also fractioned SBML because each of these packages is only supported by a few simulators. 
 In fact, no single simulator supports all of these packages.
 This diminishes SBML's capability to facilitate replication.
@@ -643,7 +645,7 @@ The \textit{M. genitalium} re-encoding effort provides a useful test case for a 
 
 The first requirement necessitates having a way for a diverse set of solvers to communicate. There are many ways to achieve this, including a shared memory buffer, a memory-mapped file, or message passing. Message passing offers the additional advantage that the different solvers can reside on different machines connected by a network. Furthermore, if the structure of the data contained in the message is defined and documented, it is possible to use the message passing scheme from many different programming languages and software environments.
 
-The behavior of hybrid systems is largely unknown. 
+The behavior of hybrid systems is largely unknown.
 
 \subsection{Towards Hybrid Simulators}
 
