@@ -539,31 +539,6 @@ In general, hybrid models contain both deterministic and stochastic components, 
 
 Insteady of relying on statistical tests, we propose that validation of hybrid models involve (1) independent validation of functional subunits based on whatever method is applicable, and (2) functional hypothesis-based testing for the hybrid model as a whole. For the first part, we assume subunits correspond models which can be simulated using a single solve (i.e. subunits are not themselves hybrid models). Hence, the tests outlined above for non-hybrid models may be applicable on a subunit basis, and will likely be sufficient in most cases. For testing the hybrid model as a whole, we resort to testing externally measurable outcomes for a given input or perturbation. For example, the cellular doubling time is externally measurable, and should respond in a predictable way to certain gene deletions under a given set of environmental conditions. These conditions are inputs to the model and can be reliably set up for the original model as well as any re-implementations. The outputs of these high-level tests should be the same across all implementations, and can serve as a measure of reproducibility. However, a failure in these high-level tests is difficult to trace back to its origin, underscoring the importance of the subunit tests. Hence, just as hybrid models follow a hierarchical construction, they must also follow a hierarchical validation scheme. This is the case for the \textit{M. genitalium} model (which contains many subunit tests under its \texttt{src\_test} directory), and we believe this approach will continue to be useful in future hybrid models.
 
-\subsection{Limitations of Current Standards for Reproducibile Modeling}
-
-The CellML \cite{cuellar2003overview}, SBML \cite{hucka2003}, and SED-ML \cite{sedml2011} standards have greatly improved the replicability of dynamical modeling.
-Despite these advances, many computational biology results still cannot easily be reproduced \cite{garijo2013quantifying}.
-
-Part of this difficulty can be attributed to the gaps in the existing standards.
-SBML helps researchers replicate model variables and equations and SED-ML helps researchers replicate simulation parameter values. 
-However, neither standard helps researchers replicate simulators. 
-In particular, neither standard ensures that simulators that use pseudorandom number generators can deterministically replicate stochastic simulation results, 
-or that multiple simulators can replicate chaotic models.
-
-A second barrier to reproducibility is the limited support for the existing standards.
-One advantage of representing a model in a standard format such as SBML is the ability
-to utilize multiple simulators to independently replicate simulation results. To support various specialized
-modeling formalisms, SBML Level 3 includes several extensions including
-Hierarchical Model Composition \cite{smith2015sbml},
-Flux Balance Constraints\footnote{http://sbml.org/Documents/Specifications/SBML\_Level\_3/Packages/fbc}, and
-Arrays \cite{watanabe2016efficient} packages.
-However, these packages have also fractioned SBML because each of these packages is only supported by a few simulators. 
-In fact, no single simulator supports all of these packages.
-This diminishes SBML's capability to facilitate replication.
-
-A third barrier to reproducibility is the lack of transparency with respect to the experimental data and assumptions which models are based on.
-This is becoming more important as researchers increasingly take advantage of high-throughput genomics data and pathway databases to build larger models.
-
 \subsection{Technical Considerations for Repeatability and Reproducibility}
 
 Replicating a model is a useful step toward reproducing a model.
