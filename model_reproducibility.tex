@@ -539,6 +539,20 @@ In general, hybrid models contain both deterministic and stochastic components, 
 
 Insteady of relying on statistical tests, we propose that validation of hybrid models involve (1) independent validation of functional subunits based on whatever method is applicable, and (2) functional hypothesis-based testing for the hybrid model as a whole. For the first part, we assume subunits correspond models which can be simulated using a single solve (i.e. subunits are not themselves hybrid models). Hence, the tests outlined above for non-hybrid models may be applicable on a subunit basis, and will likely be sufficient in most cases. For testing the hybrid model as a whole, we resort to testing externally measurable outcomes for a given input or perturbation. For example, the cellular doubling time is externally measurable, and should respond in a predictable way to certain gene deletions under a given set of environmental conditions. These conditions are inputs to the model and can be reliably set up for the original model as well as any re-implementations. The outputs of these high-level tests should be the same across all implementations, and can serve as a measure of reproducibility. However, a failure in these high-level tests is difficult to trace back to its origin, underscoring the importance of the subunit tests. Hence, just as hybrid models follow a hierarchical construction, they must also follow a hierarchical validation scheme. This is the case for the \textit{M. genitalium} model (which contains many subunit tests under its \texttt{src\_test} directory), and we believe this approach will continue to be useful in future hybrid models.
 
+\section{Constructing a Platform for Complex, Hybrid Modeling}
+
+The \textit{M. genitalium} re-encoding effort provides a useful test case for a platform designed to support large, complex, hybrid models, such as whole-cell models. Using the outcome of the workshop as an example, we can expect the following areas to be key features in the next generation of modeling software:
+
+\begin{itemize}
+\item A hybrid timecourse solver incorporating multiple, heterogeneous codebases
+\item Better standards for model integration, including how to parallelize the model for execution performance
+\item Transparent encoding of model data and initialization
+\end{itemize}
+
+These focus areas require advances in simulation software, standards, and services to connect models and data. The first requirement necessitates having a way for a diverse set of solvers to communicate. There are many ways to achieve this, including shared memory buffers, memory-mapped files, or message passing. Message passing offers the additional advantage that the different solvers can reside on different machines connected by a network. Furthermore, if the structure of the data contained in the message is defined and documented, it is possible to use the message passing scheme from many different programming languages and software environments. The SBML Arrays package \cite{watanabe2016efficient} helps aid in the parallelization of certain types of models, while the Hierarchical Model Composition package \cite{smith2015sbml} offers a way to integrate models. However, there is overlap between these two packages, and their respective feature sets could be reconciled into a single scheme for encoding and simulating hierarchical models. This scheme must also address how to deal with updates to shared variables, which can be a source of conflicts and race conditions. Finally, better databases and services are needed to transparently, unambiguously tie the parameterization and initialization of the model to the data used to generate it. Linked data has proven to be extremely useful both in the annotation of XML-encoded standards \cite{novere2005minimum} and pure RDF standards \cite{galdzicki2014synthetic}.
+
+Before a platform for hybrid modeling can be realized, the modeling community will first need to agree on a few preliminary features such a platform should have. It has been our experience that non-replicable simulations are notoriously difficult to debug. Therefore, we propose that in order to build a scalable platform, replicable simulations should be incorporated as a core feature. Since replicable simulations are difficult to achieve for hybrid models with the aforementioned synchronization issues for shared variables, we devote an entire section to this problem and how it is handled in computer science. We then suggest how these computer science techniques may be applied to timecourse simulation software.
+
 \subsection{Technical Considerations for Repeatability and Reproducibility}
 
 Replicating a model is a useful step toward reproducing a model.
@@ -583,7 +597,7 @@ ordinary differential equations, Boolean networks, and flux balance analysis.
 
 Although the \textit{M. genitalium} model is replicable, the model is not easily reproducible for several reasons. First,
 although the model could be encoded in SBML using the Flux Balance Constraints, Hierarchical Model Composition \cite{smith2015sbml}, Multistate and Multicomponent
-Species, and Array SBML packages, there is no SBML-compatible simulator which supports all of these packages or 
+Species, and Arrays \cite{watanabe2016efficient} SBML packages, there is no SBML-compatible simulator which supports all of these packages or
 which can simulate multi-algorithm models. The existing SBML simulators only support 
 model composition by flattening submodels into a single larger model. 
 
@@ -610,20 +624,6 @@ simulations. In particular, it must have deterministic control over its use of p
 In addition, multithreaded simulators should use libraries like C{\small ORE}D{\small ET} and D{\small THREADS} to 
 ensure deterministic behavior on multi-core systems.
 
-\section{Constructing a Platform for Complex, Hybrid Modeling}
-
-The \textit{M. genitalium} re-encoding effort provides a useful test case for a platform designed to support large, complex, hybrid models, such as whole-cell models. Using the outcome of the workshop as an example, we can expect the following areas to be key features in the next generation of modeling software:
-
-\begin{itemize}
-\item A hybrid timecourse solver incorporating multiple, heterogeneous codebases
-\item Better standards for model integration, including how to parallelize the model for execution performance
-\item Transparent encoding of model data and initialization
-\end{itemize}
-
-The first requirement necessitates having a way for a diverse set of solvers to communicate. There are many ways to achieve this, including a shared memory buffer, a memory-mapped file, or message passing. Message passing offers the additional advantage that the different solvers can reside on different machines connected by a network. Furthermore, if the structure of the data contained in the message is defined and documented, it is possible to use the message passing scheme from many different programming languages and software environments.
-
-The behavior of hybrid systems is largely unknown.
-
 \subsection{Towards Hybrid Simulators}
 
 The \textit{M. genitalium} was constructed from a limited set of data and its creators made carefully chosen compromises which reflect this fact. For example, metabolism is modeled using flux balance when a more detailed kinetic model could have been employed. Flux balance was chosen due to the fact that it does not require kinetic parameters in order to estimate the flux for a pathway, and it is difficult to obtain accurate values for these parameters in an organism such as \textit{M. genitalium}. We anticipate whole-cell models will continue to need to make such tradeoffs in the near future, so it follows that \textit{hybrid models} will become utilized more often in modeling studies.
@@ -634,7 +634,7 @@ Furthermore, many models feature multiscale phenomena. In a whole-cell model, so
 
 Returning to the \textit{M. genitalium} model, we observe that it is divided into submodules on the basis of physiological processes (transcription, translation, metabolism, etc.). The numerical solvers for each of these submodules are all run at each timestep and the outputs are propagated to global shared variables. Assuming \textit{a priori} knowledge of the timescale of each component, we could instead subdivide the full model on the basis of timescale by putting components with similar scales in the same submodule. Furthermore, instead of running all numerical solvers at each timestep, we could employ a hierarchy of timesteps in which only the fastest submodules are run, followed by the next fastest, and so on.
 
-Naturally, this raises theoretical questions
+Naturally, this raises theoretical questions. The behavior of complex, large-scale hybrid systems is largely unknown. Moreover, existing schemes for handling combined discrete and continuous systems often do not scale well as the number of discrete events per unit of time increases.
 
 \section{Conclusion}
 
@@ -644,7 +644,7 @@ directly from experimental data, and reproduce hybrid model simulations.
 
 One key step toward replicable modeling is expanded support for the 
 Flux Balance Constraints, Hierarchical Model Composition \cite{smith2015sbml}, Multistate and Multicomponent
-Species, and Array SBML packages. It is not necessary for every simulator
+Species, and Arrays \cite{watanabe2016efficient} SBML packages. It is not necessary for every simulator
 to support every package, but each simulator should be capable of numerically replicating its own results.
 Consequently, each simulator must have deterministic control over its use of pseudorandom number generators.
 New standards and tools to document model assumptions and data sources are also needed to enable researchers to reproduce models.
