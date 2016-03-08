@@ -582,11 +582,10 @@ due to memory layout. D{\small THREADS} achieves this through a specially implem
 whereas C{\small ORE}D{\small ET} achieves this by compiling the
 memory allocator itself with the C{\small ORE}D{\small ET} framework.
 
-Some shortcomings of these tools include the fact that a small perturbation in initial
-conditions can drastically affect program behavior.
-Nevertheless, we believe that
-dynamical modelers should use tools like C{\small ORE}D{\small ET} and D{\small THREADS}
-to achieve replicable simulation algorithms, and that the systems biology community should
+It is important to emphasize that these tools only address determinism, not sensitivity to initial conditions.
+If a model is highly sensitive to initial conditions, a small perturbation can yield significant differences in the output. This is a property of the model, not the simulation tool.
+We hope that tools like C{\small ORE}D{\small ET} and D{\small THREADS} will be utilized in future simulators
+to achieve replicable simulation results, and that the systems biology community should
 work toward producing software with robust determinism.
 
 \subsection{Limitations of Current Standards for Whole-Cell Modeling}
