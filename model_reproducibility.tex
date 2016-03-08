@@ -418,7 +418,7 @@
 \textit{Methods:} We describe the standards and software tools that are needed to enable researchers to reproduce models and simulations.
 \textit{Results:} We show that it is possible to engineer models and software tools for better reproducibility
 by using deterministic algorithms, data integration, and explicit documentation of assumptions.
-\textit{Conclusion:} While dynamical modeling has made great strides with the creation of the first whole-cell model of \textit{Mycoplasma genitalium},
+\textit{Conclusion:} While dynamical modeling has made great strides with the creation of the first whole-cell (WC) model of \textit{Mycoplasma genitalium},
 continuing to advance dynamical modeling requires reproducing increasingly complex models and simulations.
 Building an ecosystem of software and standards which emphasize reproducibility
 is a necessary step in achieving this goal.
@@ -426,7 +426,7 @@ is a necessary step in achieving this goal.
 It is currently challenging to reproduce complex simulations. Here, we
 suggest how future tools
 and standards might be tailored to meet upcoming challenges in reproducible modeling.
-We use whole-cell modeling as an example throughout our discussion.
+We use WC modeling as an example throughout our discussion.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -493,7 +493,7 @@ The above example shows that \textit{reproducibility} applies to a process with 
 In systems biology, many standards have been introduced for encoding models and simulations. These standards include CellML \cite{cuellar2003overview}, SBML \cite{hucka2003}, SED-ML \cite{sedml2011}, the COMBINE archive \cite{COMBINE2012}, and SBGN \cite{LeNovereHMMSS09} and model repositories including BioModels and the CellML Model Repository.
 By utilizing community-based development \cite{hucka2015promoting} \cite{drager2014improving}, these standards are tailored to a wide range of use-cases in modeling and allow researchers to reproduce most \textit{in silico} experiments using a range of simulation tools. These standards and repositories have also enabled researchers to reuse models for new experiments, to expand models, and to combine models into larger, more comprehensive models. By encouraging reuse and modification of models and decoupling of models and the software used to simulate them, researchers have access to tools that allow them to test and validate models and software independently of each other and improve overall robustness and reproducibility.
 
-However, due to continued time pressures, the priority for innovation, and the growing complexity of computational methods, these standards fall short of supporting complex hybrid models such as the recent \textit{Mycoplasma genitalium} whole-cell model \cite{Karr2012}. Due to this model's novelty and complexity, preexisting standards are not useful for encoding this model and new approaches are necessary to overcome these limitations. However, in order to move forward we must first formulate a vision for what is required to support future hybrid models, and how to build a platform for modeling which can be scaled up to whole-cell models.
+However, due to continued time pressures, the priority for innovation, and the growing complexity of computational methods, these standards fall short of supporting complex hybrid models such as the recent \textit{Mycoplasma genitalium} whole-cell (WC) model \cite{Karr2012}. Due to this model's novelty and complexity, preexisting standards are not useful for encoding this model and new approaches are necessary to overcome these limitations. However, in order to move forward we must first formulate a vision for what is required to support future hybrid models, and how to build a platform for modeling which can be scaled up to WC models.
 
 Waltemath and Schreiber recently organized a week-long workshop to reproduce the \textit{M. genitalium} model using SBML and open-source modeling software. The workshop included 60 modelers, modeling software developers, and standards developers. The workshop made great progress toward encoding the model in SBML, including draft SBML versions of most of the submodels. However, because the model requires many new SBML packages that are still only supported by a few software programs and because the model is large, significant work remains to reproduce the model despite the more than one person-year of effort that has already been dedicated to this effort.
 
@@ -507,7 +507,7 @@ There are certainly times when the requirement of replicating simulation results
 
 Here, we describe the process for reproducing models, outline the gaps in our current standards and software for facilitating
 reproducible modeling, and describe new standards and tools that are needed to enable researchers to conduct reproducible
-biological modeling. Throughout, our discussion is motivated by the need for improved standards and software tools for whole-cell modeling.
+biological modeling. Throughout, our discussion is motivated by the need for improved standards and software tools for WC modeling.
 
 \begin{figure*}[!t]
 \centering
@@ -528,9 +528,9 @@ The result of the model construction steps described above will usually be a set
 
 Stochastic models are problematic for reproducibility studies because they inherently give different output each time they are run. However, real implementations of stochastic processes often use pseudo-random number generators (PRNG) to achieve the illusion of stochasticity. The current standard for reproducing a stochastic model is based on comparing at least the first and second moments of the model's predictions. However, we argue that there are two advantages to reproducing the model's exact trajectory.
 
-First, biology is replete with examples where rare events play key roles: e.g. cancer, speciation events, and mutations conferring antibiotic resistance. While these events may not occur often enough to contribute significantly to the expected dynamical behavior of a typical cell, they contribute significantly to the long-term behavior of the population. We believe that capturing these events when they occur will be instrumental to the usefullness of whole-cell models as engines for discovery and prevention of such rare events.
+First, biology is replete with examples where rare events play key roles: e.g. cancer, speciation events, and mutations conferring antibiotic resistance. While these events may not occur often enough to contribute significantly to the expected dynamical behavior of a typical cell, they contribute significantly to the long-term behavior of the population. We believe that capturing these events when they occur will be instrumental to the usefullness of WC models as engines for discovery and prevention of such rare events.
 
-Second, being able to reproduce a trace of model timecourse behavior is absolutely crucial to scaling up to large and complex models. Human error has been and will continue to be a major source of inaccuracy in modeling experiments \cite{ebrahim2015genome}. The ability to reproduce an exact model trace would be highly useful in the context of model reproduction endeavors such as the workshop by Waltemath and Schreiber because this ability allows modelers to identify the exact point at which predictions diverge. Assuming such errors occur at a constant rate, a larger model would be expected to contain many more errors than a smaller one, and eliminating such costly errors is a prerequisite to the adoption of whole-cell modeling.
+Second, being able to reproduce a trace of model timecourse behavior is absolutely crucial to scaling up to large and complex models. Human error has been and will continue to be a major source of inaccuracy in modeling experiments \cite{ebrahim2015genome}. The ability to reproduce an exact model trace would be highly useful in the context of model reproduction endeavors such as the workshop by Waltemath and Schreiber because this ability allows modelers to identify the exact point at which predictions diverge. Assuming such errors occur at a constant rate, a larger model would be expected to contain many more errors than a smaller one, and eliminating such costly errors is a prerequisite to the adoption of WC modeling.
 
 The idea of capturing the exact sequence of events leading to an error is not new. In the field of computer science, the SPIN model checker \cite{holzmann1997model} \cite{holzmann2004spin} has been used extensively to validate the operational logic of non-deterministic systems. SPIN detects invalid models by exhibiting a counterexample including the exact events leading to failure. We envisage a similar approach for biophysical modeling. Specifically, we envisage a simulator where not only can an exact simulation be replicated by supplying the same random seed, but also where a simulation may be restarted from a checkpoint containing a state snapshot at any point in the timecourse. Since serializing such checkpoints would be an expensive operation, the checkpoints would be user-specified. By combining these two features, we would be able to (1) replicate exactly a trace from a specific prior simulation, and (2) insert as many such checkpoints into the run as desired without affecting the outcome. We would then be able to capture rare events and apply permutations to test various hypotheses relating to the mechanism of the events, e.g. to test their robustness to knockouts and systematically screen for targets for intervention.
 
@@ -544,7 +544,7 @@ Insteady of relying on statistical tests, we propose that validation of hybrid m
 
 \section{Constructing a Platform for Complex, Hybrid Modeling}
 
-The \textit{M. genitalium} re-encoding effort provides a useful test case for a platform designed to support large, complex, hybrid models, such as whole-cell models. Using the outcome of the workshop as an example, we can expect the following areas to be key features in the next generation of modeling software:
+The \textit{M. genitalium} re-encoding effort provides a useful test case for a platform designed to support large, complex, hybrid models, such as WC models. Using the outcome of the workshop as an example, we can expect the following areas to be key features in the next generation of modeling software:
 
 \begin{itemize}
 \item A hybrid timecourse solver incorporating multiple, heterogeneous codebases
@@ -624,9 +624,9 @@ We hope that tools like C{\small ORE}D{\small ET} and D{\small THREADS} will be 
 to achieve replicable simulation results, and that the systems biology community should
 work toward producing software with robust determinism.
 
-\subsection{Limitations of Current Standards for Whole-Cell Modeling}
+\subsection{Limitations of Current Standards for WC Modeling}
 
-The \textit{M. genitalium} whole-cell model \cite{Karr2012} consists of 28 submodels.
+The \textit{M. genitalium} WC model \cite{Karr2012} consists of 28 submodels.
 The submodels are implemented using a variety of modeling formalisms including
 ordinary differential equations, Boolean networks, and flux balance analysis.
 
@@ -641,7 +641,7 @@ are not transparent. The \textit{M. genitalium} model was parameterized using da
 sources. The WholeCellKB-MG database carefully describes these data sources \cite{karr2013wholecellkb}. Although this database is publicly accessible, 
 the details of how this database was used to parameterize the model are unclear
 because they are intertwined with the simulation code. 
-Improved software tools must be developed to help whole-cell modelers use the minimum information 
+Improved software tools must be developed to help WC modelers use the minimum information 
 requested in the annotation of biochemical models (MIRIAM) \cite{novere2005minimum}
 standard to annotate model components with persistent uniform resource identifiers. 
 
@@ -661,11 +661,11 @@ ensure deterministic behavior on multi-core systems.
 
 \subsection{Towards Hybrid Simulators}
 
-The \textit{M. genitalium} was constructed from a limited set of data and its creators made carefully chosen compromises which reflect this fact. For example, metabolism is modeled using flux balance when a more detailed kinetic model could have been employed. Flux balance was chosen due to the fact that it does not require kinetic parameters in order to estimate the flux for a pathway, and it is difficult to obtain accurate values for these parameters in an organism such as \textit{M. genitalium}. We anticipate whole-cell models will continue to need to make such tradeoffs in the near future, so it follows that \textit{hybrid models} will become utilized more often in modeling studies.
+The \textit{M. genitalium} was constructed from a limited set of data and its creators made carefully chosen compromises which reflect this fact. For example, metabolism is modeled using flux balance when a more detailed kinetic model could have been employed. Flux balance was chosen due to the fact that it does not require kinetic parameters in order to estimate the flux for a pathway, and it is difficult to obtain accurate values for these parameters in an organism such as \textit{M. genitalium}. We anticipate WC models will continue to need to make such tradeoffs in the near future, so it follows that \textit{hybrid models} will become utilized more often in modeling studies.
 
 A hybrid model employs diverse numerical solvers in calculating a timecourse trajectory. In general, these solvers will not be united by a common theoretical ground so it will not be possible to collapse (or ``flatten'') models into a single set of differential equations or rules which govern its dynamical behavior.
 Instead, the dynamics will be derived from the internal behavior of the solvers and their interactions with each other. This allows modelers the freedom of choosing the optimum solver for a given role and availability of data.
-Furthermore, many models feature multiscale phenomena. In a whole-cell model, some reactions will proceed on a faster timescale than others. The difference can be orders of magnitude, and considerable gains in performance can be realized if the fast components of the system can be simulated separately from the slow components. Indeed, SBML has attributes for such ``fast'' reactions, but complex multiscale models may have an entire hierarchy of reaction timescales and a simple true/false attribute is insufficient in this case.
+Furthermore, many models feature multiscale phenomena. In a WC model, some reactions will proceed on a faster timescale than others. The difference can be orders of magnitude, and considerable gains in performance can be realized if the fast components of the system can be simulated separately from the slow components. Indeed, SBML has attributes for such ``fast'' reactions, but complex multiscale models may have an entire hierarchy of reaction timescales and a simple true/false attribute is insufficient in this case.
 
 Returning to the \textit{M. genitalium} model, we observe that it is divided into submodules on the basis of physiological processes (transcription, translation, metabolism, etc.). The numerical solvers for each of these submodules are all run at each timestep and the outputs are propagated to global shared variables. Assuming \textit{a priori} knowledge of the timescale of each component, we could instead subdivide the full model on the basis of timescale by putting components with similar scales in the same submodule. Furthermore, instead of running all numerical solvers at each timestep, we could employ a hierarchy of timesteps in which only the fastest submodules are run, followed by the next fastest, and so on.
 
@@ -673,7 +673,7 @@ Naturally, this raises theoretical questions. The behavior of complex, large-sca
 
 \section{Conclusion}
 
-Expanded standards and new tools are needed to facilitate replicable and reproducible systems biology modeling, including whole-cell modeling.
+Expanded standards and new tools are needed to facilitate replicable and reproducible systems biology modeling, including WC modeling.
 These standards and tools must enable researchers to reproduce model assumptions, reproduce model parameters
 directly from experimental data, and reproduce hybrid model simulations. 
 
@@ -712,7 +712,7 @@ He currently develops libRoadRunner, a software package for simulating dynamical
 \end{IEEEbiography}
 
 \begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{photos/karr.jpg}}]{Jonathan R. Karr}
-received his Ph.D. in Biophysics and M.S. in Medicine from Stanford University, USA in 2014 and his B.S.s in Physics and Brain \& Cognitive Sciences from the Massachusetts Institute of Technology, USA in 2006. Currently, Dr. Karr is a Fellow at the Icahn School of Medicine at Mount Sinai, USA. His research focuses on the development of comprehensive whole-cell computational models and their application to bioengineering and medicine.
+received his Ph.D. in Biophysics and M.S. in Medicine from Stanford University, USA in 2014 and his B.S.s in Physics and Brain \& Cognitive Sciences from the Massachusetts Institute of Technology, USA in 2006. Currently, Dr. Karr is a Fellow at the Icahn School of Medicine at Mount Sinai, USA. His research focuses on the development of comprehensive WC computational models and their application to bioengineering and medicine.
 \end{IEEEbiography}
 
 \vfill
