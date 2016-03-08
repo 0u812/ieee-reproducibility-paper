@@ -491,7 +491,7 @@ To illustrate the difference between these two terms, consider a Gedanken experi
 The above example shows that \textit{reproducibility} applies to a process with a human in the loop. Different researchers are unlikely to arrive at the same numerical results, but tracking down discrepancies often helps illuminate sources of error. By contrast, machines can, in principle, replicate a numerical result exactly without human intervetion. \textit{Replicability} is a technological feature, whereas \textit{reproducibility} is a property of the research process.
 
 In systems biology, many standards have been introduced for encoding models and simulations. These standards include CellML \cite{cuellar2003overview}, SBML \cite{hucka2003}, SED-ML \cite{sedml2011}, the COMBINE archive \cite{COMBINE2012}, and SBGN \cite{LeNovereHMMSS09} and model repositories including BioModels and the CellML Model Repository.
-By utilizing community-based development \cite{hucka2015promoting}, these standards are tailored to a wide range of use-cases in modeling and allow researchers to reproduce most \textit{in silico} experiments using a range of simulation tools. These standards and repositories have also enabled researchers to reuse models for new experiments, to expand models, and to combine models into larger, more comprehensive models. By encouraging reuse and modification of models and decoupling of models and the software used to simulate them, researchers have access to tools that allow them to test and validate models and software independently of each other and improve overall robustness and reproducibility.
+By utilizing community-based development \cite{hucka2015promoting} \cite{drager2014improving}, these standards are tailored to a wide range of use-cases in modeling and allow researchers to reproduce most \textit{in silico} experiments using a range of simulation tools. These standards and repositories have also enabled researchers to reuse models for new experiments, to expand models, and to combine models into larger, more comprehensive models. By encouraging reuse and modification of models and decoupling of models and the software used to simulate them, researchers have access to tools that allow them to test and validate models and software independently of each other and improve overall robustness and reproducibility.
 
 However, due to continued time pressures, the priority for innovation, and the growing complexity of computational methods, these standards fall short of supporting complex hybrid models such as the recent \textit{Mycoplasma genitalium} whole-cell model \cite{Karr2012}. Due to this model's novelty and complexity, preexisting standards are not useful for encoding this model and new approaches are necessary to overcome these limitations. However, in order to move forward we must first formulate a vision for what is required to support future hybrid models, and how to build a platform for modeling which can be scaled up to whole-cell models.
 
@@ -631,7 +631,7 @@ The submodels are implemented using a variety of modeling formalisms including
 ordinary differential equations, Boolean networks, and flux balance analysis.
 
 Although the \textit{M. genitalium} model is replicable, the model is not easily reproducible for several reasons. First,
-although the model could be encoded in SBML using the Flux Balance Constraints, Hierarchical Model Composition \cite{smith2015sbml}, Multistate and Multicomponent
+although the model could be encoded in SBML using the Flux Balance Constraints \cite{olivier2015fbc}, Hierarchical Model Composition \cite{smith2015sbml}, Multistate and Multicomponent
 Species, and Arrays \cite{watanabe2016efficient} SBML packages, there is no SBML-compatible simulator which supports all of these packages or
 which can simulate multi-algorithm models. The existing SBML simulators only support 
 model composition by flattening submodels into a single larger model. 
@@ -678,7 +678,7 @@ These standards and tools must enable researchers to reproduce model assumptions
 directly from experimental data, and reproduce hybrid model simulations. 
 
 One key step toward replicable modeling is expanded support for the 
-Flux Balance Constraints, Hierarchical Model Composition \cite{smith2015sbml}, Multistate and Multicomponent
+Flux Balance Constraints \cite{olivier2015fbc}, Hierarchical Model Composition \cite{smith2015sbml}, Multistate and Multicomponent
 Species, and Arrays \cite{watanabe2016efficient} SBML packages. It is not necessary for every simulator
 to support every package, but each simulator should be capable of numerically replicating its own results.
 Consequently, each simulator must have deterministic control over its use of pseudorandom number generators.
