@@ -347,7 +347,8 @@
 \usepackage{xcolor}
 \newcommand{\karrcomment}[2]{\pdfmarkupcomment[markup=Highlight,color=yellow,author={Jonathan Karr}]{#1}{#2}}
 \usepackage{pgfplots}
-
+\usepackage{caption}
+\usepackage{subcaption}
 
 % *** Do not adjust lengths that control margins, column widths, etc. ***
 % *** Do not use packages that alter fonts (such as pslatex).         ***
@@ -557,8 +558,16 @@ Before a platform for hybrid modeling can be realized, the modeling community wi
 It has been our experience that non-replicable simulations are notoriously difficult to debug. Therefore, we propose that in order to build a scalable platform, replicable simulations should be incorporated as a core feature. Since replicable simulations are difficult to achieve for hybrid models with the aforementioned synchronization issues for shared variables, we devote an entire section to this problem and how it is handled in computer science. We then suggest how these computer science techniques may be applied to timecourse simulation software.
 
 \begin{figure*}[!t]
-\centering
-\input{bistable-stochastic.tex}
+  \centering
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \input{bistable-stochastic.tex}
+  \end{subfigure}%
+  ~
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \input{bistable-stochastic.tex}
+  \end{subfigure}
 \end{figure*}
 
 \subsection{Technical Considerations for Repeatability and Reproducibility}
