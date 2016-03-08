@@ -538,7 +538,7 @@ The idea of capturing the exact sequence of events leading to an error is not ne
 
 Bergmann \cite{bergmann2008comparing} presented a strategy for comparing the outputs of various SBML ODE simulators, enabling developers of simulation tools to identify weaknesses of a particular implementation. The SBML Test Suite provides normative simulation output for specific SBML features\footnote{http://sbml.org/Software/SBML\_Test\_Suite}. Both of these tests cover ODE models only, which, owing to their determinism, can be reproduced across solvers. Hence, the criteria for passing these tests is whether the results converge to an \textit{a priori} known trajectory. Stochastic models, on the other hand, intrinsically do not converge to an exact trajectory. The current standard for testing stochastic models is a statistical test based on comparing the per-variable mean and standard deviation to expected values as a function of time \cite{evans2008sbml}.
 
-In general, hybrid models contain both deterministic and stochastic components, so the statistical test could in principle be applicable. However, we argue that statistical tests are not sufficient to pronounce hybrid models (nor even complex stochastic ones) identical in practice. It has been shown that noise propagation in genetic networks can have a non-linear effect on the behavior of the network \cite{kim2013nonlinear}. A simple example is an $n$-stable switch (for example, a cell fate model) with noisy inputs. The system will ultimately end up in one of several stable states, dependent to a large extent on a random decision process. Consider a simple bi-stable switch. Over many trials, the sampled values of the variables of this system will exhibit bi-modality, with a mean in between the two modes and a very large variance encompassing the two modes. Rather than test whether a given trajectory fits within this large variance, a more useful test would be to confirm whether the trajectory follows one of the bi-modal patterns. However, complex models can contain many non-trivial features such as the aforementioned branching behavior and it is difficult to construct a generalized statistical test that encompasses all cases.
+In general, hybrid models contain both deterministic and stochastic components, so the statistical test could in principle be applicable. However, we argue that statistical tests are not sufficient to pronounce hybrid models (nor even complex stochastic ones) identical in practice. It has been shown that noise propagation in genetic networks can have a non-linear effect on the behavior of the network \cite{kim2013nonlinear}. A simple example is an $n$-stable switch (for example, a cell fate model) with noisy inputs. The system will ultimately end up in one of several stable states, dependent to a large extent on a random decision process. Consider a simple bi-stable switch. Over many trials, the sampled values of the variables of this system will exhibit bi-modality, with a mean in between the two modes and a very large variance encompassing the two modes, as shown in Figure. Rather than test whether a given trajectory fits within this large variance, a more useful test would be to confirm whether the trajectory follows one of the bi-modal patterns. However, complex models can contain many non-trivial features such as the aforementioned branching behavior and it is difficult to construct a generalized statistical test that encompasses all cases.
 
 Insteady of relying on statistical tests, we propose that validation of hybrid models involve (1) independent validation of functional subunits based on whatever method is applicable, and (2) functional hypothesis-based testing for the hybrid model as a whole. For the first part, we assume subunits correspond models which can be simulated using a single solve (i.e. subunits are not themselves hybrid models). Hence, the tests outlined above for non-hybrid models may be applicable on a subunit basis, and will likely be sufficient in most cases. For testing the hybrid model as a whole, we resort to testing externally measurable outcomes for a given input or perturbation. For example, the cellular doubling time is externally measurable, and should respond in a predictable way to certain gene deletions under a given set of environmental conditions. These conditions are inputs to the model and can be reliably set up for the original model as well as any re-implementations. The outputs of these high-level tests should be the same across all implementations, and can serve as a measure of reproducibility. However, a failure in these high-level tests is difficult to trace back to its origin, underscoring the importance of the subunit tests. Hence, just as hybrid models follow a hierarchical construction, they must also follow a hierarchical validation scheme. This is the case for the \textit{M. genitalium} model (which contains many subunit tests under its \texttt{src\_test} directory), and we believe this approach will continue to be useful in future hybrid models.
 
@@ -563,13 +563,14 @@ It has been our experience that non-replicable simulations are notoriously diffi
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
     \input{bistable-stochastic.tex}
+    \caption{A timecourse plot of a stochastic bistable switch shows two distinct trajectories. The simulation was performed using Gillespie's Direct Method \cite{gillespie1977exact} implemented in libRoadRunner \cite{Somogyi17062015}}
   \end{subfigure}%
   ~
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
     \begin{BVerbatim}
-      -> x; 0.5 + vmax*(x^n/z^n) /
-            (15 + (x^n/z^n))
+      -> x; 0.5 + vmax*(x^n/z^n) \
+            / (15 + (x^n/z^n))
   x   ->  ; k*x/z
 
   z = 1*16
@@ -582,6 +583,7 @@ It has been our experience that non-replicable simulations are notoriously diffi
 
 
     \end{BVerbatim}
+    \caption{Antimony code for the model in part (a)}
   \end{subfigure}
 \end{figure*}
 
