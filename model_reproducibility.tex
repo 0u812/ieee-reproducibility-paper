@@ -344,8 +344,9 @@
 \newcommand{\email}[1]{\href{mailto:#1}{#1}}
 
 \usepackage{pdfcomment}
-\usepackage{xcolor}
 \newcommand{\karrcomment}[2]{\pdfmarkupcomment[markup=Highlight,color=yellow,author={Jonathan Karr}]{#1}{#2}}
+\usepackage[pdftex,rgb,dvipsnames,svgnames,hyperref,table]{xcolor}
+\newcommand{\change}[1]{\textcolor{DarkBlue}{#1}}
 \usepackage{pgfplots}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -364,22 +365,22 @@
 \newtheorem{definition}{Definition}
 
 % correct bad hyphenation here
-\hyphenation{op-tical net-works semi-conduc-tor}
+\hyphenation{net-works}
 
 % Nature News on irreproducibility:
 % http://www.nature.com/news/reproducibility-1.17552
 
 \begin{document}
 
-\newcommand{\thetitle}{Enhancing the Reproducibility of Systems Biology Models}
-\title{\thetitle}
+\newcommand{\thetitle}{Guidelines for reproducibly building and simulating systems biology models}
+\title{\change{\thetitle}}
 
 \author{
     J. Kyle Medley$^*$ and
 	Jonathan R. Karr
     
     \thanks{
-        Manuscript received XXX XX, 2015; revised XXX XX, 2016; accepted XXX XX, 2016. Date of publication XXX XX, 2016; date of current version XXX XX, 2016.
+        Manuscript received November 4, 2015; revised XXX XX, 2016; accepted XXX XX, 2016. Date of publication XXX XX, 2016; date of current version XXX XX, 2016.
         J. K. Medley was supported by National Institutes of Health grant R01 GM081070. J. R. Karr was supported by National Science Foundation grant 1548123 and a James S. McDonnell Foundation Postdoctoral Fellowship Award in Studying Complex Systems. The content is solely the responsibility of the authors and does not necessarily represent the views of the National Institutes of Health, the National Science Foundation, or the James S. McDonnell Foundation.
         \textit{Asterisk indicates corresponding author.}
     }
@@ -415,19 +416,20 @@
 
 \maketitle
 
-\begin{abstract}
+\begin{abstract}\change{
 \textit{Objective:}
 Reproducibility is the cornerstone of the scientific method. 
 However, currently many systems biology models cannot easily be reproduced.
 \textit{Methods:} 
 We analyzed the recent \textit{Mycoplasma genitalium} whole-cell model to determine the requirements for reproducible systems biology modeling.
 \textit{Results:} 
-We determined that reproducible systems biology modeling requires both reproducible model building and reproducible numerical simulation.
+We determined that reproducible modeling requires both reproducible model building and reproducible numerical simulation.
 \textit{Conclusion:} 
-We also determined that new standards and simulation software tools are needed to enhance the reproducibility of systems biology modeling. 
-New standards are needed to explicitly document all model assumptions. New distributed simulation tools are needed to deterministically simulate computationally expensive models.
+We concluded that new standards and simulation software tools are needed to enhance the reproducibility of systems biology modeling. 
+New standards are needed to explicitly document all model data source and assumptions, and new parallel simulation tools are needed to deterministically simulate complex models.
 \textit{Significance:}
 We anticipate that these new standards and software will enable researchers to reproducibly build and simulate more complex models.
+}
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -487,17 +489,15 @@ This rigorous standard eliminates conclusions that were based on incorrect metho
 Repeatability is a more lenient standard than reproducibility. 
 Consequently, repeatability only eliminates conclusions that were based on erroneous experiments, and cannot eliminate conclusions that were based on faulty methods or machinery.
 
-The following thought experiment illustrates the difference between reproducibility and repeatability. Consider a modeler Alice who wants to investigate a discrepant simulation result published by Bob about a pathway which has been implicated in cancer. Bob's model predicts that knocking out regulator Y causes cancer, whereas Alice's model indicates that cancer requires at least two knockouts. Fortunately, Alice can investigate Bob's results because Bob published his model in the Systems Biology Markup Language (SBML) \cite{hucka2003} format and his simulation experiments in the Simulation Experiment Description Markup Language (SED-ML) \cite{sedml2011} format. Alice uses Bob's SBML and SED-ML files to \textit{replicate} Bob's simulation results, compares the two models, and finds that Bob's model generates different predictions because it uses a different rate law to describe the effect of regulatory Y. However, because Bob's SBML file does not describe all of the experimental data and assumptions underlying his model, Alice cannot \textit{reproduce} Bob's rate laws and thus cannot fully resolve why their models generate different predictions.
+\change{The following thought experiment illustrates the difference between reproducibility and repeatability. Consider a modeler Alice who wants to investigate a discrepant simulation result published by Bob about a pathway which has been implicated in cancer. Bob's model predicts that knocking out regulator Y causes cancer, whereas Alice's model indicates that cancer requires at least two knockouts. Fortunately, Alice can investigate Bob's results because Bob published his model in the Systems Biology Markup Language (SBML) \cite{hucka2003} format and his simulation experiments in the Simulation Experiment Description Markup Language (SED-ML) \cite{sedml2011} format. Alice uses Bob's SBML and SED-ML files to \textit{replicate} Bob's simulation results, compares the two models, and finds that Bob's model generates different predictions because it uses a different rate law to describe the effect of regulatory Y. However, because Bob's SBML file does not describe all of the experimental data and assumptions underlying his model, Alice cannot \textit{reproduce} Bob's rate laws and thus cannot fully resolve why their models generate different predictions.}
 
 The systems biology community has developed several standard formats to exchange systems biology models and repeat systems biology simulations. These include CellML \cite{cuellar2003overview}, the Computational Modeling in Biology Network (COMBINE) archive \cite{COMBINE2012}, SBML \cite{hucka2003}, SED-ML \cite{sedml2011}, and the Systems Biology Graphical Notation (SBGN) \cite{LeNovereHMMSS09}. These standards support several types of systems biology models including ordinary differential equation (ODE), flux balance analysis \cite{orth2010flux}, and logical models and numerous modeling software programs support these standards \cite{hucka2011profile}. Several model repositories have also been developed to facilitate model sharing, including BioModels \cite{chelliah2015biomodels} and the CellML Model Repository \cite{lloyd2008cellml}. 
 
-These standards and modeling software tools help researchers repeat most \textit{in silico} experiments. Thus, these standards can help researchers reuse, modify, expand, and combine most systems biology models. However, these standards do not help researchers reproduce models because they do not record the experimental data and assumptions underlying models.
+These standards and modeling software tools help researchers repeat most \textit{in silico} systems biology experiments and reuse, modify, expand, and combine most systems biology models. However, these standards do not completely help researchers reproduce models because they do not record the experimental data and assumptions underlying models.
 
-Furthermore, researchers have begun to develop more complex models which cannot be represented by the existing systems biology standards. For example, researchers at Stanford University recently developed the first multi-algorithm whole-cell (WC) model of the gram-positive bacterium \textit{Mycoplasma genitalium} \cite{Karr2012}. The model is composed of 28 mathematically diverse submodels of 28 individual cellular pathways and is stochastic. 
+Furthermore, researchers have begun to develop more complex models which cannot be represented by the existing systems biology standards and simulated by the existing standards-compliant software. For example, several aspects of the recent whole-cell (WC) model of the gram-positive bacterium \textit{Mycoplasma genitalium} \cite{Karr2012} cannot currently be represented in SBML \cite{Waltemath2016}. In particular, SBML cannot represent multi-algorithmic models, such as the \textit{M. genitalium} WC model, which are composed of multiple mathematically diverse submodels of individual cellular pathways.
 
-Waltemath and Schreiber recently organized a workshop to evaluate the capability of SBML and the existing SBML-compliant software to repeat WC model simulation experiments \cite{Waltemath2016}. The workshop determined that SBML and the SBML-compatible simulators must be expanded to support hierarchical model composition and rule-based modeling.
-
-Here, we must present a comprehensive vision for reproducible WC modeling. First, we describe a process for reproducing WC models. Second, we outline the gaps in the existing standards and software for reproducible WC modeling. Third, we describe several new standards and software tools that are needed to accelerate and reproduce WC modeling, including a new model design tool which automatically records every model source and assumption so that models can be reproduced from their underlying data and assumptions, new standards for multi-algorithmic and rule- and sequence-based modeling, and a new simulation tool which uses large computing clusters with variable available resource to quickly and deterministically simulate multi-algorithm models. Although deterministic simulation is not strictly required to repeat the distribution of WC model simulation results, our vision includes deterministic simulation to facilitate the debugging of complex WC models. 
+\change{Here, we must present a comprehensive vision for reproducible systems biology modeling, including complex multi-algorithmic WC models. First, we describe the requirements for reproducible modeling. Second, we outline the gaps in the existing standards and software for reproducible modeling. Third, we describe several new standards and software tools that are needed for reproducible modeling, including new model design tools which automatically record every model source and assumption so that models can be reproduced from their underlying data and assumptions, new standards for multi-algorithmic and rule- and sequence-based modeling, and new simulation software programs which can quickly and deterministically simulate models using large computing clusters with variable available resources. Deterministic simulation is not strictly required for reproducibility. However, we believe that determinism is invaluable for debugging complex models.}
 
 %CellML and SBML must be expanded to describe WC models. A new model design tool which automatically records every data source and assumption must also be developed so that WC models can be reproduced. In addition, a new repeatable multi-algorithm simulator must be developed. This simulator should use parallel computing to achieve adequate performance and use deterministic frameworks to generate reproducible results from variable computing resources.
 
@@ -515,15 +515,19 @@ Here, we must present a comprehensive vision for reproducible WC modeling. First
 % where an .eps filename suffix will be assumed under latex,
 % and a .pdf suffix will be assumed for pdflatex; or what has been declared
 % via \DeclareGraphicsExtensions.
-\caption{Comparison of repeatability and reproducibility. A model is repeatable if its simulation results can be numerically replicated. A model is reproducible if the model is repeatable and the model can be replicated from its underlying scientific data and knowledge. Reproducibility is a stricter standard than repeatability.}
+\caption{Requirements for reproducing systems biology modeling. (1) Every data source and assumption underlying the model must be recorded so that the model species, reactions, and rate laws can be regenerated. (2) Every simulation parameter value must be recorded so that the numerical simulation results can be regenerated. (3) Multiple simulation software tools must generate consistent numerical results. Reproducibility is a stricter standard than repeatability. Models are considered repeatable, but not reproducible, if they satisfy the second and third criteria.}
 \label{fig_repro_diagram}
 \end{figure*}
 
-\section{\karrcomment{Repeatability and Reproducibility}{This section needs more introduction to tie all of the ideas together and to connect them to the introduction.}}
+\change{\section{The Requirements for Reproducible Systems Biology Modeling}}
 
-Fig.~\ref{fig_repro_diagram} \karrcomment{shows the steps involved in reproducing a model. A subset of these steps involve repeatability only. To summarize these steps, the model's equations and parameter values must be duplicated from the original assumptions and experimental data.}{These sentences need more explanation. Keep in mind readers that are not familiar with systems biology or whole-cell modeling. This needs to be readily understandable by the average electrical engineer.} This requires new machine-readable experimental databases which contain the data needed to build models, new model annotation standards for describing how these databases are used to build models, and new model annotation standards for describing the assumptions that models are based on \cite{boulton2012open}.
+\change{There are three requirements for reproducible systems biology modeling (Fig.~\ref{fig_repro_diagram}). First, researchers must record every data and assumption used to construct models so that other researchers can generate the same modeled species, reactions, and rate laws. Second, researchers must record every algorithm and parameter value used to simulate models so that other researchers can generate the same numerical results. Third, researchers must ensure that every simulation software tool produces statistically indistinguishable numerical results so that researchers who use different software programs can reach the same conclusions.}
 
-The result of the model construction steps described above will usually be a set of differential equations, reaction propensities, or rules which govern the timecourse behavior of the model. While in theory this formalism should be sufficient to recapitulate the model's behavior, we have found that reproducibility is further complicated by the details of the software implementation. In Matlab, for example, there are a number of differential equation solvers for both stiff and non-stiff systems. These solvers in turn have many configuration options relating to error tolerances and variable stepping. Therefore, we argue that software plays a critical role in reproducibility. Making the source code available partly addresses this problem \cite{easterbrook2014open}, but we will show that more can be done to improve reproducibility in this area.
+\change{\section{Progress Toward Reproducible Systems Biology Modeling}}
+
+This requires new machine-readable experimental databases which contain the data needed to build models, new model annotation standards for describing how these databases are used to build models, and new model annotation standards for describing the assumptions that models are based on \cite{boulton2012open}.
+
+The result of the model construction steps described above will usually be a set of differential equations, reaction propensities, or rules which govern the timecourse behavior of the model. While in theory this formalism should be sufficient to recapitulate the model's behavior, we have found that reproducibility is further complicated by the details of the software implementation. In MATLAB, for example, there are a number of differential equation solvers for both stiff and non-stiff systems. These solvers in turn have many configuration options relating to error tolerances and variable stepping. Therefore, we argue that software plays a critical role in reproducibility. Making the source code available partly addresses this problem \cite{easterbrook2014open}, but we will show that more can be done to improve reproducibility in this area.
 
 Stochastic models are problematic for reproducibility studies because they inherently give different output each time they are run. However, real implementations of stochastic processes often use pseudo-random number generators (PRNG) to achieve the illusion of stochasticity. The current standard for reproducing a stochastic model is based on comparing at least the first and second moments of the model's predictions. However, we argue that there are two advantages to reproducing the model's exact trajectory.
 
@@ -667,7 +671,7 @@ Naturally, this raises theoretical questions. The behavior of complex, large-sca
 \section{Conclusion}
 
 Expanded standards and new software tools are needed to facilitate replicable and reproducible WC modeling.
-These standards should enable researchers to describe every model data source and assumption. One key step toward replicating WC model simulation results is expanded support among SBML-compliant simulators for the 
+These standards should enable researchers to describe every model data source and assumption. One key step toward replicating WC model simulation results is expanded support among SBML-compatible simulators for the 
 Flux Balance Constraints \cite{olivier2015fbc}, Hierarchical Model Composition \cite{smith2015sbml}, Multistate and Multicomponent
 Species, and Arrays \cite{watanabe2016efficient} SBML packages. 
 Each simulator should also have deterministic control over its use of pseudorandom number generators.
