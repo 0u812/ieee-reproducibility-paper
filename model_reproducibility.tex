@@ -359,6 +359,7 @@
 
 \usepackage{color,soul} % for highlighting only
 
+
 %http://tex.stackexchange.com/questions/61265/why-doesnt-the-ieeetran-document-class-recognize-definition-environments
 \newtheorem{definition}{Definition}
 
@@ -370,7 +371,8 @@
 
 \begin{document}
 
-\title{Engineering Dynamical Models for Better Reproducibility}
+\newcommand{\thetitle}{Engineering Dynamical Models for Better Reproducibility}
+\title{\thetitle}
 
 \author{
     J. Kyle Medley$^*$ and
@@ -387,8 +389,8 @@
 }
 
 % The paper headers
-\markboth{IEEE Transactions on Biomedical Engineering,~Vol.~13, No.~9, October~2015}%
-{Medley \MakeLowercase{\textit{et al.}}: Enginnering Dynamical Models for Better Reproducibility}
+\markboth{IEEE Transactions on Biomedical Engineering,~Vol.~XX, No.~XX, XXXX~2016}%
+{Medley and Karr: \thetitle}
 % The only time the second header will appear is for the odd numbered pages
 % after the title page when using the twoside option.
 % 
@@ -414,23 +416,22 @@
 \maketitle
 
 \begin{abstract}
-\textit{Objective:} To outline the requirements for reproducible dynamical models in systems biology.
-\textit{Methods:} We describe the standards and software tools that are needed to enable researchers to reproduce models and simulations.
-\textit{Results:} We show that it is possible to engineer models and software tools for better reproducibility
-by using deterministic algorithms, data integration, and explicit documentation of assumptions.
-\textit{Conclusion:} While dynamical modeling has made great strides with the creation of the first whole-cell (WC) model of \textit{Mycoplasma genitalium},
-continuing to advance dynamical modeling requires reproducing increasingly complex models and simulations.
-Building an ecosystem of software and standards which emphasize reproducibility
-is a necessary step in achieving this goal.
+\textit{Objective:}
+Reproducibility is the cornerstone of the scientific method. 
+However, currently many systems biology models cannot easily be reproduced.
+\textit{Methods:} 
+We analyzed the recent \textit{Mycoplasma genitalium} whole-cell model to determine the requirements for reproducible systems biology modeling.
+\textit{Results:} 
+We determined that reproducible systems biology modeling requires both reproducible model building and reproducible numerical simulation.
+\textit{Conclusion:} 
+We also determined that new standards and simulation software tools are needed to enhance the reproducibility of systems biology modeling. 
+New standards are needed to explicitly document all model assumptions. New distributed simulation tools are needed to deterministically simulate computationally expensive models.
 \textit{Significance:}
-It is currently challenging to reproduce complex simulations. Here, we
-suggest how future tools
-and standards might be tailored to meet upcoming challenges in reproducible modeling.
-We use WC modeling as an example throughout our discussion.
+We anticipate that these new standards and software will enable researchers to reproducibly build and simulate more complex models.
 \end{abstract}
 
 \begin{IEEEkeywords}
-Systems biology, computational modeling, reproducibility
+Systems biology, whole-cell, computational modeling, reproducibility, standards
 \end{IEEEkeywords}
 
 % To allow for easy dual compilation without having to reenter the
