@@ -8,10 +8,14 @@
 \begin{tikzpicture}
 
 \begin{axis}[
-xlabel={time},
+xlabel={Time (s)},
+ylabel={x (molecules)},
 xmin=0, xmax=30,
-ymin=-20, ymax=120,
-axis on top
+ymin=0, ymax=105,
+axis on top,
+axis lines=left,
+xtick align=outside,
+ytick align=outside
 ]
 \addplot [thick, black, opacity=0.5]
 table {%
