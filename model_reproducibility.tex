@@ -344,8 +344,10 @@
 \newcommand{\email}[1]{\href{mailto:#1}{#1}}
 
 \usepackage{pdfcomment}
-\usepackage{xcolor}
 \newcommand{\karrcomment}[2]{\pdfmarkupcomment[markup=Highlight,color=yellow,author={Jonathan Karr}]{#1}{#2}}
+\usepackage[pdftex,rgb,dvipsnames,svgnames,hyperref,table]{xcolor}
+\newcommand{\change}[1]{\textcolor{DarkBlue}{#1}}
+\newcommand{\changesection}{\color{DarkBlue}}
 \usepackage{pgfplots}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -364,14 +366,14 @@
 \newtheorem{definition}{Definition}
 
 % correct bad hyphenation here
-\hyphenation{op-tical net-works semi-conduc-tor}
+\hyphenation{net-works}
 
 % Nature News on irreproducibility:
 % http://www.nature.com/news/reproducibility-1.17552
 
 \begin{document}
 
-\newcommand{\thetitle}{Engineering Dynamical Models for Better Reproducibility}
+\newcommand{\thetitle}{Guidelines for reproducibly building and simulating systems biology models}
 \title{\thetitle}
 
 \author{
@@ -379,7 +381,7 @@
 	Jonathan R. Karr
     
     \thanks{
-        Manuscript received XXX XX, 2015; revised XXX XX, 2016; accepted XXX XX, 2016. Date of publication XXX XX, 2016; date of current version XXX XX, 2016.
+        Manuscript received November 4, 2015; revised XXX XX, 2016; accepted XXX XX, 2016. Date of publication XXX XX, 2016; date of current version XXX XX, 2016.
         J. K. Medley was supported by National Institutes of Health grant R01 GM081070. J. R. Karr was supported by National Science Foundation grant 1548123 and a James S. McDonnell Foundation Postdoctoral Fellowship Award in Studying Complex Systems. The content is solely the responsibility of the authors and does not necessarily represent the views of the National Institutes of Health, the National Science Foundation, or the James S. McDonnell Foundation.
         \textit{Asterisk indicates corresponding author.}
     }
@@ -418,16 +420,16 @@
 \begin{abstract}
 \textit{Objective:}
 Reproducibility is the cornerstone of the scientific method. 
-However, currently many systems biology models cannot easily be reproduced.
+However, currently, many systems biology models cannot easily be reproduced.
 \textit{Methods:} 
-We analyzed the recent \textit{Mycoplasma genitalium} whole-cell model to determine the requirements for reproducible systems biology modeling.
+We analyzed the recent \textit{Mycoplasma genitalium} whole-cell (WC) model to determine the requirements for reproducible systems biology modeling.
 \textit{Results:} 
-We determined that reproducible systems biology modeling requires both reproducible model building and reproducible numerical simulation.
+We determined that reproducible modeling requires both repeatable model building and repeatable numerical simulation.
 \textit{Conclusion:} 
-We also determined that new standards and simulation software tools are needed to enhance the reproducibility of systems biology modeling. 
-New standards are needed to explicitly document all model assumptions. New distributed simulation tools are needed to deterministically simulate computationally expensive models.
+We concluded that new standards and simulation software tools are needed to enhance and verify the reproducibility of systems biology modeling. 
+New standards are needed to explicitly document all model data source and assumptions, and new parallel simulation tools are needed to deterministically simulate complex models.
 \textit{Significance:}
-We anticipate that these new standards and software will enable researchers to reproducibly build and simulate more complex models.
+We anticipate that these new standards and software will enable researchers to reproducibly build and simulate more complex models, including WC models.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -480,93 +482,55 @@ Systems biology, whole-cell, computational modeling, reproducibility, standards
 % Here we have the typical use of a "T" for an initial drop letter
 % and "HIS" in caps to complete the first word.
 \IEEEPARstart{R}{eproducibility} is one of the central tenets of the scientific method.
-\textit{Reproducibility} is the ability to confirm a result via a completely independent test, including different investigators, experimental methods, and experimental machinery. 
-This rigorous standard eliminates conclusions that were based on incorrect methods, machinery, or experiments and ensures that scientific results are only accepted as facts once multiple scientists have thoroughly dismissed other potential explanations. 
+In this manuscript, we define \textit{reproducibility} as the ability to confirm a result via a completely independent test, including by different investigators, experimental methods, and experimental machinery. In the context of systems biology, a simulation result is \textit{reproducible} if the model which generated the result can be recreated from the scientific literature and the numerical simulation result can be regenerated from descriptions of the model and simulation experiment.
+This rigorous standard eliminates conclusions that are based on incorrect methods, machinery, or experiments, and ensures that scientific results are only accepted as facts once multiple scientists have thoroughly dismissed other potential explanations. 
 
-\textit{Repeatability}, in contrast, is the ability to reproduce a result given the same experimental machinery and conditions.
-% Repeatability is a more liberal standard than reproducibility because replicability does not require independent experimental methods or equipment.
-Consequently, replicability only has the power to eliminate conclusions that were based on erroneous experiments, and cannot eliminate conclusions based on faulty methods or machinery.
+In this manuscript, we define \textit{repeatability} as the ability to reproduce a result given the same experimental machinery and conditions. In the context of systems biology, a simulation result is \textit{repeatable} if the numerical result can be regenerated from descriptions of the model and simulation experiment.
+Repeatability is a more lenient standard than reproducibility because it does not require regeneration of the model itself. 
+Consequently, repeatability only eliminates scientific conclusions that are based on erroneous experiments, and cannot eliminate conclusions that are based on faulty models.
 
-To illustrate the difference between these two terms, consider a Gedanken experiment where Alice is trying to \textit{reproduce} a result published by Bob concerning pathway X, which has been implicated in cancer. The pathway has several regulators and Bob's results predict that knocking out the ONCO1 regulator alone is sufficient to cause cancer. Alice's results contradict this. In fact, she finds that at least two or more regulators must be knocked out in order to cause cancer. Since Bob's simulation algorithm was published along with his results, Alice should in theory be able to download and run his simulations. Assume that Bob used a technology such as SED-ML \cite{sedml2011} to parameterize his model so that Alice knows unambiguously what parameter values he used to obtain his results. She initializes her model with the same values and finds that, at the initial state, most of the processes in her model have the same reaction rates as Bob's, except for the activity of ONCO1 and several other regulators. Further investigation confirms that the kinetic laws for these interactions are different, which she later traces back to a decoupling assumption in Bob's model.
+The following thought experiment illustrates the difference between reproducibility and repeatability. Consider a modeler Alice who wants to investigate a discrepant simulation result published by Bob about a pathway which has been implicated in cancer. Bob's model predicts that knocking out regulator $Y$ causes cancer, whereas Alice's model indicates that cancer requires at least two knockouts. Fortunately, Alice can investigate Bob's results because Bob published his model and simulation experiments in standard formats. Alice uses Bob's model and simulation experiment files to \textit{repeat} Bob's simulation results, compares the two models, and finds that Bob's model generates different predictions because it uses a different rate law to describe the effect of regulatory $Y$. However, because Bob's model file does not describe all of the experimental data and assumptions underlying his model, Alice cannot \textit{reproduce} Bob's rate laws and thus cannot resolve why their models generate different predictions.
 
-The above example shows that \textit{reproducibility} applies to a process with a human in the loop. Different researchers are unlikely to arrive at the same numerical results, but tracking down discrepancies often helps illuminate sources of error. By contrast, machines can, in principle, replicate a numerical result exactly without human intervetion. \textit{Replicability} is a technological feature, whereas \textit{reproducibility} is a property of the research process.
+The systems biology community, spearheaded by the Computational Modeling in Biology Network \cite{hucka2015promoting}, has developed several standard formats to exchange systems biology models and repeat systems biology simulations \cite{drager2014improving}. These include CellML \cite{cuellar2003overview}, COMBINE archive \cite{COMBINE2012}, Systems Biology Markup Language (SBML) \cite{hucka2003}, Simulation Experiment Description Markup Language (SED-ML) \cite{sedml2011}, and the Systems Biology Graphical Notation (SBGN) \cite{LeNovereHMMSS09}. These standards support several types of systems biology models including ordinary differential equation (ODE), flux balance analysis \cite{orth2010flux}, and logical models. Numerous modeling software programs support these standards \cite{hucka2011profile}. Several model repositories,  including BioModels \cite{chelliah2015biomodels} and the CellML Model Repository \cite{lloyd2008cellml}, have also been developed to share models encoded in these standard formats. 
 
-In systems biology, many standards have been introduced for encoding models and simulations. These standards include CellML \cite{cuellar2003overview}, SBML \cite{hucka2003}, SED-ML \cite{sedml2011}, the COMBINE archive \cite{COMBINE2012}, and SBGN \cite{LeNovereHMMSS09} and model repositories including BioModels and the CellML Model Repository.
-By utilizing community-based development \cite{hucka2015promoting} \cite{drager2014improving}, these standards are tailored to a wide range of use-cases in modeling and allow researchers to reproduce most \textit{in silico} experiments using a range of simulation tools. These standards and repositories have also enabled researchers to reuse models for new experiments, to expand models, and to combine models into larger, more comprehensive models. By encouraging reuse and modification of models and decoupling of models and the software used to simulate them, researchers have access to tools that allow them to test and validate models and software independently of each other and improve overall robustness and reproducibility.
-
-However, due to continued time pressures, the priority for innovation, and the growing complexity of computational methods, these standards fall short of supporting complex hybrid models such as the recent \textit{Mycoplasma genitalium} whole-cell (WC) model \cite{Karr2012}. Due to this model's novelty and complexity, preexisting standards are not useful for encoding this model and new approaches are necessary to overcome these limitations. However, in order to move forward we must first formulate a vision for what is required to support future hybrid models, and how to build a platform for modeling which can be scaled up to WC models.
-
-Waltemath and Schreiber recently organized a week-long workshop to reproduce the \textit{M. genitalium} model using SBML and open-source modeling software. The workshop included 60 modelers, modeling software developers, and standards developers. The workshop made great progress toward encoding the model in SBML, including draft SBML versions of most of the submodels. However, because the model requires many new SBML packages that are still only supported by a few software programs and because the model is large, significant work remains to reproduce the model despite the more than one person-year of effort that has already been dedicated to this effort.
-
-% What role does \textit{replicability} play in the process of performing reproducible research?
-
-Although the topic of the workshop was reproducibility, we have also chosen to include \textit{replicability} in our discussion. We believe that, particularly for re-encoding efforts, the determinism of the original simulation is a significant factor. Consider again the above example and suppose Bob's simulation was based on a stochastic method instead of a deterministic one. Alice can still compare the propensities at the initial time point, but if the initial propensities are identical then the timecourse behavior of the model will not help her to isolate the discrepancy. Alice can employ other methods to continue trying to reproduce Bob's results but by throwing away the ability to produce predictable, deterministic simulations Bob has effectively made it difficult to reproduce his work.
-
-There are certainly times when the requirement of replicating simulation results exactly does not apply, but since our discussion is motivated by the drive to create a better platform for modeling complex systems in a robust way, we believe it is useful to consider whether exact replicability aids in the development, encoding, and distribution of complex hybrid models.
-
-% Due to the complexity of modern scientific experiments as well as financial, time, and publishing pressures, investigators often do not have the time or resources to design orthogonal methods to test results independently. Instead, investigators frequently replicate reported results using the published method. The underemphasis on independent testing has the potential to allow us to accept false results based on faulty methods.
-
-Here, we describe the process for reproducing models, outline the gaps in our current standards and software for facilitating
-reproducible modeling, and describe new standards and tools that are needed to enable researchers to conduct reproducible
-biological modeling. Throughout, our discussion is motivated by the need for improved standards and software tools for WC modeling.
-
-\begin{figure*}[!t]
+\begin{figure*}[!tb]
 \centering
 \includegraphics[width=\textwidth]{figure1/figure1}
 % where an .eps filename suffix will be assumed under latex,
 % and a .pdf suffix will be assumed for pdflatex; or what has been declared
 % via \DeclareGraphicsExtensions.
-\caption{Repeatability and reproducibility explained: Model reproducibility refers to derivation from scientific knowledge and the ability to generate results in a reliable, repeatable manner;
-Repeatability refers only to the ability to recapitulate earlier simulation results}
+\caption{Three requirements for reproducing systems biology modeling. (1) Every data source and assumption must be recorded so that each species, reaction, and rate law can be regenerated. (2) Every simulation parameter value must be recorded so that numerical simulation results can be regenerated. (3) Multiple simulation software tools must generate consistent numerical results. Reproducibility is a stricter standard than repeatability. Models are considered repeatable, but not reproducible, if they satisfy the second and third criteria.}
 \label{fig_repro_diagram}
 \end{figure*}
 
-\section{Repeatability and Reproducibility}
+These standards and modeling software tools help researchers repeat most \textit{in silico} systems biology experiments and reuse, modify, expand, and combine most systems biology models. However, these standards and software provide limited support for regenerating models themselves because they do not record all of the model design choices used to build models, including the experimental data sources and assumptions used to build models.
 
-Fig.~\ref{fig_repro_diagram} shows the steps involved in reproducing a model. A subset of these steps involve replication only. To summarize these steps, the model's equations and parameter values must be duplicated from the original assumptions and experimental data. This requires machine-readable standards for concretely describing model components in terms of external database entries such as KEGG \cite{kanehisa2000kegg} compounds and MetaCyc \cite{caspi2008metacyc} reactions, machine-readable databases for representing the data sources that were used to parameterize a model, annotation standards for describing how those data sources were used to parameterize the model, and annotation standards for describing the assumptions that the model was based on \cite{boulton2012open}.
+Furthermore, researchers have begun to develop more complex models which cannot be represented by the existing systems biology standards or simulated by the existing standards-compliant software. For example, several aspects of the recent whole-cell (WC) model of the gram-positive bacterium \textit{Mycoplasma genitalium} \cite{Karr2012} cannot currently be represented by SBML \cite{Waltemath2016}. In particular, SBML cannot represent the multi-algorithmic nature of the \textit{M. genitalium} WC model. In addition, no SBML-compatible simulation software program supports all of the SBML packages needed to represent WC models, including the Arrays \cite{watanabe2016efficient}, Distributions \cite{Moodie2015}, Flux Balance Constraints \cite{olivier2015fbc}, Hierarchical Model Composition \cite{smith2015sbml}, and Multistate and Multicomponent Species \cite{SBMLMulti} packages.
 
-The result of the model construction steps described above will usually be a set of differential equations, reaction propensities, or rules which govern the timecourse behavior of the model. While in theory this formalism should be sufficient to recapitulate the model's behavior, we have found that reproducibility is further complicated by the details of the software implementation. In Matlab, for example, there are a number of differential equation solvers for both stiff and non-stiff systems. These solvers in turn have many configuration options relating to error tolerances and variable stepping. Therefore, we argue that software plays a critical role in reproducibility. Making the source code available helps to partly address this problem \cite{easterbrook2014open}, but we will show that more can be done to improve reproducibility in this area.
+Here, we must present a comprehensive vision for reproducible systems biology modeling, including WC models. First, we propose several requirements for reproducible modeling. Second, we outline several gaps in the existing standards and software for reproducible modeling and describe several new standards and software tools that are needed for reproducible modeling. Third, we describe several methods for verifying the repeatability of systems biology models.
 
-Stochastic models are problematic for reproducibility studies because they inherently give different output each time they are run. However, real implementations of stochastic processes often use pseudo-random number generators (PRNG) to achieve the illusion of stochasticity. The current standard for reproducing a stochastic model is based on comparing at least the first and second moments of the model's predictions. However, we argue that there are two advantages to reproducing the model's exact trajectory.
+\section{The Requirements for Reproducible Modeling}
 
-First, biology is replete with examples where rare events play key roles: e.g. cancer, speciation events, and mutations conferring antibiotic resistance. While these events may not occur often enough to contribute significantly to the expected dynamical behavior of a typical cell, they contribute significantly to the long-term behavior of the population. We believe that capturing these events when they occur will be instrumental to the usefullness of WC models as engines for discovery and prevention of such rare events.
+There are three requirements for fully reproducible systems biology modeling (Fig.~\ref{fig_repro_diagram}). (1) Researchers should be able to regenerate models, including every species, reaction, and rate law, from the scientific literature. Consequently, researchers must record every data source and assumption used to build models. (2) Researchers should be able to regenerate statistically indistinguishable simulation results. Consequently, researchers must record every parameter value, algorithm, and simulation software option used to simulate models. (3) Researchers should ensure that multiple simulation software tools generate statistically indistinguishable simulation results. This is particularly helpful for identifying errors in novel simulation algorithms. This requires standard model description formats that support all possible models, including WC models. This enables researchers to use different software programs and generate the same results.
 
-Second, being able to reproduce a trace of model timecourse behavior is absolutely crucial to scaling up to large and complex models. Human error has been and will continue to be a major source of inaccuracy in modeling experiments \cite{ebrahim2015genome}. The ability to reproduce an exact model trace would be highly useful in the context of model reproduction endeavors such as the workshop by Waltemath and Schreiber because this ability allows modelers to identify the exact point at which predictions diverge. Assuming such errors occur at a constant rate, a larger model would be expected to contain many more errors than a smaller one, and eliminating such costly errors is a prerequisite to the adoption of WC modeling.
+\section{The Path to Reproducible Modeling}
 
-The idea of capturing the exact sequence of events leading to an error is not new. In the field of computer science, the SPIN model checker \cite{holzmann1997model} \cite{holzmann2004spin} has been used extensively to validate the operational logic of non-deterministic systems. SPIN detects invalid models by exhibiting a counterexample including the exact events leading to failure. We envisage a similar approach for biophysical modeling. Specifically, we envisage a simulator where not only can an exact simulation be replicated by supplying the same random seed, but also where a simulation may be restarted from a checkpoint containing a state snapshot at any point in the timecourse. Since serializing such checkpoints would be an expensive operation, the checkpoints would be user-specified. By combining these two features, we would be able to (1) replicate exactly a trace from a specific prior simulation, and (2) insert as many such checkpoints into the run as desired without affecting the outcome. We would then be able to capture rare events and apply permutations to test various hypotheses relating to the mechanism of the events, e.g. to test their robustness to knockouts and systematically screen for targets for intervention.
+Several new tools and practices are needed to help researchers reproducibly build and simulate systems biology models. (1) More comprehensive experimental databases should be developed to provide the data needed to build systems models.  For example, Karr et al. developed the WholeCellKB database \cite{karr2013wholecellkb} to organize the over 1,400 quantitative measurements used to build the \textit{M. genitalium} WC model. These databases should be machine-readable so that they can be automatically queried and used to build models. These databases should also use data models similar to that of predictive models to clarify the connection between models and their underlying experimental data. (2) New model design tools and Systems Biology Ontology (SBO) \cite{juty2013systems} terms are needed to record how models are built, including every design choice, assumption, and data source. Currently, researchers can use SBML annotations and SBO terms to record several common assumptions, such as the rapid equilibrium between free enzymes and enzyme-substrate complexes in Michaelis-Menten kinetics. However, many researchers do not utilize these annotations and the SBO does not represent all possible assumptions. Thus, researchers should develop model design tools which automatically record assumptions and data sources. The SBO should also be expanded to represent more assumptions. (3) The existing model description standards should be expanded to succinctly represent all possible models, including WC models. For example, to succinctly describe WC models, SBML should be expanded to support genomic sequences and sequence-based reaction patterns. (4) Where possible, researchers should use standard formats rather than to proprietary codes to describe models and simulation experiments. For example, researchers should use SED-ML to represent every software configuration option used to generate simulation results. (5) The existing standards-compliant simulation software programs should be expanded to support a wider variety of models. In particular, simulation software programs should be expanded to support the Arrays, Distributions, Flux Balance Constraints, Hierarchical Model Composition, and Multistate and Multicomponent Species SBML packages. Several simulation software programs, including iBioSim \cite{Stevens2013}, have already begun to support these packages. Unfortunately, most simulation software developers have insufficient funding to implement every package. (6) Researchers should systematically verify the repeatability of every simulation software program and computational model. (7) New model verification tools should be developed to automatically identify errors in models. We developed a suite of simple tests to systematically error-check our \textit{M. genitalium} WC model. These tests checked for simple problems such as undefined species, reaction mass and charge imbalance, and inconsistent reaction rates among submodels. Nevertheless, we found this test suite invaluable for debugging complex models. These tests must be generalized and new software tools should be developed to help researchers systematically evaluate such tests. (8) Every model, simulation experiment, simulation result, and simulation software program should be published open-source so that researchers have all of the information needed to reproduce reported results.
 
-\subsection{Validation Tests as a Basis for Reproducibility}
+\subsection{\karrcomment{Special Considerations for Stochastic Models}{Add note about completely setting the state of RNG (e.g. mersienne-twister algorithm) to this section.}}
+Special care must be taken to ensure that stochastic models are repeatable because each simulation generates different results. We recommend that stochastic simulation programs use pseudo-random number streams to generate reproducible results. This enables researchers to reproduce not only statistical distributions, but exact trajectories, which is invaluable for identifying and debugging errors in complex models.
 
-Bergmann \cite{bergmann2008comparing} presented a strategy for comparing the outputs of various SBML ODE simulators, enabling developers of simulation tools to identify weaknesses of a particular implementation. The SBML Test Suite provides normative simulation output for specific SBML features\footnote{http://sbml.org/Software/SBML\_Test\_Suite}. Both of these tests cover ODE models only, which, owing to their determinism, can be reproduced across solvers. Hence, the criteria for passing these tests is whether the results converge to an \textit{a priori} known trajectory. Stochastic models, on the other hand, intrinsically do not converge to an exact trajectory. The current standard for testing stochastic models is a statistical test based on comparing the per-variable mean and standard deviation to expected values as a function of time \cite{evans2008sbml}.
+\subsection{Special Considerations for Multi-algorithm WC Models}
+Multi-algorithm WC models strive to represent every gene and cell function by combining multiple submodels of individual cellular pathways, each represented using different mathematics and each trained using different experimental data \cite{Karr2015, macklin2014future, carrera2015build}. This multi-algorithm methodology is motivated by the desire to model biological systems as completely as possible, given our current knowledge, by simultaneously using fine-grained representations such as ODEs and coarse-grained representations such as Boolean networks to represent well- and poorly-characterized pathways. 
 
-In general, hybrid models contain both deterministic and stochastic components, so the statistical test could in principle be applicable. However, we argue that statistical tests are not sufficient to pronounce hybrid models (nor even complex stochastic ones) identical in practice. It has been shown that noise propagation in genetic networks can have a non-linear effect on the behavior of the network \cite{kim2013nonlinear}. A simple example is an $n$-stable switch (for example, a cell fate model) with noisy inputs. The system will ultimately end up in one of several stable states, dependent to a large extent on a random decision process. Consider a simple bi-stable switch. Over many trials, the sampled values of the variables of this system will exhibit bi-modality, with a mean in between the two modes and a very large variance encompassing the two modes, as shown in Fig.~\ref{fig_bistable_plot}. Rather than test whether a given trajectory fits within this large variance, a more useful test would be to confirm whether the trajectory follows one of the bi-modal patterns. However, complex models can contain many non-trivial features such as the aforementioned branching behavior and it is difficult to construct a generalized statistical test that encompasses all cases.
+Multi-algorithm modeling is a new methodology which still lacks a strong theoretical foundation. Consequently, significant work is still needed to develop tools for building, simulating, and reproducing WC models. (1) The Hierarchical Model Composition SBML package should be extended to use the KiSAO ontology \cite{courtot2011controlled} to represent each submodel's simulation algorithm. (2) Researchers must determine how to concurrently integrate submodels that share state. Researchers are currently exploring several potential methods to concurrently integrate submodels, including shared memory and parallel discrete event simulation \cite{Goldberg2016}. (3) Researchers must develop a high-performance, reusable multi-algorithm simulator. (4) Additional tools should be developed to help researchers build and analyze WC models. (5) These programs should be integrated into a comprehensive WC modeling platform, but should be implemented as separate tools so that modelers can easily use alternative components and so that software developers can contribute to individual tools. We anticipate that this platform will enable more researchers engage in WC modeling and accelerate the WC modeling field.
 
-Insteady of relying on statistical tests, we propose that validation of hybrid models involve (1) independent validation of functional subunits based on whatever method is applicable, and (2) functional hypothesis-based testing for the hybrid model as a whole. For the first part, we assume subunits correspond models which can be simulated using a single solve (i.e. subunits are not themselves hybrid models). Hence, the tests outlined above for non-hybrid models may be applicable on a subunit basis, and will likely be sufficient in most cases. For testing the hybrid model as a whole, we resort to testing externally measurable outcomes for a given input or perturbation. For example, the cellular doubling time is externally measurable, and should respond in a predictable way to certain gene deletions under a given set of environmental conditions. These conditions are inputs to the model and can be reliably set up for the original model as well as any re-implementations. The outputs of these high-level tests should be the same across all implementations, and can serve as a measure of reproducibility. However, a failure in these high-level tests is difficult to trace back to its origin, underscoring the importance of the subunit tests. Hence, just as hybrid models follow a hierarchical construction, they must also follow a hierarchical validation scheme. This is the case for the \textit{M. genitalium} model (which contains many subunit tests under its \texttt{src\_test} directory), and we believe this approach will continue to be useful in future hybrid models.
+\subsection{\karrcomment{Special Considerations for Parallel Simulation Software Programs}{add concrete example}}
 
-\section{Constructing a Platform for Complex, Hybrid Modeling}
+Multi-threaded and multi-core programs execute individual instructions in a non-deterministic order that is determined by the program's operating environment. Multi-threaded and multi-core programs also non-deterministically allocate memory in ways that are determined by their operating environment. Special care must be taken to ensure that parallel simulation software tools are repeatable despite this non-deterministic thread execution and memory layout.
 
-The \textit{M. genitalium} re-encoding effort provides a useful test case for a platform designed to support large, complex, hybrid models, such as WC models. Using the outcome of the workshop as an example, we can expect the following areas to be key features in the next generation of modeling software:
-
-\begin{itemize}
-\item A hybrid timecourse solver incorporating multiple, heterogeneous codebases
-\item Better standards for model integration, including how to parallelize the model for execution performance
-\item Transparent encoding of model data and initialization
-\end{itemize}
-
-These focus areas require advances in simulation software, standards, and services to connect models and data. The first requirement necessitates having a way for a diverse set of solvers to communicate. There are many ways to achieve this, including shared memory buffers, memory-mapped files, or message passing. Message passing offers the additional advantage that the different solvers can reside on different machines connected by a network. Furthermore, if the structure of the data contained in the message is defined and documented, it is possible to use the message passing scheme from many different programming languages and software environments. The SBML Arrays package \cite{watanabe2016efficient} helps aid in the parallelization of certain types of models, while the Hierarchical Model Composition package \cite{smith2015sbml} offers a way to integrate models. However, there is overlap between these two packages, and their respective feature sets could be reconciled into a single scheme for encoding and simulating hierarchical models. This scheme must also address how to deal with updates to shared variables, which can be a source of conflicts and race conditions. Finally, better databases and services are needed to transparently, unambiguously tie the parameterization and initialization of the model to the data used to generate it. Linked data has proven to be extremely useful both in the annotation of XML-encoded standards \cite{novere2005minimum} and pure RDF standards \cite{galdzicki2014synthetic}.
-
-Before a platform for hybrid modeling can be realized, the modeling community will first need to agree on a few preliminary features such a platform should have. For a hybrid solver to be useful, it should be implemented as a highly reusable software system. In so far as possible, it should be language-agnostic in order to reach the broadest possible audience. As an example, consider Geppetto, the multi-solver interface for the OpenWorm project \footnote{http://www.openworm.org/}. Geppetto uses the OSGi framework to interface with various solvers in a modular way. However, this system has a serious drawback: It is not language agnostic, and requires an OSGi interface written in Java for each component. This in turn imposes a burden on developers of non-Java solvers. While we are not aware of any single system that can address all of OSGi's use cases in a language agnostic way, we do acknowledge that there are libraries (such as ZeroMQ) that enable cross-process and cross-platform communication, and we believe that using communication as the starting point and building a service architecture on top of it is more language agnostic than starting with a specific service scheme (OSGi) and trying to build a system for cross-language communication.
-
-It has been our experience that non-replicable simulations are notoriously difficult to debug. Therefore, we propose that in order to build a scalable platform, replicable simulations should be incorporated as a core feature. Since replicable simulations are difficult to achieve for hybrid models with the aforementioned synchronization issues for shared variables, we devote an entire section to this problem and how it is handled in computer science. We then suggest how these computer science techniques may be applied to timecourse simulation software.
-
-\begin{figure*}[!t]
+\begin{figure*}[tb!]
   \centering
-  \begin{subfigure}[t]{0.5\textwidth}
-    \centering
-    \input{bistable-stochastic.tex}
-    \caption{A timecourse plot of a stochastic bistable switch shows two distinct trajectories. The simulation was performed using Gillespie's Direct Method \cite{gillespie1977exact} implemented in libRoadRunner \cite{Somogyi17062015}}
-  \end{subfigure}%
-  ~
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
     \begin{BVerbatim}
@@ -583,114 +547,56 @@ It has been our experience that non-replicable simulations are notoriously diffi
 
 
 
-    \end{BVerbatim}
-    \caption{Antimony code for the model in part (a)}
+    \end{BVerbatim}    
+  \end{subfigure}%
+  ~
+  \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+    \input{bistable-stochastic.tex}    
   \end{subfigure}
-  \caption{Some stochastic systems can exhibit statistical divergence, making them unsuitable for mean-and-variance tests. Each trace in part (a) corresponds to the same model with the same initial conditions and a different random seed.}
+  \caption{Mean and variance testing is not an effective way to verify the reproducibility of stochastic models because these statistical metrics do not capture the behavior of all stochastic systems. For example, the bistable stochastic model described by the \karrcomment{Antimony}{It would be better to describe the model rather than the Antimony code which readers won't be familiar with} code in (a) and simulated trajectories plotted in (b) cannot be completely specified by its mean and variance.}
   \label{fig_bistable_plot}
 \end{figure*}
 
-\subsection{Technical Considerations for Repeatability and Reproducibility}
-
-Replicating a model is a useful step toward reproducing a model.
-If a model's numerical simulations cannot be replicated, it will be
-difficult to reproduce the model. Here, we discuss two technical issues which can 
-cause non-replicable simulations -- concurrency and memory layout -- 
-and approaches from computer science which have been successfully used to create 
-deterministic software despite these issues.
-
-Threading and asynchronous input/output callbacks execute instructions in an arbitrary,
-non-deterministic order that is determined by a program's interaction with 
-its operating environment. The increasing push to exploit multi-core CPUs has
-led computer scientists to develop strategies for deterministically running software 
-in a concurrent environment. Two systems that have been developed to eliminate non-determinism in threading
-are C{\small ORE}D{\small ET} \cite{bergan2010coredet} and D{\small THREADS} \cite{liu2011dthreads}.
-C{\small ORE}D{\small ET} is a framework and library for compiling C/C++ programs
-such that the output executables behave deterministically, whereas
+\karrcomment{Computer scientists have developed several systems to deterministically run multi-threaded programs.}{This section would be strengthened by a concrete example.} These include C{\small ORE}D{\small ET} \cite{bergan2010coredet} and D{\small THREADS} \cite{liu2011dthreads}.
+C{\small ORE}D{\small ET} is a library for compiling C/C++ programs such that they behave deterministically.
 D{\small THREADS} is a replacement for the standard UNIX Pthreads library.
-Both of these systems operate by preventing information sharing between
-threads during a parallel phase, and deterministically allowing sharing
-during a serial phase.
-This biphasic structure imposes an overhead on the operation of the threading
-system, but this overhead is low in many benchmarked cases \cite{liu2011dthreads}. 
+Both systems create deterministic programs by preventing information sharing between
+threads during parallel phases, and deterministically allowing sharing during serial phases.
+The systems also eliminate non-determinism due to variable memory layout. D{\small THREADS} achieves this by implementing a special deterministic memory allocator. 
+C{\small ORE}D{\small ET} deterministically allocates memory compiling memory allocators with the C{\small ORE}D{\small ET} library to generate deterministic memory allocators.
+C{\small ORE}D{\small ET} and D{\small THREADS} have both been shown to impose minimal overhead \cite{liu2011dthreads}. 
 
-These libraries also eliminate non-determinism
-due to memory layout. D{\small THREADS} achieves this through a specially implemented memory allocator,
-whereas C{\small ORE}D{\small ET} achieves this by compiling the
-memory allocator itself with the C{\small ORE}D{\small ET} framework.
+We recommend that simulation software developers use C{\small ORE}D{\small ET} or D{\small THREADS} to create repeatable parallel simulation software programs.
 
-It is important to emphasize that these tools only address determinism, not sensitivity to initial conditions.
-If a model is highly sensitive to initial conditions, a small perturbation can yield significant differences in the output. This is a property of the model, not the simulation tool.
-We hope that tools like C{\small ORE}D{\small ET} and D{\small THREADS} will be utilized in future simulators
-to achieve replicable simulation results, and that the systems biology community should
-work toward producing software with robust determinism.
+\subsection{Special Considerations for Chaotic Systems}
 
-\subsection{Limitations of Current Standards for WC Modeling}
+Special care must also be taken to repeat the simulation results of chaotic models which are highly sensitive to their initial conditions. \karrcomment{We recommend that modelers communicate initial conditions and parameters with sufficient numerical precision that chaotic model simulation results can be repeated.}{What else can we say?}
 
-The \textit{M. genitalium} WC model \cite{Karr2012} consists of 28 submodels.
-The submodels are implemented using a variety of modeling formalisms including
-ordinary differential equations, Boolean networks, and flux balance analysis.
+\section{Methods for Verifying Repeatability}
+After adopting the methods outlined above to repeatably simulate models, we recommend that systems biology modelers and software developers verify repeatability by testing the statistical equivalence of simulation results generated by multiple simulation software programs for the same model, and then correcting any errors identified through this analysis. Bergmann and Sauro \cite{bergmann2008comparing} and Evans et al. \cite{evans2008sbml} have used this approach to assess the repeatability of models across several deterministic and stochastic simulators, identifying errors in several simulation programs.
 
-Although the \textit{M. genitalium} model is replicable, the model is not easily reproducible for several reasons. First,
-although the model could be encoded in SBML using the Flux Balance Constraints \cite{olivier2015fbc}, Hierarchical Model Composition \cite{smith2015sbml}, Multistate and Multicomponent
-Species, and Arrays \cite{watanabe2016efficient} SBML packages, there is no SBML-compatible simulator which supports all of these packages or
-which can simulate multi-algorithm models. The existing SBML simulators only support 
-model composition by flattening submodels into a single larger model. 
+Model checking and unit testing are two formalisms that can be used to verify repeatability. Simulation-based model checkers, such as SPIN \cite{holzmann1997model}, are extensively used in electrical engineering to verify the behavior of models. Simulation-based checkers execute multiple simulations and then verify statistical properties, such as the mean and variance, of their results \cite{kwiatkowska2011prism}. These systems could be adopted to verify the repeatability of systems biology models. Unit testing is a powerful strategy for verifying the behavior of software. Unit testing could also be used to verify the repeatability of systems biology models and simulation programs by (1) using multiple simulators to execute multiple simulations and (2) comparing their predicted means and variances.
 
-Second, the model is difficult to reproduce because the details of how experimental data was used to parameterize the \textit{M. genitalium}
-are not transparent. The \textit{M. genitalium} model was parameterized using data from over 900 
-sources. The WholeCellKB-MG database carefully describes these data sources \cite{karr2013wholecellkb}. Although this database is publicly accessible, 
-the details of how this database was used to parameterize the model are unclear
-because they are intertwined with the simulation code. 
-Improved software tools must be developed to help WC modelers use the minimum information 
-requested in the annotation of biochemical models (MIRIAM) \cite{novere2005minimum}
-standard to annotate model components with persistent uniform resource identifiers. 
+\subsection{Special Considerations for Stochastic Models}
+In theory, the repeatability of stochastic models can be assessed by verifying the statistical equivalence of the mean and variance of simulation results across multiple simulators. However, verifying repeatability with high confidence requires large numbers of simulations for models with rare events \cite{kim2013nonlinear}. Furthermore, tests for statistical equivalence which only check the predicted mean and variance can fail to identify important differences between simulation results that are not captured by their mean or variance. For example, the bistable system illustrated in Fig.~\ref{fig_bistable_plot} cannot be specified by its mean and variance. 
 
-Third, the model is difficult to reproduce because its assumptions are not clearly outlined. Rather, its assumptions are
-implicit in the simulation source code. This makes it difficult
-to distill the model's mathematical structure. A new standard is needed to allow modelers to annotate model assumptions, including why
-specific mathematical formalisms were used and why those formalisms were appropriate. This standard should reference an ontology that 
-includes common modeling assumptions.
+In general, it is difficult to verify the repeatability of complex stochastic models by testing the statistical equivalence of their simulation results across multiple simulators. In addition to testing the statistical equivalence of simulation results across multiple simulators, we recommend that modelers and simulation software developers (1) utilize the methods described in the previous section to construct deterministic simulators and (2) verify that each simulation software program can exactly regenerate its own numerical results. This approach also facilitates the debugging of simulation software programs.
 
-Fourth, the model is difficult to reproduce because there is not yet a consensus multi-algorithm simulation meta-algorithm 
-or consensus multi-algorithm simulation software system. An accurate, scalable multi-algorithm simulation meta-algorithm
-and a high performance simulation program must be developed and accepted by the modeling community. This 
-simulator must have deterministic control over its execution so that it can replicate 
-simulations. In particular, it must have deterministic control over its use of pseudorandom number generators. 
-In addition, multithreaded simulators should use libraries like C{\small ORE}D{\small ET} and D{\small THREADS} to 
-ensure deterministic behavior on multi-core systems.
+\subsection{Special Considerations for Hierarchical Models}
+The repeatability of hierarchical models, such as WC models, can be efficiently verified by taking advantage of their hierarchical nature. (1) Modelers should verify the repeatability of each submodel. (2) Modelers should verify the repeatability of the combined model. The main advantage of this hierarchical verification strategy is that it facilitates debugging by breaking models into smaller, more easily testable units. 
 
-\subsection{Towards Hybrid Simulators}
-
-The \textit{M. genitalium} was constructed from a limited set of data and its creators made carefully chosen compromises which reflect this fact. For example, metabolism is modeled using flux balance when a more detailed kinetic model could have been employed. Flux balance was chosen due to the fact that it does not require kinetic parameters in order to estimate the flux for a pathway, and it is difficult to obtain accurate values for these parameters in an organism such as \textit{M. genitalium}. We anticipate WC models will continue to need to make such tradeoffs in the near future, so it follows that \textit{hybrid models} will become utilized more often in modeling studies.
-
-A hybrid model employs diverse numerical solvers in calculating a timecourse trajectory. In general, these solvers will not be united by a common theoretical ground so it will not be possible to collapse (or ``flatten'') models into a single set of differential equations or rules which govern its dynamical behavior.
-Instead, the dynamics will be derived from the internal behavior of the solvers and their interactions with each other. This allows modelers the freedom of choosing the optimum solver for a given role and availability of data.
-Furthermore, many models feature multiscale phenomena. In a WC model, some reactions will proceed on a faster timescale than others. The difference can be orders of magnitude, and considerable gains in performance can be realized if the fast components of the system can be simulated separately from the slow components. Indeed, SBML has attributes for such ``fast'' reactions, but complex multiscale models may have an entire hierarchy of reaction timescales and a simple true/false attribute is insufficient in this case.
-
-Returning to the \textit{M. genitalium} model, we observe that it is divided into submodules on the basis of physiological processes (transcription, translation, metabolism, etc.). The numerical solvers for each of these submodules are all run at each timestep and the outputs are propagated to global shared variables. Assuming \textit{a priori} knowledge of the timescale of each component, we could instead subdivide the full model on the basis of timescale by putting components with similar scales in the same submodule. Furthermore, instead of running all numerical solvers at each timestep, we could employ a hierarchy of timesteps in which only the fastest submodules are run, followed by the next fastest, and so on.
-
-Naturally, this raises theoretical questions. The behavior of complex, large-scale hybrid systems is largely unknown. Moreover, existing schemes for handling combined discrete and continuous systems often do not scale well as the number of discrete events per unit of time increases.
+\subsection{Special Considerations for Multi-algorithm WC Models}
+As introduced above, multi-algorithm modeling is a new methodology which still requires significant fundamental research. Thus, multi-algorithm simulation algorithms will need to be extensively tested to verify their repeatability, as well as to understand their fundamental properties such as how their runtime scales with the number of submodels and how the variance in their predicted dynamics varies with the simulation timestep.
 
 \section{Conclusion}
 
-Expanded standards and new tools are needed to facilitate replicable and reproducible systems biology modeling, including WC modeling.
-These standards and tools must enable researchers to reproduce model assumptions, reproduce model parameters
-directly from experimental data, and reproduce hybrid model simulations. 
-
-One key step toward replicable modeling is expanded support for the 
-Flux Balance Constraints \cite{olivier2015fbc}, Hierarchical Model Composition \cite{smith2015sbml}, Multistate and Multicomponent
-Species, and Arrays \cite{watanabe2016efficient} SBML packages. It is not necessary for every simulator
-to support every package, but each simulator should be capable of numerically replicating its own results.
-Consequently, each simulator must have deterministic control over its use of pseudorandom number generators.
-New standards and tools to document model assumptions and data sources are also needed to enable researchers to reproduce models.
-Such standards and tools will make it easier for independent researchers to understand, reproduce, and validate models. 
-Finally, continued commitment to open standards, software tools, and models is needed to help researchers replicate and reproduce biologically accurate models.
+Expanded standards and simulation software tools are needed to enhance the reproducibility of systems biology modeling. These standards and software tools should enable researchers to regenerate models from our scientific knowledge by recording every model design decision, assumption, data source, parameter, and software option. These software tools should also enable researchers to regenerate simulation results by using pseudo-random number generators and deterministic multi-threading libraries. These standards and software tools should also support all possible systems biology models, including WC models. This requires expanded support among simulation software programs for the Arrays, Distributions, Flux Balance Constraints, Hierarchical Model Composition, and Multistate and Multicomponent Species SBML packages. These simulation software tools also should be extensively tested to verify that they produce consistent simulation results. Lastly, we believe that continued commitment to open standards, software tools, and models is critical to advancing the reproducibility of systems biology modeling.
 
 \section{Acknowledgment}
 
 The authors thank Herbert M. Sauro for helpful discussions
-on reproducibility and replicability in systems biology.
+on reproducibility and repeatability.
 
 % Can use something like this to put references on a page
 % by themselves when using endfloat and the captionsoff option.
