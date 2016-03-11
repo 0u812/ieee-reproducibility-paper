@@ -420,7 +420,7 @@
 \begin{abstract}
 \textit{Objective:}
 Reproducibility is the cornerstone of the scientific method. 
-However, currently many systems biology models cannot easily be reproduced.
+However, currently, many systems biology models cannot easily be reproduced.
 \textit{Methods:} 
 We analyzed the recent \textit{Mycoplasma genitalium} whole-cell model to determine the requirements for reproducible systems biology modeling.
 \textit{Results:} 
@@ -525,7 +525,7 @@ Multi-algorithm WC models strive to represent every gene and cell function by co
 
 Multi-algorithm modeling is a new methodology which still lacks a strong theoretical foundation. Consequently, significant work is still needed to develop tools for building, simulating, and reproducing WC models. (1) The Hierarchical Model Composition SBML package should be extended to use the KiSAO ontology \cite{courtot2011controlled} to represent the simulation algorithm for each submodel. (2) Researchers must determine how to concurrently integrate submodels that share state. Researchers are currently exploring several potential methods to concurrently integrate submodels, including shared memory and parallel discrete event simulation \cite{Goldberg2016}. (3) Researchers must develop a high-performance, reusable multi-algorithm simulator. (4) Additional tools should be developed to help researchers build and analyze WC models. (5) These programs should be integrated into a comprehensive WC modeling platform, but implemented as separate tools so that modelers can easily use alternative components and so that software developers can contribute to individual tools. We anticipate that this platform will enable more researchers engage in WC modeling and accelerate the field.
 
-\subsection{Special Considerations for Parallel Simulation Software}
+\subsection{\karrcomment{Special Considerations for Parallel Simulation Software}{add concrete example}}
 
 Multi-threaded and multi-core programs execute individual instructions in a non-deterministic order that is determined by the program's operating environment. Multi-threaded and multi-core programs also non-deterministically allocate memory in ways that are determined by their operating environment. Special care must be taken to ensure that parallel simulation software tools are repeatable despite non-deterministic thread execution and memory layout.
 
