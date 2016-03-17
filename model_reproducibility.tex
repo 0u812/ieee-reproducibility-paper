@@ -527,9 +527,12 @@ Multi-algorithm WC models strive to represent every gene and cell function by co
 
 Multi-algorithm modeling is a new methodology which still lacks a strong theoretical foundation. Consequently, significant work is still needed to develop tools for building, simulating, and reproducing WC models. (1) The Hierarchical Model Composition SBML package should be extended to use the KiSAO ontology \cite{courtot2011controlled} to represent each submodel's simulation algorithm. (2) Researchers should determine how to concurrently integrate submodels that share state. Researchers are currently exploring several potential methods to concurrently integrate submodels, including shared memory and parallel discrete event simulation \cite{Goldberg2016}. (3) Researchers should develop a high-performance, reusable multi-algorithm simulator. (4) Additional tools should be developed to help researchers build and analyze WC models. (5) These programs should be integrated into a comprehensive WC modeling platform, but should be implemented as separate tools so that modelers can easily use alternative components and so that software developers can contribute to individual tools. We anticipate that this platform will enable more researchers to engage in WC modeling and accelerate the WC modeling field.
 
-\subsection{\karrcomment{Special Considerations for Parallel Simulation Software Programs}{add concrete example}}
+\subsection{Special Considerations for Parallel Simulation Software Programs}
 
 Multi-threaded and multi-core programs execute individual instructions in a non-deterministic order that is determined by the program's operating environment. Multi-threaded and multi-core programs also non-deterministically allocate memory in ways that are determined by their operating environment. Special care should be taken to ensure that parallel simulation software tools are repeatable despite this non-deterministic thread execution and memory layout.
+
+Deterministic synchronization is germane to WC models because hybrid models can exhibit the same repeatability problems as parallel computer programs. These problems occur when submodules attempt to exchange data or update shared variables. In the \textit{M. genitalium} WC model, the chromosome represents a single entity that can be accessed and modified by multiple submodules --- for example, to bind a protein to the chromosome. If two submodules attempt to bind a protein to the same locus on the chromosome, a race condition ensues. Such binding must be resolved deterministically if the simulation is to be repeatable. % Another example is utilization of a finite energy pool. At each timestep, the \textit{M. genitalium} model allocates available ATP molecules among its submodules according to each submodule's energy requirements. When the total energy requirements exceed the available reserve, a shortfall occurs and the energy resources must be partitioned among the submodules in such a way as to optimize the chances of cell survival. There are multiple strategies for performing this partitioning, but, if ranking is used to distribute energy, then care must be taken to ensure the ranking is repeatable.
+We therefore briefly examine methods from computer science used to solve repeatability problems stemming from non-determinism caused by synchronization and memory layout.
 
 \begin{figure*}[tb!]
   \centering
@@ -560,7 +563,7 @@ Multi-threaded and multi-core programs execute individual instructions in a non-
   \label{fig_bistable_plot}
 \end{figure*}
 
-\karrcomment{Computer scientists have developed several systems to deterministically run multi-threaded programs.}{This section would be strengthened by a concrete example.} These include C{\small ORE}D{\small ET} \cite{bergan2010coredet} and D{\small THREADS} \cite{liu2011dthreads}.
+Several libraries have been developed to eliminate non-determinism from multi-threaded programs. These include C{\small ORE}D{\small ET} \cite{bergan2010coredet} and D{\small THREADS} \cite{liu2011dthreads}.
 C{\small ORE}D{\small ET} is a library for compiling C/C++ programs such that they behave deterministically.
 D{\small THREADS} is a replacement for the standard UNIX Pthreads library.
 Both systems create deterministic programs by preventing information sharing between
