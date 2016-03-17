@@ -540,8 +540,8 @@ We therefore briefly examine methods from computer science used to solve repeata
     \[
     \begin{array}{c c c}
        & \textrm{Reaction} & \textrm{Rate} \\
-      \left( a \right) & * \to x & \frac{1}{2} + V_{max} \frac{x^n}{10^6 + x^n} \\
-      \left( b \right) & x \to * & \frac{k}{x} \\
+      \left( 1 \right) & * \to x & \frac{1}{2} + V_{max} \frac{x^n}{10^6 + x^n} \\
+      \left( 2 \right) & x \to * & \frac{k}{x} \\
     \end{array}
     \]
     Where:
@@ -563,7 +563,7 @@ We therefore briefly examine methods from computer science used to solve repeata
     \centering
     \input{bistable-stochastic.tex}
   \end{subfigure}
-  \caption{Mean and variance testing is not an effective way to verify the repeatability of stochastic models because most simulation results cannot be uniquely specified by these statistical metrics. For example, the bistable stochastic model described in (a) and simulated trajectories plotted in (b) cannot be completely specified by its mean and variance. Statistical equivalence should be tested using multivariate Kolmogorov-Smirnov tests. Supplementary Material S1 contains all of the Python and Antimony \cite{smith2009antimony} code needed to reproduce this example.}
+  \caption{Mean and variance testing is not an effective way to verify the repeatability of stochastic models because most simulation results cannot be uniquely specified by these statistical metrics. For example, the bistable stochastic model described in (a) and simulated trajectories plotted in (b) cannot be completely specified by its mean and variance. Statistical equivalence should be tested using multivariate Kolmogorov-Smirnov tests. Reaction $\left( 1 \right)$ represents production of species $x$ and reaction $\left( 2 \right)$ represents degredation. Supplementary Material S1 contains all of the Python and Antimony \cite{smith2009antimony} code needed to reproduce this example.}
   \label{fig_bistable_plot}
 \end{figure*}
 
