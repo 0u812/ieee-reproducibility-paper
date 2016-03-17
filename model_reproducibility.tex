@@ -538,21 +538,41 @@ We therefore briefly examine methods from computer science used to solve repeata
   \centering
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
-    \begin{BVerbatim}
-      -> x; 0.5 + vmax*(x^n/z^n) \
-            / (15 + (x^n/z^n))
-  x   ->  ; k*x/z
-
-  z = 1*16
-  x = 1.4925*16
-  n = 4
-  vmax = 10
-  k = 2
-
-
-
-
-    \end{BVerbatim}    
+    \[
+    \begin{array}{c c c}
+       & \textrm{Reaction} & \textrm{Rate} \\
+      \left( a \right) & * \to x & \frac{1}{2} + V_{max} \frac{x^n}{10^6 + x^n} \\
+      \left( b \right) & x \to * & \frac{k}{x} \\
+    \end{array}
+    \]
+    Where:
+    \[
+      x = 24 ~ \textrm{at} ~ t = 0,
+    \]
+    \[
+      n = 4,
+    \]
+    \[
+      V_{max} = 4,
+    \]
+    \[
+      k = 0.125
+    \]
+%     \begin{BVerbatim}
+%       -> x; 0.5 + vmax*(x^n/z^n) \
+%             / (15 + (x^n/z^n))
+%   x   ->  ; k*x/z
+%
+%   z = 1*16
+%   x = 1.4925*16
+%   n = 4
+%   vmax = 10
+%   k = 2
+%
+%
+%
+%
+%     \end{BVerbatim}
   \end{subfigure}%
   ~
   \begin{subfigure}[t]{0.5\textwidth}
