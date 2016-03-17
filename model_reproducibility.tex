@@ -534,9 +534,9 @@ Multi-threaded and multi-core programs execute individual instructions in a non-
 Deterministic synchronization is germane to WC models because hybrid models can exhibit the same repeatability problems as parallel computer programs. These problems occur when submodules attempt to exchange data or update shared variables. In the \textit{M. genitalium} WC model, the chromosome represents a single entity that can be accessed and modified by multiple submodules --- for example, to bind a protein to the chromosome. If two submodules attempt to bind a protein to the same locus on the chromosome, a race condition ensues. Such binding must be resolved deterministically if the simulation is to be repeatable. % Another example is utilization of a finite energy pool. At each timestep, the \textit{M. genitalium} model allocates available ATP molecules among its submodules according to each submodule's energy requirements. When the total energy requirements exceed the available reserve, a shortfall occurs and the energy resources must be partitioned among the submodules in such a way as to optimize the chances of cell survival. There are multiple strategies for performing this partitioning, but, if ranking is used to distribute energy, then care must be taken to ensure the ranking is repeatable.
 We therefore briefly examine methods from computer science used to solve repeatability problems stemming from non-determinism caused by synchronization and memory layout.
 
-\begin{figure*}[tb!]
+\begin{figure*}
   \centering
-  \begin{subfigure}[t]{0.5\textwidth}
+  \begin{subfigure}[b]{0.5\textwidth}
     \centering
     \[
     \begin{array}{c c c}
@@ -558,28 +558,13 @@ We therefore briefly examine methods from computer science used to solve repeata
     \[
       k = 0.125
     \]
-%     \begin{BVerbatim}
-%       -> x; 0.5 + vmax*(x^n/z^n) \
-%             / (15 + (x^n/z^n))
-%   x   ->  ; k*x/z
-%
-%   z = 1*16
-%   x = 1.4925*16
-%   n = 4
-%   vmax = 10
-%   k = 2
-%
-%
-%
-%
-%     \end{BVerbatim}
+    \vspace{3em}
   \end{subfigure}%
-  ~
-  \begin{subfigure}[t]{0.5\textwidth}
+  \begin{subfigure}[b]{0.5\textwidth}
     \centering
-    \input{bistable-stochastic.tex}    
+    \input{bistable-stochastic.tex}
   \end{subfigure}
-  \caption{Mean and variance testing is not an effective way to verify the repeatability of stochastic models because most simulation results cannot be uniquely specified by these statistical metrics. For example, the bistable stochastic model described by the \karrcomment{Antimony}{It would be better to describe the model rather than the Antimony code which readers won't be familiar with} code in (a) and simulated trajectories plotted in (b) cannot be completely specified by its mean and variance. Statistical equivalence should be tested using multivariate Kolmogorov-Smirnov tests. \karrcomment{Supplementary Material S1 contains all of the Python code needed to reproduce this example.}{TODO}}
+  \caption{Mean and variance testing is not an effective way to verify the repeatability of stochastic models because most simulation results cannot be uniquely specified by these statistical metrics. For example, the bistable stochastic model described in (a) and simulated trajectories plotted in (b) cannot be completely specified by its mean and variance. Statistical equivalence should be tested using multivariate Kolmogorov-Smirnov tests. Supplementary Material S1 contains all of the Python and Antimony \cite{smith2009antimony} code needed to reproduce this example.}
   \label{fig_bistable_plot}
 \end{figure*}
 
