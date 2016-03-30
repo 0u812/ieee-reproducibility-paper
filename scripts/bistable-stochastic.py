@@ -1,11 +1,12 @@
 import tellurium as te
 
-# Using roadrunner develop branch, commit f913e5818acc63337ed825b771f2f04fa3ee5c10
+# roadrunner version:
+# 1.4.3; Compiler: clang "6.0 (clang-600.0.56)", C++ version: 199711; JIT Compiler: LLVM-3.5; Date: Feb 24 2016, 10:47:54; LibSBML Version: 5.11.0
 
 r = te.loada('''
-       -> x; 0.5 + vmax*x^n \
+   J0:     -> x; 0.5 + vmax*x^n \
              / (10^6 + x^n)
-   x   ->  ; k*x
+   J1: x   ->  ; k*x
 
    x = 24
    n = 4
@@ -22,4 +23,5 @@ for k in range(50):
   p = r.simulate(0,30)
   results.append(p)
   r.plot(p, show=False, loc=None, color='black', alpha=0.5)
-r.showPlot()
+import matplotlib.pyplot as plt
+plt.show()
