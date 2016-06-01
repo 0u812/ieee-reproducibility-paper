@@ -1,12 +1,12 @@
 import tellurium as te
 
 # roadrunner version:
-# 1.4.3; Compiler: clang "6.0 (clang-600.0.56)", C++ version: 199711; JIT Compiler: LLVM-3.5; Date: Feb 24 2016, 10:47:54; LibSBML Version: 5.11.0
+# 1.4.4; Compiler: clang "3.7.0 (tags/RELEASE_370/final)", C++ version: 199711; JIT Compiler: LLVM-3.5; Date: May  9 2016, 11:38:08; LibSBML Version: 5.12.0
 
 r = te.loada('''
-   J0:     -> x; 0.5 + vmax*x^n \
+   v1:     -> x; 0.5 + vmax*x^n \
              / (10^6 + x^n)
-   J1: x   ->  ; k*x
+   v2: x   ->  ; k*x
 
    x = 24
    n = 4
@@ -24,4 +24,6 @@ for k in range(50):
   results.append(p)
   r.plot(p, show=False, loc=None, color='black', alpha=0.5)
 import matplotlib.pyplot as plt
+plt.xlabel('time $(s)$')
+plt.ylabel('$x$ $(\mu \mathrm{M})$')
 plt.show()
