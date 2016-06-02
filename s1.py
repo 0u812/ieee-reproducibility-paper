@@ -23,10 +23,10 @@ r.getIntegrator().setValue('seed', 100)
 
 results = []
 for k in range(50):
-  r.reset()
-  p = r.simulate(0,30)
-  results.append(p)
-  r.plot(p, show=False, loc=None, color='black', alpha=0.5)
+   r.reset()
+   p = r.simulate(0,30)
+   results.append(p)
+   r.plot(p, show=False, loc=None, color='black', alpha=0.5)
 import matplotlib.pyplot as plt
 plt.xlabel('time $(s)$')
 plt.ylabel('$x$ $(\mu \mathrm{M})$')
