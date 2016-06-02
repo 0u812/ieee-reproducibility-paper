@@ -1,4 +1,4 @@
-# Python 2.7.9
+# Python 2.7.10
 # Figure 2 source from Medley, Goldberg, and Karr: Guidelines for reproducibly building and simulating systems biology models
 # Author: J Kyle Medley
 # Uses Tellurium for Mac OS X 10.10
