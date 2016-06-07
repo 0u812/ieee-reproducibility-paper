@@ -353,11 +353,11 @@
 \usepackage{subcaption}
 \usepackage{fancyvrb}
 \usepackage{amssymb}
-\usepackage{siunitx}
+%\usepackage{siunitx}
 
 % http://tex.stackexchange.com/questions/27614/expressing-capital-m-for-molar-in-siunitx-package
-\DeclareSIUnit\molar{\mole\per\cubic\deci\metre}
-\DeclareSIUnit\Molar{\textsc{m}}
+%\DeclareSIUnit\molar{\mole\per\cubic\deci\metre}
+%\DeclareSIUnit\Molar{\textsc{m}}
 
 % *** Do not adjust lengths that control margins, column widths, etc. ***
 % *** Do not use packages that alter fonts (such as pslatex).         ***
@@ -564,7 +564,7 @@ Consequently, special care must be taken to create deterministic parallel simula
     \]
     Where
     \[
-      x = 24\,\SI{}{\micro\Molar} ~ \textrm{at} ~ t = 0\,s,
+      x = 24\,\textrm{$\mu$M at $t = 0$\,s,}
     \]
     \[
       n = 4,
@@ -573,10 +573,10 @@ Consequently, special care must be taken to create deterministic parallel simula
       V_m = 4\,s^{-1},
     \]
     \[
-      K_m = 10^6\,\SI{}{\micro\Molar}\text{, and}
+      K_m = 10^6\,\textrm{$\mu$M, and}
     \]
     \[
-      k = 0.125\,\SI{}{\micro\Molar}\,s^{-1}.
+      k = 0.125\,\textrm{$\mu$M\,s$^{-1}$}.
     \]
     \vspace{1em}
   \end{subfigure}%
